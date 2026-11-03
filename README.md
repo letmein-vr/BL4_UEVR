@@ -17,7 +17,7 @@ A full motion-controller VR conversion of Borderlands 4 for UEVR, with visible h
 
 ### Weapons and combat
 
-- **Weapon in hand.** The equipped weapon sits in your right hand (or on the IK hand) and aims where you point it, with per-weapon position and rotation offsets. Bullets leave the barrel of the gun you see thanks to a small native plugin (BL4AimFix.dll), which hooks the game's projectile spawn.
+- **Weapon in hand.** The equipped weapon sits in your right hand (or on the IK hand) and aims where you point it, with per-weapon position and rotation offsets. Bullets leave the barrel of the gun you see thanks to a small native plugin (BL4AimFix.dll, source in `source/BL4AimFix`), which hooks the game's projectile spawn.
 - **Weapon animations kept.** Each first-person gun keeps its own animation, so slides, magazines and reloads still animate while it rides your hand.
 - **Weapon recoil.** Every shot kicks the gun in your hand, taken from the game's own firing animation, so each weapon kicks the way it does in the flat game - back into your hand with muzzle flip, then recovering. Works in Hands and IK modes and while two-handing; distance and rotation strength are adjustable.
 - **Two-handed aiming.** Bring your left hand to the gun's fore-grip and hold the left grip (or left trigger); the gun then pivots between both hands. The left hand glides on and off the gun and holds the weapon's left-hand grip pose. In IK mode the whole left arm is solved onto the fore-grip.
@@ -69,4 +69,4 @@ Built on jbusfield's shared uevrlib Lua framework, running on my UEVR backend. G
 
 Borderlands 4 draws the first-person arms and gun in its own foreground pass with a separate projection that the game only fills in its flat-screen path; the backend fills it from the VR projection, which is what makes the arms and gun visible in stereo. BL4 also has no player-side "equip weapon slot" function, so the holsters press the game's own number keys through `plugins/luakey.dll`, with a primer key first so the game accepts keyboard input while you're on a controller.
 
-The native plugin (BL4AimFix.dll) hooks the game's light-projectile spawn: player shots start at the muzzle of the first-person gun you see and fly along its barrel.
+The native plugin (BL4AimFix.dll) hooks the game's light-projectile spawn: player shots start at the muzzle of the first-person gun you see and fly along its barrel. Its source is in `source/BL4AimFix` (build paths in its CMakeLists.txt point at local folders and need adjusting).
