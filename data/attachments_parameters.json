@@ -1,0 +1,625 @@
+{
+    "attachmentOffsets": [
+        {
+            "animation": "pistol",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_DAD_PS",
+            "hand_location": [
+                0.0,
+                -0.699999988079071,
+                0.0
+            ],
+            "id": "OakWeapon_SK_DAD_PS",
+            "location": [
+                4.599999904632568,
+                -1.399999976158142,
+                4.099999904632568
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "sights_rotation_offset": [
+                0.0,
+                0.10000000149011612,
+                0.0
+            ],
+            "strip_child_suffix_length": false,
+            "two_handed": false,
+            "use_laser": false,
+            "weight": 0.0
+        },
+        {
+            "animation": "revolver",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_JAK_PS",
+            "hand_location": [
+                1.2000000476837158,
+                0.4000000059604645,
+                2.200000047683716
+            ],
+            "hand_rotation": [
+                -24.100000381469727,
+                -7.5,
+                0.0
+            ],
+            "id": "OakWeapon_SK_JAK_PS",
+            "location": [
+                5.099999904632568,
+                -1.899999976158142,
+                1.600000023841858
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": false,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "daedalus_smg",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_DAD_SM",
+            "hand_location": [
+                -0.6000000238418579,
+                0.0,
+                -0.30000001192092896
+            ],
+            "id": "OakWeapon_SK_DAD_SM",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "vladof_smg",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_VLA_SM",
+            "hand_location": [
+                1.399999976158142,
+                0.10000000149011612,
+                0.5
+            ],
+            "id": "OakWeapon_SK_VLA_SM",
+            "location": [
+                6.099999904632568,
+                -1.399999976158142,
+                4.099999904632568
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "vladof_smg",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_VLA_HW",
+            "id": "HeavyWeaponGadget_SK_VLA_HW",
+            "location": [
+                5.0,
+                -21.700000762939453,
+                4.400000095367432
+            ],
+            "melee": false,
+            "parent": "HeavyWeaponGadget",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": false,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "jakobs_ar",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_JAK_AR",
+            "hand_location": [
+                -1.2999999523162842,
+                0.800000011920929,
+                9.600000381469727
+            ],
+            "hand_rotation": [
+                -39.5,
+                -0.30000001192092896,
+                0.0
+            ],
+            "id": "OakWeapon_SK_JAK_AR",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "jakobs_shotgun",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_JAK_SG",
+            "hand_location": [
+                -1.0,
+                1.2000000476837158,
+                7.800000190734863
+            ],
+            "hand_rotation": [
+                -36.099998474121094,
+                0.30000001192092896,
+                0.0
+            ],
+            "id": "OakWeapon_SK_JAK_SG",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "jakobs_ar",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_DAD_AR",
+            "hand_location": [
+                0.699999988079071,
+                0.30000001192092896,
+                -0.8999999761581421
+            ],
+            "id": "OakWeapon_SK_DAD_AR",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "jakobs_shotgun",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_DAD_SG",
+            "hand_location": [
+                1.899999976158142,
+                0.800000011920929,
+                5.5
+            ],
+            "hand_rotation": [
+                -33.20000076293945,
+                0.0,
+                0.0
+            ],
+            "id": "OakWeapon_SK_DAD_SG",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "maliwan_smg",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_MAL_SM",
+            "hand_location": [
+                0.8999999761581421,
+                0.10000000149011612,
+                3.0999999046325684
+            ],
+            "id": "OakWeapon_SK_MAL_SM",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "maliwan_shotgun",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_MAL_SG",
+            "hand_location": [
+                0.8999999761581421,
+                0.0,
+                4.800000190734863
+            ],
+            "hand_rotation": [
+                -25.899999618530273,
+                0.0,
+                0.0
+            ],
+            "id": "OakWeapon_SK_MAL_SG",
+            "location": [
+                4.699999809265137,
+                -1.399999976158142,
+                4.099999904632568
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "vladof_smg",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_MAL_HW",
+            "hand_location": [
+                0.0,
+                0.699999988079071,
+                0.0
+            ],
+            "hand_rotation": [
+                -21.600000381469727,
+                0.0,
+                0.0
+            ],
+            "id": "HeavyWeaponGadget_SK_MAL_HW",
+            "location": [
+                54.900001525878906,
+                0.4000000059604645,
+                -4.900000095367432
+            ],
+            "melee": false,
+            "parent": "HeavyWeaponGadget",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "vladof_smg",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_VLA_AR",
+            "hand_location": [
+                -1.100000023841858,
+                -0.30000001192092896,
+                -0.5
+            ],
+            "id": "OakWeapon_SK_VLA_AR",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "order_ar",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_ORD_AR",
+            "hand_location": [
+                2.4000000953674316,
+                0.800000011920929,
+                5.900000095367432
+            ],
+            "hand_rotation": [
+                -30.600000381469727,
+                0.0,
+                0.0
+            ],
+            "id": "OakWeapon_SK_ORD_AR",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "order_pistol",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_ORD_PS",
+            "hand_location": [
+                -2.299999952316284,
+                -0.20000000298023224,
+                0.10000000149011612
+            ],
+            "id": "OakWeapon_SK_ORD_PS",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": false,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "maliwan_sniper",
+            "any_child": false,
+            "any_parent": false,
+            "child": "SK_MAL_SR",
+            "hand_location": [
+                2.5,
+                0.4000000059604645,
+                4.400000095367432
+            ],
+            "hand_rotation": [
+                -24.299999237060547,
+                0.0,
+                0.0
+            ],
+            "id": "OakWeapon_SK_MAL_SR",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        }
+    ],
+    "baseOffsets": {
+        "location": [
+            0,
+            0,
+            0
+        ],
+        "rotation": [
+            0,
+            0,
+            0
+        ],
+        "scale": [
+            1,
+            1,
+            1
+        ]
+    },
+    "leftHandOffsets": {
+        "flip_x": false,
+        "flip_y": false,
+        "flip_z": false,
+        "location": [
+            0,
+            0,
+            0
+        ],
+        "rotation": [
+            0,
+            0,
+            0
+        ],
+        "scale": [
+            1,
+            1,
+            1
+        ]
+    }
+}

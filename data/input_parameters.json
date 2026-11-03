@@ -1,0 +1,69 @@
+{
+    "_profileLabels": {
+        "default": "Default"
+    },
+    "_profileState": {
+        "currentEditingProfile": "default"
+    },
+    "default": {
+        "adjustBodyMeshPosition": true,
+        "adjustForAnimation": false,
+        "adjustForEyeOffset": false,
+        "aimCamera": "",
+        "aimMethod": 1,
+        "autoDetectEyeIndices": true,
+        "cameraResetAction": 1,
+        "eyeOffset": 0,
+        "firstStereoViewIndex": 1,
+        "fixSpatialAudio": true,
+        "fixStickDrift": false,
+        "headBoneName": "",
+        "headOffset": {
+            "X": 0,
+            "Y": 0,
+            "Z": 0
+        },
+        "heightBoneConfirmTime": 0.15,
+        "heightBoneEnterThreshold": 30,
+        "heightBoneExitThreshold": 15,
+        "heightBoneFollow": false,
+        "heightBoneName": "",
+        "heightBoneSmoothTime": 0.12,
+        "heightBoneUseThreshold": true,
+        "heightSource": 1,
+        "isDisabledOverride": false,
+        "optimizeBodyLocationCalculations": true,
+        "optimizeBodyRotationCalculations": true,
+        "orientRotationToMovement": 1,
+        "overridePlayerControllerPitch": false,
+        "overridePlayerControllerPitchValue": 0,
+        "overridePlayerControllerRoll": false,
+        "overridePlayerControllerRollValue": 0,
+        "overridePlayerControllerYaw": false,
+        "overridePlayerControllerYawValue": 0,
+        "pawnPositionAnimationScale": 0.2,
+        "pawnPositionMode": 2,
+        "pawnPositionSweepMovement": true,
+        "pawnRotationLockedSmoothTime": 0.0,
+        "pawnRotationMode": 1,
+        "pawnRotationModeDisableInEarlyUpdate": false,
+        "pawnRotationModeDisableRotation": false,
+        "pawnRotationModeUseRootPitchRoll": false,
+        "rootBoneName": "",
+        "rootOffset": {
+            "X": 1.699,
+            "Y": 0.698,
+            "Z": -20.602
+        },
+        "smoothTurnSpeed": 50,
+        "snapAngle": 30,
+        "useControllerDesiredRotation": 1,
+        "useControllerRotationPitch": 1,
+        "useControllerRotationRoll": 1,
+        "useControllerRotationYaw": 1,
+        "usePawnControlRotation": 1,
+        "useRootOffset": true,
+        "useRootOffsetLocalZ": false,
+        "useSnapTurn": false
+    }
+}

@@ -1,0 +1,1707 @@
+{
+    "uevr_attachment_base_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_end_time": 0.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_existing_guid": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_activation_hand": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_attach_type": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_grip_animation": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_grip_priority": "1",
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_id": "",
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_label": "",
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_socket_list": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_socket_name": "",
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_test_left_hand": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_test_right_hand": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_marker_picker": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_picker": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_start_time": 0.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_any_child": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_any_parent": true,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_delete_accessory_override": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_grip_animation": 3,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_hand_position": [
+        0.0,
+        0.699999988079071,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_hand_rotation": [
+        -21.600000381469727,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_is_melee": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_is_scoped": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_is_two_handed": true,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_position": [
+        54.900001525878906,
+        0.4000000059604645,
+        -4.900000095367432
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_brightness": 2.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_deactivate_distance": 50.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_max_fov": 20.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_min_fov": 2.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_show_debug": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_zoom_exponential": 0.5,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_scope_zoom_speed": 1.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_strip_child_suffix_length": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_use_laser": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_weight": 0,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_end_time": 0.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_existing_guid": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_activation_hand": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_attach_type": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_grip_animation": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_grip_priority": "1",
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_id": "",
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_label": "",
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_socket_list": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_socket_name": "",
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_test_left_hand": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_item_test_right_hand": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_marker_picker": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_picker": 1,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_accessory_start_time": 0.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_any_child": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_any_parent": true,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_delete_accessory_override": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_grip_animation": 3,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_hand_position": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_hand_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_is_melee": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_is_scoped": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_is_two_handed": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_position": [
+        5.0,
+        -21.700000762939453,
+        4.400000095367432
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_brightness": 2.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_deactivate_distance": 50.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_max_fov": 20.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_min_fov": 2.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_show_debug": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_zoom_exponential": 0.5,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_scope_zoom_speed": 1.0,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_strip_child_suffix_length": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_use_laser": false,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_weight": 0,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_any_child": false,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_grip_animation": 5,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_hand_position": [
+        0.699999988079071,
+        0.30000001192092896,
+        -0.8999999761581421
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_hand_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_is_two_handed": true,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_position": [
+        4.599999904632568,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_AR_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_weight": 0,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_any_child": false,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_grip_animation": 13,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_hand_position": [
+        0.0,
+        -0.699999988079071,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_hand_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_is_two_handed": false,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_position": [
+        4.599999904632568,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_sights_rotation_offset": [
+        0.10000000149011612,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_PS_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_weight": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_any_child": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_grip_animation": 9,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_hand_position": [
+        1.899999976158142,
+        0.800000011920929,
+        5.5
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_hand_rotation": [
+        -33.20000076293945,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_is_two_handed": true,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_position": [
+        4.599999904632568,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SG_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_weight": 0,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_any_child": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_grip_animation": 10,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_hand_position": [
+        -0.6000000238418579,
+        0.0,
+        -0.30000001192092896
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_hand_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_is_two_handed": true,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_position": [
+        4.599999904632568,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_DAD_SM_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_weight": 0,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_any_child": false,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_grip_animation": 5,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_hand_position": [
+        -1.2999999523162842,
+        0.800000011920929,
+        9.600000381469727
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_hand_rotation": [
+        -39.5,
+        -0.30000001192092896,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_is_two_handed": true,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_position": [
+        4.599999904632568,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_AR_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_weight": 0,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_any_child": false,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_grip_animation": 8,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_hand_position": [
+        1.2000000476837158,
+        0.4000000059604645,
+        2.200000047683716
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_hand_rotation": [
+        -24.100000381469727,
+        -7.5,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_is_two_handed": false,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_position": [
+        5.099999904632568,
+        -1.899999976158142,
+        1.600000023841858
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_PS_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_weight": 0,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_any_child": false,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_grip_animation": 9,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_hand_position": [
+        -1.0,
+        1.2000000476837158,
+        7.800000190734863
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_hand_rotation": [
+        -36.099998474121094,
+        0.30000001192092896,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_is_two_handed": true,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_position": [
+        4.599999904632568,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_JAK_SG_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_weight": 0,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_any_child": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_grip_animation": 4,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_hand_position": [
+        0.8999999761581421,
+        0.0,
+        4.800000190734863
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_hand_rotation": [
+        -25.899999618530273,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_is_two_handed": true,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_position": [
+        4.699999809265137,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SG_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_weight": 0,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_any_child": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_grip_animation": 7,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_hand_position": [
+        0.8999999761581421,
+        0.10000000149011612,
+        3.0999999046325684
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_hand_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_is_two_handed": true,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_position": [
+        4.599999904632568,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SM_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_weight": 0,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_any_child": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_any_parent": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_grip_animation": 11,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_hand_position": [
+        2.5,
+        0.4000000059604645,
+        4.400000095367432
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_hand_rotation": [
+        -24.299999237060547,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_is_two_handed": true,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_position": [
+        4.599999904632568,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_MAL_SR_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_weight": 0,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_any_child": false,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_grip_animation": 6,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_hand_position": [
+        2.4000000953674316,
+        0.800000011920929,
+        5.900000095367432
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_hand_rotation": [
+        -30.600000381469727,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_is_two_handed": true,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_position": [
+        4.599999904632568,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_AR_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_weight": 0,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_any_child": false,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_grip_animation": 12,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_hand_position": [
+        -2.299999952316284,
+        -0.20000000298023224,
+        0.10000000149011612
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_hand_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_is_two_handed": false,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_position": [
+        4.599999904632568,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_ORD_PS_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_weight": 0,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_any_child": false,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_grip_animation": 3,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_hand_position": [
+        -1.100000023841858,
+        -0.30000001192092896,
+        -0.5
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_hand_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_is_two_handed": true,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_position": [
+        4.599999904632568,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_AR_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_weight": 0,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_end_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_existing_guid": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_activation_hand": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_attach_type": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_grip_animation": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_grip_priority": "1",
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_id": "",
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_label": "",
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_socket_list": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_socket_name": "",
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_test_left_hand": false,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_item_test_right_hand": false,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_marker_picker": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_picker": 1,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_accessory_start_time": 0.0,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_any_child": false,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_any_parent": true,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_delete_accessory_override": false,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_grip_animation": 3,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_hand_position": [
+        1.399999976158142,
+        0.10000000149011612,
+        0.5
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_hand_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_is_melee": false,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_is_scoped": false,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_is_two_handed": true,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_position": [
+        6.099999904632568,
+        -1.399999976158142,
+        4.099999904632568
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_brightness": 2.0,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_deactivate_distance": 50.0,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_max_fov": 20.0,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_min_fov": 2.0,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_objective_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_ocular_lens_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_show_debug": false,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_zoom_exponential": 0.5,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_scope_zoom_speed": 1.0,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_OakWeapon_SK_VLA_SM_strip_child_suffix_length": false,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_use_laser": false,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_weight": 0,
+    "uevr_attachments_left_hand_flip_x": false,
+    "uevr_attachments_left_hand_flip_y": false,
+    "uevr_attachments_left_hand_flip_z": false,
+    "uevr_attachments_left_hand_position": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_left_hand_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_left_hand_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_use_left_hand_offsets": false,
+    "use_uevr_attachments_strip_parent_name_numeric_suffix": false
+}

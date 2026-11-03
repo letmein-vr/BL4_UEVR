@@ -1,0 +1,30 @@
+{
+    "currentReticuleID": "_default",
+    "reticuleList": [
+        {
+            "class": "StaticMesh /Engine/EngineMeshes/Sphere.Sphere",
+            "id": "_default",
+            "label": "Default",
+            "options": {
+                "collisionChannel": 0,
+                "ignorePawn": true,
+                "materialName": "Material /Engine/EngineMaterials/Widget3DPassThrough.Widget3DPassThrough",
+                "position_2d": [
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    0.004,
+                    0.004,
+                    0.004
+                ],
+                "scale_2d": [
+                    1.0,
+                    1.0
+                ]
+            },
+            "type": "Mesh"
+        }
+    ],
+    "reticuleTargetMethod": 6
+}

@@ -1,0 +1,4129 @@
+{
+    "animations": {
+        "Shared": {
+            "poses": {
+                "grip_left_weapon": [
+                    [
+                        "left_grip_weapon",
+                        "on"
+                    ],
+                    [
+                        "left_trigger_weapon",
+                        "off"
+                    ]
+                ],
+                "grip_left_weapon_daedalus_smg": [
+                    [
+                        "left_grip_weapon_daedalus_smg",
+                        "on"
+                    ],
+                    [
+                        "left_trigger_weapon_daedalus_smg",
+                        "off"
+                    ]
+                ],
+                "grip_left_weapon_jakobs_ar": [
+                    [
+                        "left_grip_weapon_jakobs_ar",
+                        "on"
+                    ],
+                    [
+                        "left_trigger_weapon_jakobs_ar",
+                        "off"
+                    ]
+                ],
+                "grip_left_weapon_jakobs_shotgun": [
+                    [
+                        "left_grip_weapon_jakobs_shotgun",
+                        "on"
+                    ],
+                    [
+                        "left_trigger_weapon_jakobs_shotgun",
+                        "off"
+                    ]
+                ],
+                "grip_left_weapon_maliwan_shotgun": [
+                    [
+                        "left_grip_weapon_maliwan_shotgun",
+                        "on"
+                    ],
+                    [
+                        "left_trigger_weapon_maliwan_shotgun",
+                        "off"
+                    ]
+                ],
+                "grip_left_weapon_maliwan_smg": [
+                    [
+                        "left_grip_weapon_maliwan_smg",
+                        "on"
+                    ],
+                    [
+                        "left_trigger_weapon_maliwan_smg",
+                        "off"
+                    ]
+                ],
+                "grip_left_weapon_maliwan_sniper": [
+                    [
+                        "left_grip_weapon_maliwan_sniper",
+                        "on"
+                    ],
+                    [
+                        "left_trigger_weapon_maliwan_sniper",
+                        "off"
+                    ]
+                ],
+                "grip_left_weapon_order_ar": [
+                    [
+                        "left_grip_weapon_order_ar",
+                        "on"
+                    ],
+                    [
+                        "left_trigger_weapon_order_ar",
+                        "off"
+                    ]
+                ],
+                "grip_left_weapon_order_pistol": [
+                    [
+                        "left_grip_weapon_order_pistol",
+                        "on"
+                    ],
+                    [
+                        "left_trigger_weapon_order_pistol",
+                        "off"
+                    ]
+                ],
+                "grip_left_weapon_pistol": [
+                    [
+                        "left_grip_weapon_pistol",
+                        "on"
+                    ],
+                    [
+                        "left_trigger_weapon_pistol",
+                        "off"
+                    ]
+                ],
+                "grip_left_weapon_revolver": [
+                    [
+                        "left_grip_weapon_revolver",
+                        "on"
+                    ],
+                    [
+                        "left_trigger_weapon_revolver",
+                        "off"
+                    ]
+                ],
+                "grip_left_weapon_vladof_smg": [
+                    [
+                        "left_grip_weapon_vladof_smg",
+                        "on"
+                    ],
+                    [
+                        "left_trigger_weapon_vladof_smg",
+                        "off"
+                    ]
+                ],
+                "grip_right_weapon": [
+                    [
+                        "right_grip_weapon",
+                        "on"
+                    ],
+                    [
+                        "right_trigger_weapon",
+                        "off"
+                    ]
+                ],
+                "grip_right_weapon_daedalus_smg": [
+                    [
+                        "right_grip_weapon_daedalus_smg",
+                        "on"
+                    ],
+                    [
+                        "right_trigger_weapon_daedalus_smg",
+                        "off"
+                    ]
+                ],
+                "grip_right_weapon_jakobs_ar": [
+                    [
+                        "right_grip_weapon_jakobs_ar",
+                        "on"
+                    ],
+                    [
+                        "right_trigger_weapon_jakobs_ar",
+                        "off"
+                    ]
+                ],
+                "grip_right_weapon_jakobs_shotgun": [
+                    [
+                        "right_grip_weapon_jakobs_shotgun",
+                        "on"
+                    ],
+                    [
+                        "right_trigger_weapon_jakobs_shotgun",
+                        "off"
+                    ]
+                ],
+                "grip_right_weapon_maliwan_shotgun": [
+                    [
+                        "right_grip_weapon_maliwan_shotgun",
+                        "on"
+                    ],
+                    [
+                        "right_trigger_weapon_maliwan_shotgun",
+                        "off"
+                    ]
+                ],
+                "grip_right_weapon_maliwan_smg": [
+                    [
+                        "right_grip_weapon_maliwan_smg",
+                        "on"
+                    ],
+                    [
+                        "right_trigger_weapon_maliwan_smg",
+                        "off"
+                    ]
+                ],
+                "grip_right_weapon_maliwan_sniper": [
+                    [
+                        "right_grip_weapon_maliwan_sniper",
+                        "on"
+                    ],
+                    [
+                        "right_trigger_weapon_maliwan_sniper",
+                        "off"
+                    ]
+                ],
+                "grip_right_weapon_order_ar": [
+                    [
+                        "right_grip_weapon_order_ar",
+                        "on"
+                    ],
+                    [
+                        "right_trigger_weapon_order_ar",
+                        "off"
+                    ]
+                ],
+                "grip_right_weapon_order_pistol": [
+                    [
+                        "right_grip_weapon_order_pistol",
+                        "on"
+                    ],
+                    [
+                        "right_trigger_weapon_order_pistol",
+                        "off"
+                    ]
+                ],
+                "grip_right_weapon_pistol": [
+                    [
+                        "right_grip_weapon_pistol",
+                        "on"
+                    ],
+                    [
+                        "right_trigger_weapon_pistol",
+                        "off"
+                    ]
+                ],
+                "grip_right_weapon_revolver": [
+                    [
+                        "right_grip_weapon_revolver",
+                        "on"
+                    ],
+                    [
+                        "right_trigger_weapon_revolver",
+                        "off"
+                    ]
+                ],
+                "grip_right_weapon_vladof_smg": [
+                    [
+                        "right_grip_weapon_vladof_smg",
+                        "on"
+                    ],
+                    [
+                        "right_trigger_weapon_vladof_smg",
+                        "off"
+                    ]
+                ],
+                "open_left": [
+                    [
+                        "left_grip",
+                        "off"
+                    ],
+                    [
+                        "left_trigger",
+                        "off"
+                    ],
+                    [
+                        "left_thumb",
+                        "off"
+                    ]
+                ],
+                "open_right": [
+                    [
+                        "right_grip",
+                        "off"
+                    ],
+                    [
+                        "right_trigger",
+                        "off"
+                    ],
+                    [
+                        "right_thumb",
+                        "off"
+                    ]
+                ]
+            },
+            "positions": {
+                "left_grip": {
+                    "off": {
+                        "L_Middle_01": [
+                            -1.9286,
+                            -19.272,
+                            4.2242
+                        ],
+                        "L_Middle_02": [
+                            0.0,
+                            -19.6096,
+                            0.0
+                        ],
+                        "L_Middle_03": [
+                            0.0,
+                            -11.3103,
+                            0.0
+                        ],
+                        "L_Pinky_01": [
+                            -0.2738,
+                            -1.8873,
+                            3.2251
+                        ],
+                        "L_Pinky_02": [
+                            0.0,
+                            -17.9334,
+                            0.0
+                        ],
+                        "L_Pinky_03": [
+                            0.0,
+                            -9.0474,
+                            0.0
+                        ],
+                        "L_Ring_01": [
+                            2.0239,
+                            -12.4971,
+                            0.1898
+                        ],
+                        "L_Ring_02": [
+                            0.0,
+                            -19.0593,
+                            0.0
+                        ],
+                        "L_Ring_03": [
+                            0.0,
+                            -7.4966,
+                            0.0
+                        ],
+                        "L_Thumb_01": [
+                            -54.9498,
+                            -21.5896,
+                            87.6772
+                        ],
+                        "L_Thumb_02": [
+                            0.0,
+                            -20.0982,
+                            0.0
+                        ],
+                        "L_Thumb_03": [
+                            0.0,
+                            -2.1569,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "L_Middle_01": [
+                            9.0,
+                            -42.1101,
+                            9.431
+                        ],
+                        "L_Middle_02": [
+                            0.0,
+                            -65.1471,
+                            0.0
+                        ],
+                        "L_Middle_03": [
+                            0.0,
+                            -59.1161,
+                            0.0
+                        ],
+                        "L_Pinky_01": [
+                            20.25,
+                            -42.1101,
+                            9.431
+                        ],
+                        "L_Pinky_02": [
+                            0.0,
+                            -65.1471,
+                            0.0
+                        ],
+                        "L_Pinky_03": [
+                            0.0,
+                            -59.1161,
+                            0.0
+                        ],
+                        "L_Ring_01": [
+                            8.9999,
+                            -42.1101,
+                            9.431
+                        ],
+                        "L_Ring_02": [
+                            0.0,
+                            -65.1471,
+                            0.0
+                        ],
+                        "L_Ring_03": [
+                            0.0,
+                            -59.1161,
+                            0.0
+                        ],
+                        "L_Thumb_01": [
+                            -43.5335,
+                            -17.7242,
+                            99.1869
+                        ],
+                        "L_Thumb_02": [
+                            9.3287,
+                            -14.3907,
+                            -1.1776
+                        ],
+                        "L_Thumb_03": [
+                            0.0,
+                            -43.2609,
+                            0.0
+                        ]
+                    }
+                },
+                "left_grip_weapon": {
+                    "off": {
+                        "L_Middle_01": [
+                            -1.9286,
+                            -19.2719,
+                            4.2243
+                        ],
+                        "L_Middle_02": [
+                            0.0,
+                            -19.6096,
+                            0.0
+                        ],
+                        "L_Middle_03": [
+                            0.0,
+                            -11.3103,
+                            0.0
+                        ],
+                        "L_Pinky_01": [
+                            -0.2738,
+                            -1.8873,
+                            3.2251
+                        ],
+                        "L_Pinky_02": [
+                            0.0,
+                            -17.9334,
+                            0.0
+                        ],
+                        "L_Pinky_03": [
+                            0.0,
+                            -9.0474,
+                            0.0
+                        ],
+                        "L_Ring_01": [
+                            2.0239,
+                            -12.4971,
+                            0.1899
+                        ],
+                        "L_Ring_02": [
+                            0.0,
+                            -19.0593,
+                            0.0
+                        ],
+                        "L_Ring_03": [
+                            0.0,
+                            -7.4966,
+                            0.0
+                        ],
+                        "L_Thumb_01": [
+                            -54.9498,
+                            -21.5896,
+                            87.6773
+                        ],
+                        "L_Thumb_02": [
+                            0.0,
+                            -20.0982,
+                            0.0
+                        ],
+                        "L_Thumb_03": [
+                            0.0,
+                            -2.1569,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "L_Middle_01": [
+                            -1.9286,
+                            -19.2719,
+                            4.2243
+                        ],
+                        "L_Middle_02": [
+                            0.0,
+                            -19.6096,
+                            0.0
+                        ],
+                        "L_Middle_03": [
+                            0.0,
+                            -11.3103,
+                            0.0
+                        ],
+                        "L_Pinky_01": [
+                            -0.2738,
+                            -1.8873,
+                            3.2251
+                        ],
+                        "L_Pinky_02": [
+                            0.0,
+                            -17.9334,
+                            0.0
+                        ],
+                        "L_Pinky_03": [
+                            0.0,
+                            -9.0474,
+                            0.0
+                        ],
+                        "L_Ring_01": [
+                            2.0239,
+                            -12.4971,
+                            0.1899
+                        ],
+                        "L_Ring_02": [
+                            0.0,
+                            -19.0593,
+                            0.0
+                        ],
+                        "L_Ring_03": [
+                            0.0,
+                            -7.4966,
+                            0.0
+                        ],
+                        "L_Thumb_01": [
+                            -54.9498,
+                            -21.5896,
+                            87.6773
+                        ],
+                        "L_Thumb_02": [
+                            0.0,
+                            -20.0982,
+                            0.0
+                        ],
+                        "L_Thumb_03": [
+                            0.0,
+                            -2.1569,
+                            0.0
+                        ]
+                    }
+                },
+                "left_thumb": {
+                    "off": {
+                        "L_Thumb_01": [
+                            -54.9498,
+                            -21.5896,
+                            87.6773
+                        ],
+                        "L_Thumb_02": [
+                            0.0,
+                            -20.0982,
+                            0.0
+                        ],
+                        "L_Thumb_03": [
+                            0.0,
+                            -2.1569,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "L_Thumb_01": [
+                            -34.8751,
+                            -21.5901,
+                            87.6772
+                        ],
+                        "L_Thumb_02": [
+                            -1.125,
+                            -48.223,
+                            0.0
+                        ],
+                        "L_Thumb_03": [
+                            0.0,
+                            -42.6571,
+                            0.0
+                        ]
+                    }
+                },
+                "left_trigger": {
+                    "off": {
+                        "L_Index_01": [
+                            -11.4809,
+                            -19.2802,
+                            8.4384
+                        ],
+                        "L_Index_02": [
+                            0.0,
+                            -14.6289,
+                            0.0
+                        ],
+                        "L_Index_03": [
+                            0.0,
+                            -8.0,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "L_Index_01": [
+                            0.8939,
+                            -46.1251,
+                            8.4384
+                        ],
+                        "L_Index_02": [
+                            0.0,
+                            -56.2541,
+                            0.0
+                        ],
+                        "L_Index_03": [
+                            0.0,
+                            -63.1251,
+                            0.0
+                        ]
+                    }
+                },
+                "left_trigger_weapon": {
+                    "off": {
+                        "L_Index_01": [
+                            -11.4809,
+                            -19.2802,
+                            8.4384
+                        ],
+                        "L_Index_02": [
+                            0.0,
+                            -14.6289,
+                            0.0
+                        ],
+                        "L_Index_03": [
+                            0.0,
+                            -8.0,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "L_Index_01": [
+                            -11.4809,
+                            -19.2802,
+                            8.4384
+                        ],
+                        "L_Index_02": [
+                            0.0,
+                            -14.6289,
+                            0.0
+                        ],
+                        "L_Index_03": [
+                            0.0,
+                            -8.0,
+                            0.0
+                        ]
+                    }
+                },
+                "right_grip": {
+                    "off": {
+                        "R_Middle_01": [
+                            1.9335,
+                            -19.272,
+                            -4.2252
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -19.6096,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -11.3103,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            0.2735,
+                            -1.8868,
+                            -3.2254
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -17.9334,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -9.0474,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -2.0243,
+                            -12.4967,
+                            -0.1903
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -19.0593,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -7.4966,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            54.9546,
+                            -21.5912,
+                            -87.6792
+                        ],
+                        "R_Thumb_02": [
+                            0.0,
+                            -20.0982,
+                            0.0
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -2.1569,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            1.9335,
+                            -19.272,
+                            -4.2252
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -19.6096,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -11.3103,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            0.2735,
+                            -1.8868,
+                            -3.2254
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -17.9334,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -9.0474,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -2.0243,
+                            -12.4967,
+                            -0.1903
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -19.0593,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -7.4966,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            54.9546,
+                            -21.5912,
+                            -87.6792
+                        ],
+                        "R_Thumb_02": [
+                            0.0,
+                            -20.0982,
+                            0.0
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -2.1569,
+                            0.0
+                        ]
+                    }
+                },
+                "right_grip_weapon": {
+                    "off": {
+                        "R_Middle_01": [
+                            1.9335,
+                            -19.272,
+                            -4.2253
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -19.6096,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -11.3103,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            0.2734,
+                            -1.8869,
+                            -3.2254
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -17.9334,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -9.0474,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -2.0243,
+                            -12.4967,
+                            -0.1903
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -19.0593,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -7.4966,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            54.9546,
+                            -21.5912,
+                            -87.6792
+                        ],
+                        "R_Thumb_02": [
+                            0.0,
+                            -20.0982,
+                            0.0
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -2.1569,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            1.9335,
+                            -19.272,
+                            -4.2253
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -19.6096,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -11.3103,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            0.2734,
+                            -1.8869,
+                            -3.2254
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -17.9334,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -9.0474,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -2.0243,
+                            -12.4967,
+                            -0.1903
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -19.0593,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -7.4966,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            54.9546,
+                            -21.5912,
+                            -87.6792
+                        ],
+                        "R_Thumb_02": [
+                            0.0,
+                            -20.0982,
+                            0.0
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -2.1569,
+                            0.0
+                        ]
+                    }
+                },
+                "right_grip_weapon_daedalus_smg": {
+                    "off": {
+                        "R_Middle_01": [
+                            -19.2449,
+                            -45.755,
+                            10.6633
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -67.8005,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -57.0659,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            -13.8116,
+                            -34.1958,
+                            10.8832
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -64.8039,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -38.2176,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -10.55,
+                            -45.5969,
+                            16.1795
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -60.2617,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -53.9426,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            18.1718,
+                            -51.7183,
+                            -149.2368
+                        ],
+                        "R_Thumb_02": [
+                            -6.1109,
+                            -27.5813,
+                            1.6478
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -41.837,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            -19.2449,
+                            -45.755,
+                            10.6633
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -67.8005,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -57.0659,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            -13.8116,
+                            -34.1958,
+                            10.8832
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -64.8039,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -38.2176,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -10.55,
+                            -45.5969,
+                            16.1795
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -60.2617,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -53.9426,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            18.1718,
+                            -51.7183,
+                            -149.2368
+                        ],
+                        "R_Thumb_02": [
+                            -6.1109,
+                            -27.5813,
+                            1.6478
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -41.837,
+                            0.0
+                        ]
+                    }
+                },
+                "right_grip_weapon_jakobs_ar": {
+                    "off": {
+                        "R_Middle_01": [
+                            -10.1291,
+                            -47.7084,
+                            11.7545
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -64.8782,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -47.158,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            5.1734,
+                            -50.9047,
+                            3.057
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -40.4218,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -21.7718,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -0.0645,
+                            -48.2407,
+                            14.2875
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -50.0791,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -43.0463,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            25.1543,
+                            -71.4143,
+                            -160.8133
+                        ],
+                        "R_Thumb_02": [
+                            -4.3782,
+                            -27.8602,
+                            1.0869
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -52.392,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            -10.1291,
+                            -47.7084,
+                            11.7545
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -64.8782,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -47.158,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            5.1734,
+                            -50.9047,
+                            3.057
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -40.4218,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -21.7718,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -0.0645,
+                            -48.2407,
+                            14.2875
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -50.0791,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -43.0463,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            25.1543,
+                            -71.4143,
+                            -160.8133
+                        ],
+                        "R_Thumb_02": [
+                            -4.3782,
+                            -27.8602,
+                            1.0869
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -52.392,
+                            0.0
+                        ]
+                    }
+                },
+                "right_grip_weapon_jakobs_shotgun": {
+                    "off": {
+                        "R_Middle_01": [
+                            -6.6248,
+                            -53.2526,
+                            8.5078
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -66.6762,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -45.4135,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            5.307,
+                            -53.9778,
+                            5.9818
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -49.2768,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -22.1179,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            1.2697,
+                            -53.4867,
+                            14.2322
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -53.0096,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -42.8565,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            21.4381,
+                            -61.1635,
+                            -168.2176
+                        ],
+                        "R_Thumb_02": [
+                            -4.4636,
+                            -22.2264,
+                            0.6522
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -44.0888,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            -6.6248,
+                            -53.2526,
+                            8.5078
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -66.6762,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -45.4135,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            5.307,
+                            -53.9778,
+                            5.9818
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -49.2768,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -22.1179,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            1.2697,
+                            -53.4867,
+                            14.2322
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -53.0096,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -42.8565,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            21.4381,
+                            -61.1635,
+                            -168.2176
+                        ],
+                        "R_Thumb_02": [
+                            -4.4636,
+                            -22.2264,
+                            0.6522
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -44.0888,
+                            0.0
+                        ]
+                    }
+                },
+                "right_grip_weapon_maliwan_shotgun": {
+                    "off": {
+                        "R_Middle_01": [
+                            -11.5054,
+                            -53.1635,
+                            -13.2014
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -64.1668,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -45.322,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            13.0081,
+                            -29.9465,
+                            -20.0062
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -59.5094,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            4.204,
+                            -39.9592,
+                            0.219
+                        ],
+                        "R_Ring_01": [
+                            1.0151,
+                            -45.8209,
+                            -5.8962
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -46.164,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            -0.1414,
+                            -52.5812,
+                            -0.3537
+                        ],
+                        "R_Thumb_01": [
+                            20.184,
+                            -63.4099,
+                            -150.4476
+                        ],
+                        "R_Thumb_02": [
+                            -4.9919,
+                            -29.2548,
+                            -0.286
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -46.7087,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            -11.5054,
+                            -53.1635,
+                            -13.2014
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -64.1668,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -45.322,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            13.0081,
+                            -29.9465,
+                            -20.0062
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -59.5094,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            4.204,
+                            -39.9592,
+                            0.219
+                        ],
+                        "R_Ring_01": [
+                            1.0151,
+                            -45.8209,
+                            -5.8962
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -46.164,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            -0.1414,
+                            -52.5812,
+                            -0.3537
+                        ],
+                        "R_Thumb_01": [
+                            20.184,
+                            -63.4099,
+                            -150.4476
+                        ],
+                        "R_Thumb_02": [
+                            -4.9919,
+                            -29.2548,
+                            -0.286
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -46.7087,
+                            0.0
+                        ]
+                    }
+                },
+                "right_grip_weapon_maliwan_smg": {
+                    "off": {
+                        "R_Middle_01": [
+                            -6.0926,
+                            -15.7766,
+                            0.6716
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -77.3792,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -29.4156,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            -2.5348,
+                            -66.7237,
+                            8.1922
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -46.7605,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -22.8592,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -6.8339,
+                            -59.0127,
+                            17.8667
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -52.4342,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -39.8515,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            9.5621,
+                            -52.9377,
+                            -151.0125
+                        ],
+                        "R_Thumb_02": [
+                            -4.4311,
+                            -24.6001,
+                            0.835
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -39.6268,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            -6.0926,
+                            -15.7766,
+                            0.6716
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -77.3792,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -29.4156,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            -2.5348,
+                            -66.7237,
+                            8.1922
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -46.7605,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -22.8592,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -6.8339,
+                            -59.0127,
+                            17.8667
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -52.4342,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -39.8515,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            9.5621,
+                            -52.9377,
+                            -151.0125
+                        ],
+                        "R_Thumb_02": [
+                            -4.4311,
+                            -24.6001,
+                            0.835
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -39.6268,
+                            0.0
+                        ]
+                    }
+                },
+                "right_grip_weapon_maliwan_sniper": {
+                    "off": {
+                        "R_Middle_01": [
+                            -6.1544,
+                            -56.3525,
+                            8.8528
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -69.7926,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -48.5298,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            5.6238,
+                            -57.0922,
+                            5.6851
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -46.6006,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -25.2343,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            2.0337,
+                            -56.5092,
+                            14.1451
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -56.126,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -45.9729,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            18.6115,
+                            -59.2053,
+                            -167.4971
+                        ],
+                        "R_Thumb_02": [
+                            -4.1878,
+                            -35.7629,
+                            1.678
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -35.1534,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            -6.1544,
+                            -56.3525,
+                            8.8528
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -69.7926,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -48.5298,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            5.6238,
+                            -57.0922,
+                            5.6851
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -46.6006,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -25.2343,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            2.0337,
+                            -56.5092,
+                            14.1451
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -56.126,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -45.9729,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            18.6115,
+                            -59.2052,
+                            -167.4971
+                        ],
+                        "R_Thumb_02": [
+                            -4.1878,
+                            -35.7629,
+                            1.678
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -35.1534,
+                            0.0
+                        ]
+                    }
+                },
+                "right_grip_weapon_order_ar": {
+                    "off": {
+                        "R_Middle_01": [
+                            -7.9959,
+                            -54.225,
+                            10.5224
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -63.1018,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -57.3676,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            5.8132,
+                            -54.7702,
+                            1.1079
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -37.4777,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -30.2752,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            0.3044,
+                            -52.0555,
+                            13.0935
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -43.7966,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -51.7674,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            14.3696,
+                            -68.9589,
+                            -156.4502
+                        ],
+                        "R_Thumb_02": [
+                            -5.0,
+                            -32.537,
+                            0.0
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -39.4599,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            -7.9959,
+                            -54.225,
+                            10.5224
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -63.1018,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -57.3676,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            5.8132,
+                            -54.7702,
+                            1.1079
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -37.4777,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -30.2752,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            0.3044,
+                            -52.0555,
+                            13.0935
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -43.7966,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -51.7674,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            14.3696,
+                            -68.9589,
+                            -156.4502
+                        ],
+                        "R_Thumb_02": [
+                            -5.0,
+                            -32.537,
+                            0.0
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -39.4599,
+                            0.0
+                        ]
+                    }
+                },
+                "right_grip_weapon_order_pistol": {
+                    "off": {
+                        "R_Middle_01": [
+                            -14.09,
+                            -34.1326,
+                            4.2161
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -64.391,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -51.7948,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            2.7902,
+                            -26.6287,
+                            -1.5544
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -46.1991,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -41.8477,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -9.4236,
+                            -30.5537,
+                            11.9986
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -52.7753,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -57.3182,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            19.0764,
+                            -57.9227,
+                            -152.7542
+                        ],
+                        "R_Thumb_02": [
+                            3.1376,
+                            -21.4068,
+                            2.2975
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -35.9179,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            -14.09,
+                            -34.1326,
+                            4.2161
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -64.391,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -51.7948,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            2.7902,
+                            -26.6287,
+                            -1.5544
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -46.1991,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -41.8477,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -9.4236,
+                            -30.5537,
+                            11.9986
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -52.7753,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -57.3182,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            19.0764,
+                            -57.9227,
+                            -152.7542
+                        ],
+                        "R_Thumb_02": [
+                            3.1376,
+                            -21.4068,
+                            2.2975
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -35.9179,
+                            0.0
+                        ]
+                    }
+                },
+                "right_grip_weapon_pistol": {
+                    "off": {
+                        "R_Middle_01": [
+                            -17.0867,
+                            -22.137,
+                            -3.4141
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -66.4467,
+                            -8.4879
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -69.6699,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            4.7285,
+                            -20.8973,
+                            -5.6906
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -51.7598,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -65.1054,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -5.5185,
+                            -21.1156,
+                            1.616
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -57.0306,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -70.6654,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            25.6461,
+                            -58.6175,
+                            -157.6209
+                        ],
+                        "R_Thumb_02": [
+                            0.0481,
+                            -50.0382,
+                            -0.0225
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -21.8753,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            -17.0867,
+                            -22.137,
+                            -3.4141
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -66.4467,
+                            -8.4879
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -69.6699,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            4.7285,
+                            -20.8973,
+                            -5.6906
+                        ],
+                        "R_Pinky_02": [
+                            0.0,
+                            -51.7598,
+                            0.0
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -65.1054,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -5.5185,
+                            -21.1156,
+                            1.616
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -57.0306,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -70.6654,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            25.6461,
+                            -58.6175,
+                            -157.6209
+                        ],
+                        "R_Thumb_02": [
+                            0.0481,
+                            -50.0382,
+                            -0.0225
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -21.8753,
+                            0.0
+                        ]
+                    }
+                },
+                "right_grip_weapon_revolver": {
+                    "off": {
+                        "R_Middle_01": [
+                            -17.6973,
+                            -70.1646,
+                            -2.6339
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -54.4456,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -46.1463,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            -5.1477,
+                            -48.7416,
+                            -11.5365
+                        ],
+                        "R_Pinky_02": [
+                            3.0704,
+                            -45.175,
+                            -5.3688
+                        ],
+                        "R_Pinky_03": [
+                            -4.4404,
+                            -27.15,
+                            -0.7696
+                        ],
+                        "R_Ring_01": [
+                            -9.3158,
+                            -66.8341,
+                            -0.7602
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -38.3191,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -42.3326,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            32.4532,
+                            -44.6864,
+                            -131.4749
+                        ],
+                        "R_Thumb_02": [
+                            26.2683,
+                            -29.8262,
+                            -5.7275
+                        ],
+                        "R_Thumb_03": [
+                            -12.0785,
+                            -53.6079,
+                            -4.3944
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            -17.6973,
+                            -70.1646,
+                            -2.6339
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -54.4456,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -46.1463,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            -5.1477,
+                            -48.7416,
+                            -11.5365
+                        ],
+                        "R_Pinky_02": [
+                            3.0704,
+                            -45.175,
+                            -5.3688
+                        ],
+                        "R_Pinky_03": [
+                            -4.4404,
+                            -27.15,
+                            -0.7696
+                        ],
+                        "R_Ring_01": [
+                            -9.3158,
+                            -66.8341,
+                            -0.7602
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -38.3191,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -42.3326,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            32.4532,
+                            -44.6864,
+                            -131.4749
+                        ],
+                        "R_Thumb_02": [
+                            26.2683,
+                            -29.8262,
+                            -5.7275
+                        ],
+                        "R_Thumb_03": [
+                            -12.0785,
+                            -53.6079,
+                            -4.3944
+                        ]
+                    }
+                },
+                "right_grip_weapon_vladof_smg": {
+                    "off": {
+                        "R_Middle_01": [
+                            -18.0981,
+                            -44.5221,
+                            10.2333
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -74.1516,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -45.9405,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            -8.4713,
+                            -46.6848,
+                            10.568
+                        ],
+                        "R_Pinky_02": [
+                            -1.1429,
+                            -63.7621,
+                            -9.9735
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -22.6795,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -8.0962,
+                            -49.6078,
+                            16.5951
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -58.5608,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -45.9768,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            23.0239,
+                            -46.9805,
+                            -148.0836
+                        ],
+                        "R_Thumb_02": [
+                            -4.3743,
+                            -27.8627,
+                            1.0857
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -42.8812,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Middle_01": [
+                            -18.0981,
+                            -44.5221,
+                            10.2333
+                        ],
+                        "R_Middle_02": [
+                            0.0,
+                            -74.1516,
+                            0.0
+                        ],
+                        "R_Middle_03": [
+                            0.0,
+                            -45.9405,
+                            0.0
+                        ],
+                        "R_Pinky_01": [
+                            -8.4713,
+                            -46.6848,
+                            10.568
+                        ],
+                        "R_Pinky_02": [
+                            -1.1429,
+                            -63.7621,
+                            -9.9735
+                        ],
+                        "R_Pinky_03": [
+                            0.0,
+                            -22.6795,
+                            0.0
+                        ],
+                        "R_Ring_01": [
+                            -8.0962,
+                            -49.6078,
+                            16.5951
+                        ],
+                        "R_Ring_02": [
+                            0.0,
+                            -58.5608,
+                            0.0
+                        ],
+                        "R_Ring_03": [
+                            0.0,
+                            -45.9768,
+                            0.0
+                        ],
+                        "R_Thumb_01": [
+                            23.0239,
+                            -46.9805,
+                            -148.0836
+                        ],
+                        "R_Thumb_02": [
+                            -4.3743,
+                            -27.8627,
+                            1.0857
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -42.8812,
+                            0.0
+                        ]
+                    }
+                },
+                "right_thumb": {
+                    "off": {
+                        "R_Thumb_01": [
+                            54.9546,
+                            -21.5912,
+                            -87.6792
+                        ],
+                        "R_Thumb_02": [
+                            0.0,
+                            -20.0982,
+                            0.0
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -2.1569,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Thumb_01": [
+                            54.9546,
+                            -21.5912,
+                            -87.6792
+                        ],
+                        "R_Thumb_02": [
+                            0.0,
+                            -20.0982,
+                            0.0
+                        ],
+                        "R_Thumb_03": [
+                            0.0,
+                            -2.1569,
+                            0.0
+                        ]
+                    }
+                },
+                "right_trigger": {
+                    "off": {
+                        "R_Index_01": [
+                            11.4858,
+                            -19.2805,
+                            -8.4393
+                        ],
+                        "R_Index_02": [
+                            0.0,
+                            -14.6289,
+                            0.0
+                        ],
+                        "R_Index_03": [
+                            0.0,
+                            -8.0,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            11.4858,
+                            -19.2805,
+                            -8.4393
+                        ],
+                        "R_Index_02": [
+                            0.0,
+                            -14.6289,
+                            0.0
+                        ],
+                        "R_Index_03": [
+                            0.0,
+                            -8.0,
+                            0.0
+                        ]
+                    }
+                },
+                "right_trigger_weapon": {
+                    "off": {
+                        "R_Index_01": [
+                            11.4858,
+                            -19.2805,
+                            -8.4393
+                        ],
+                        "R_Index_02": [
+                            0.0,
+                            -14.6289,
+                            0.0
+                        ],
+                        "R_Index_03": [
+                            0.0,
+                            -8.0,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            11.4858,
+                            -19.2805,
+                            -8.4393
+                        ],
+                        "R_Index_02": [
+                            0.0,
+                            -14.6289,
+                            0.0
+                        ],
+                        "R_Index_03": [
+                            0.0,
+                            -8.0,
+                            0.0
+                        ]
+                    }
+                },
+                "right_trigger_weapon_daedalus_smg": {
+                    "off": {
+                        "R_Index_01": [
+                            9.4402,
+                            5.5131,
+                            -1.8266
+                        ],
+                        "R_Index_02": [
+                            -0.3773,
+                            -32.8268,
+                            0.9937
+                        ],
+                        "R_Index_03": [
+                            -0.4139,
+                            -47.5735,
+                            0.979
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            9.4402,
+                            5.5131,
+                            -1.8266
+                        ],
+                        "R_Index_02": [
+                            -0.3773,
+                            -78.75,
+                            0.9937
+                        ],
+                        "R_Index_03": [
+                            -0.4139,
+                            -47.5735,
+                            0.979
+                        ]
+                    }
+                },
+                "right_trigger_weapon_jakobs_ar": {
+                    "off": {
+                        "R_Index_01": [
+                            6.9982,
+                            -5.8131,
+                            -5.6297
+                        ],
+                        "R_Index_02": [
+                            0.0,
+                            -14.6289,
+                            0.0
+                        ],
+                        "R_Index_03": [
+                            0.0,
+                            -20.7257,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            6.9982,
+                            -5.8131,
+                            -5.6297
+                        ],
+                        "R_Index_02": [
+                            0.0,
+                            -73.129,
+                            0.0
+                        ],
+                        "R_Index_03": [
+                            0.0,
+                            -20.7257,
+                            0.0
+                        ]
+                    }
+                },
+                "right_trigger_weapon_jakobs_shotgun": {
+                    "off": {
+                        "R_Index_01": [
+                            6.9242,
+                            -7.3238,
+                            -3.7912
+                        ],
+                        "R_Index_02": [
+                            0.0,
+                            -14.6289,
+                            0.0
+                        ],
+                        "R_Index_03": [
+                            0.0,
+                            -43.5907,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            6.9242,
+                            -7.3238,
+                            -3.7912
+                        ],
+                        "R_Index_02": [
+                            0.0,
+                            -60.7541,
+                            0.0
+                        ],
+                        "R_Index_03": [
+                            0.0,
+                            -43.5907,
+                            0.0
+                        ]
+                    }
+                },
+                "right_trigger_weapon_maliwan_shotgun": {
+                    "off": {
+                        "R_Index_01": [
+                            8.186,
+                            -16.6388,
+                            -6.3845
+                        ],
+                        "R_Index_02": [
+                            -1.4539,
+                            -22.2556,
+                            0.2511
+                        ],
+                        "R_Index_03": [
+                            -0.6186,
+                            -42.2288,
+                            0.8644
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            8.186,
+                            -16.6388,
+                            -6.3845
+                        ],
+                        "R_Index_02": [
+                            -1.4539,
+                            -67.256,
+                            0.2511
+                        ],
+                        "R_Index_03": [
+                            -0.6186,
+                            -42.2288,
+                            0.8644
+                        ]
+                    }
+                },
+                "right_trigger_weapon_maliwan_smg": {
+                    "off": {
+                        "R_Index_01": [
+                            -1.0684,
+                            -13.4348,
+                            -9.7342
+                        ],
+                        "R_Index_02": [
+                            0.0,
+                            -48.8609,
+                            0.0
+                        ],
+                        "R_Index_03": [
+                            0.0,
+                            -37.9454,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            -1.0684,
+                            -13.4348,
+                            -9.7342
+                        ],
+                        "R_Index_02": [
+                            0.0,
+                            -92.2501,
+                            0.0
+                        ],
+                        "R_Index_03": [
+                            0.0,
+                            -37.9454,
+                            0.0
+                        ]
+                    }
+                },
+                "right_trigger_weapon_maliwan_sniper": {
+                    "off": {
+                        "R_Index_01": [
+                            9.4526,
+                            -5.3012,
+                            -4.9233
+                        ],
+                        "R_Index_02": [
+                            0.2074,
+                            -47.5824,
+                            1.3597
+                        ],
+                        "R_Index_03": [
+                            0.3872,
+                            -67.7462,
+                            0.8649
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            9.4526,
+                            -5.3012,
+                            -4.9233
+                        ],
+                        "R_Index_02": [
+                            0.2074,
+                            -71.2071,
+                            1.3597
+                        ],
+                        "R_Index_03": [
+                            0.3872,
+                            -67.7462,
+                            0.8649
+                        ]
+                    }
+                },
+                "right_trigger_weapon_order_ar": {
+                    "off": {
+                        "R_Index_01": [
+                            21.8229,
+                            -12.9737,
+                            -7.2347
+                        ],
+                        "R_Index_02": [
+                            -0.09,
+                            -47.3659,
+                            1.0591
+                        ],
+                        "R_Index_03": [
+                            -0.0287,
+                            -67.9773,
+                            1.0625
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            21.8229,
+                            -12.9737,
+                            -7.2347
+                        ],
+                        "R_Index_02": [
+                            -0.09,
+                            -78.866,
+                            1.0591
+                        ],
+                        "R_Index_03": [
+                            -0.0287,
+                            -67.9773,
+                            1.0625
+                        ]
+                    }
+                },
+                "right_trigger_weapon_order_pistol": {
+                    "off": {
+                        "R_Index_01": [
+                            6.9144,
+                            -4.3248,
+                            -3.2411
+                        ],
+                        "R_Index_02": [
+                            -0.5929,
+                            -19.7339,
+                            0.8822
+                        ],
+                        "R_Index_03": [
+                            -0.7069,
+                            -28.8263,
+                            0.7938
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            6.9144,
+                            -4.3248,
+                            -3.2411
+                        ],
+                        "R_Index_02": [
+                            -0.5929,
+                            -68.1091,
+                            0.8822
+                        ],
+                        "R_Index_03": [
+                            -0.7069,
+                            -28.8263,
+                            0.7938
+                        ]
+                    }
+                },
+                "right_trigger_weapon_pistol": {
+                    "off": {
+                        "R_Index_01": [
+                            13.2475,
+                            -10.3372,
+                            -7.501
+                        ],
+                        "R_Index_02": [
+                            0.3366,
+                            -72.1548,
+                            1.0082
+                        ],
+                        "R_Index_03": [
+                            -0.2264,
+                            -58.1871,
+                            1.0385
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            12.1219,
+                            -38.4621,
+                            -7.501
+                        ],
+                        "R_Index_02": [
+                            0.3366,
+                            -72.1549,
+                            1.0082
+                        ],
+                        "R_Index_03": [
+                            -0.2265,
+                            -58.1871,
+                            1.0384
+                        ]
+                    }
+                },
+                "right_trigger_weapon_revolver": {
+                    "off": {
+                        "R_Index_01": [
+                            15.5966,
+                            3.4027,
+                            -8.481
+                        ],
+                        "R_Index_02": [
+                            2.6569,
+                            -43.3506,
+                            1.2962
+                        ],
+                        "R_Index_03": [
+                            0.0,
+                            -37.9105,
+                            0.0
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            15.5966,
+                            3.4027,
+                            -8.481
+                        ],
+                        "R_Index_02": [
+                            2.6569,
+                            -79.875,
+                            1.2962
+                        ],
+                        "R_Index_03": [
+                            0.0,
+                            -37.9105,
+                            0.0
+                        ]
+                    }
+                },
+                "right_trigger_weapon_vladof_smg": {
+                    "off": {
+                        "R_Index_01": [
+                            7.7135,
+                            2.8766,
+                            -2.3427
+                        ],
+                        "R_Index_02": [
+                            -0.4151,
+                            -30.6491,
+                            0.9785
+                        ],
+                        "R_Index_03": [
+                            -0.6887,
+                            -30.1152,
+                            0.8097
+                        ]
+                    },
+                    "on": {
+                        "R_Index_01": [
+                            7.7135,
+                            2.8766,
+                            -2.3427
+                        ],
+                        "R_Index_02": [
+                            -0.4151,
+                            -73.3991,
+                            0.9785
+                        ],
+                        "R_Index_03": [
+                            -0.6887,
+                            -30.1152,
+                            0.8097
+                        ]
+                    }
+                }
+            }
+        }
+    },
+    "attachments": {
+        "daedalus_smg": {
+            "label": "Daedalus SMG"
+        },
+        "jakobs_ar": {
+            "label": "Jakobs AR"
+        },
+        "jakobs_shotgun": {
+            "label": "Jakobs Shotgun"
+        },
+        "maliwan_shotgun": {
+            "label": "Maliwan Shotgun"
+        },
+        "maliwan_smg": {
+            "label": "Maliwan SMG"
+        },
+        "maliwan_sniper": {
+            "label": "Maliwan Sniper"
+        },
+        "order_ar": {
+            "label": "Order AR"
+        },
+        "order_pistol": {
+            "label": "Order Pistol"
+        },
+        "pistol": {
+            "label": "Pistol"
+        },
+        "revolver": {
+            "label": "Revolver"
+        },
+        "vladof_smg": {
+            "label": "Vladof SMG"
+        }
+    },
+    "profiles": {
+        "Main": {
+            "Arms": {
+                "FOV": "",
+                "IgnoreRelativeOffset": true,
+                "InitialTransform": {
+                    "left_hand": {
+                        "L_Drone_Object": {
+                            "location": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                -8.945310041616158e-15,
+                                3.816665617756221e-14,
+                                4.452776554048924e-14
+                            ]
+                        },
+                        "L_GravGun_Console_Button01": {
+                            "location": [
+                                2.6979403495715815,
+                                8.116390228256932,
+                                17.74960517884756
+                            ],
+                            "rotation": [
+                                39.72148895263675,
+                                148.86975097656253,
+                                -95.38578033447268
+                            ]
+                        },
+                        "L_GravGun_Console_Button02": {
+                            "location": [
+                                1.5081229209899902,
+                                8.59419250486826,
+                                16.187177658095607
+                            ],
+                            "rotation": [
+                                39.72148895263675,
+                                148.86975097656253,
+                                -95.38578033447268
+                            ]
+                        },
+                        "L_GravGun_Console_DPad": {
+                            "location": [
+                                3.3810155391765875,
+                                10.754485130295507,
+                                16.74557113648916
+                            ],
+                            "rotation": [
+                                39.721496582031286,
+                                148.86984252929688,
+                                -95.3852157592774
+                            ]
+                        },
+                        "L_GravGun_Grip": {
+                            "location": [
+                                61.64699172976543,
+                                -81.4942321777562,
+                                28.479236602783203
+                            ],
+                            "rotation": [
+                                -53.28054428100591,
+                                -37.80463409423834,
+                                169.35760498046878
+                            ]
+                        },
+                        "L_GravGun_Grip_Cable01": {
+                            "location": [
+                                8.633775711052294,
+                                0.1490325927734375,
+                                14.697398185744532
+                            ],
+                            "rotation": [
+                                23.46306228637698,
+                                -6.7896189513565555e-15,
+                                -1.4099596569944827e-15
+                            ]
+                        },
+                        "L_GravGun_Grip_Cable02": {
+                            "location": [
+                                5.776580333693346,
+                                0.0,
+                                -1.4551915228366852e-11
+                            ],
+                            "rotation": [
+                                3.1805546814635168e-15,
+                                -6.361109362927035e-15,
+                                -6.361109362927035e-15
+                            ]
+                        },
+                        "L_GravGun_Grip_Cable03": {
+                            "location": [
+                                6.854382991808961,
+                                -1.4551915228366852e-11,
+                                -1.4551915228366852e-11
+                            ],
+                            "rotation": [
+                                0.14039349555968758,
+                                -0.3789885342121235,
+                                0.00044712927775479176
+                            ]
+                        },
+                        "L_GravGun_Grip_Cable04": {
+                            "location": [
+                                9.091755866998938,
+                                -1.4551915228366852e-11,
+                                0.0
+                            ],
+                            "rotation": [
+                                3.1805546814635187e-15,
+                                1.272221872585407e-14,
+                                -1.272221872585407e-14
+                            ]
+                        },
+                        "L_GravGun_Grip_Cable05": {
+                            "location": [
+                                8.753345489503772,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                -0.20792050659654351,
+                                1.4746775627136295,
+                                5.0845341176740195e-12
+                            ]
+                        },
+                        "L_GravGun_Grip_FrontButton": {
+                            "location": [
+                                -2.2171835899498546,
+                                -0.024463653564453125,
+                                12.258118629455566
+                            ],
+                            "rotation": [
+                                34.81731033325198,
+                                179.99999999999997,
+                                -90.00000000000007
+                            ]
+                        },
+                        "L_GravGun_Grip_Lid": {
+                            "location": [
+                                4.451080322272901,
+                                0.00845718382333871,
+                                17.99270820619131
+                            ],
+                            "rotation": [
+                                23.3999996185303,
+                                -8.895483994303125e-15,
+                                -1.1586285597717612e-14
+                            ]
+                        },
+                        "L_GravGun_Grip_SideButton": {
+                            "location": [
+                                -1.3388762474060059,
+                                4.836162567138672,
+                                11.55998992921377
+                            ],
+                            "rotation": [
+                                14.41169834136963,
+                                125.29887390136717,
+                                -95.77132415771487
+                            ]
+                        },
+                        "L_GravGun_Grip_Switch": {
+                            "location": [
+                                0.9513516426086426,
+                                -0.05107498170400504,
+                                16.010238647460938
+                            ],
+                            "rotation": [
+                                23.3999996185303,
+                                -8.895483994303125e-15,
+                                -1.1586285597717612e-14
+                            ]
+                        },
+                        "L_GravGun_Grip_Trigger": {
+                            "location": [
+                                2.229194164276123,
+                                0.03567314146494027,
+                                6.613403797149658
+                            ],
+                            "rotation": [
+                                0.6641299128532392,
+                                1.2685990868977474e-14,
+                                -6.287692104867103e-15
+                            ]
+                        },
+                        "L_Hand_Aux": {
+                            "location": [
+                                8.613168716459768,
+                                -5.178950309760694,
+                                -0.3493526280071819
+                            ],
+                            "rotation": [
+                                -3.086289644241327,
+                                -1.1152085065841504,
+                                -169.4614715576172
+                            ]
+                        },
+                        "L_Hand_Object": {
+                            "location": [
+                                8.613168716459768,
+                                -5.178950309760694,
+                                -0.3493526280071819
+                            ],
+                            "rotation": [
+                                -3.086289644241327,
+                                -1.1152085065841504,
+                                -169.4614715576172
+                            ]
+                        },
+                        "L_Index_01": {
+                            "location": [
+                                7.472196102142334,
+                                -0.6219156384468079,
+                                -3.3075382709575933
+                            ],
+                            "rotation": [
+                                -11.48088359832764,
+                                -19.280197143554695,
+                                8.438418388366701
+                            ]
+                        },
+                        "L_Index_01_End": {
+                            "location": [
+                                -0.11211986094713211,
+                                1.3629478215880226,
+                                0.0020931081417074893
+                            ],
+                            "rotation": [
+                                0.006860696710648523,
+                                2.3190355300903422,
+                                -0.08805559575557989
+                            ]
+                        },
+                        "L_Index_02": {
+                            "location": [
+                                3.6422886848449707,
+                                -2.9103830456733704e-11,
+                                -3.637978807091713e-12
+                            ],
+                            "rotation": [
+                                4.0493138800298373e-16,
+                                -14.628893852233881,
+                                3.154672511179168e-15
+                            ]
+                        },
+                        "L_Index_02_End": {
+                            "location": [
+                                3.8834078312211204,
+                                0.7985003590438282,
+                                -3.637978807091713e-12
+                            ],
+                            "rotation": [
+                                4.848434332652902e-15,
+                                -16.52225303649904,
+                                5.723856608690601e-15
+                            ]
+                        },
+                        "L_Index_03": {
+                            "location": [
+                                2.5657117366645252,
+                                1.4551915228366852e-11,
+                                -7.275957614183426e-12
+                            ],
+                            "rotation": [
+                                -2.2519963032982505e-15,
+                                -7.9999995231628676,
+                                -9.407488900147126e-15
+                            ]
+                        },
+                        "L_Index_03_End": {
+                            "location": [
+                                2.6493489742133534,
+                                0.700228452711599,
+                                0.0
+                            ],
+                            "rotation": [
+                                -4.283522745128911e-15,
+                                -8.547529220581087,
+                                6.6989539036393686e-15
+                            ]
+                        },
+                        "L_Middle_01": {
+                            "location": [
+                                7.637884616851807,
+                                0.0591571107506752,
+                                -1.0416494607961795
+                            ],
+                            "rotation": [
+                                -1.9285528659820568,
+                                -19.27181434631348,
+                                4.224336624145511
+                            ]
+                        },
+                        "L_Middle_01_End": {
+                            "location": [
+                                -0.05058028921484947,
+                                1.4491183757854742,
+                                -0.0011756929034163477
+                            ],
+                            "rotation": [
+                                0.051341149955984156,
+                                1.0629649162292587,
+                                0.04562398791313115
+                            ]
+                        },
+                        "L_Middle_02": {
+                            "location": [
+                                3.888145923585398,
+                                2.1827872842550278e-11,
+                                -3.637978807091713e-12
+                            ],
+                            "rotation": [
+                                -4.652467346758379e-15,
+                                -19.609556198120135,
+                                -1.2913702339394779e-14
+                            ]
+                        },
+                        "L_Middle_02_End": {
+                            "location": [
+                                4.139013767242432,
+                                0.7259838581157965,
+                                -1.2732925824820995e-11
+                            ],
+                            "rotation": [
+                                -5.2257992088204305e-15,
+                                -19.062904357910153,
+                                2.4899868272716487e-15
+                            ]
+                        },
+                        "L_Middle_03": {
+                            "location": [
+                                2.8414998054358875,
+                                0.0,
+                                -1.4915713109076023e-09
+                            ],
+                            "rotation": [
+                                -4.277492569528439e-15,
+                                -11.310260772705101,
+                                5.2177326192165815e-15
+                            ]
+                        },
+                        "L_Middle_03_End": {
+                            "location": [
+                                2.859530210509547,
+                                0.6433892250352073,
+                                -1.4879333321005106e-09
+                            ],
+                            "rotation": [
+                                -4.407959390432605e-15,
+                                -12.13381195068361,
+                                3.666968813349849e-15
+                            ]
+                        },
+                        "L_Pinky_01": {
+                            "location": [
+                                6.620158672332764,
+                                0.2777725458072382,
+                                0.02082815207722888
+                            ],
+                            "rotation": [
+                                -0.2737518250942224,
+                                -1.8872336149215547,
+                                3.2251238822937025
+                            ]
+                        },
+                        "L_Pinky_01_End": {
+                            "location": [
+                                6.318384170503123,
+                                1.4890419244766235,
+                                0.06069381162433274
+                            ],
+                            "rotation": [
+                                -5.121123313903808,
+                                -6.063158512115459,
+                                -0.07330375909805385
+                            ]
+                        },
+                        "L_Pinky_02": {
+                            "location": [
+                                2.609729528427124,
+                                -7.275957614183426e-12,
+                                9.908490028465167e-09
+                            ],
+                            "rotation": [
+                                -5.374019383874624e-15,
+                                -17.933362960815447,
+                                1.6529340329549535e-15
+                            ]
+                        },
+                        "L_Pinky_02_End": {
+                            "location": [
+                                2.7172350883483887,
+                                0.5991228818893433,
+                                9.8939381132368e-09
+                            ],
+                            "rotation": [
+                                2.35340856987359e-15,
+                                -18.918838500976584,
+                                -8.856160243064106e-15
+                            ]
+                        },
+                        "L_Pinky_03": {
+                            "location": [
+                                1.936363697052002,
+                                1.4551915228366852e-11,
+                                4.801222530659288e-09
+                            ],
+                            "rotation": [
+                                6.257247250579673e-15,
+                                -9.047386169433583,
+                                -4.084365068801712e-15
+                            ]
+                        },
+                        "L_Pinky_03_End": {
+                            "location": [
+                                1.8059381246712292,
+                                0.5855435728735756,
+                                4.801222530659288e-09
+                            ],
+                            "rotation": [
+                                3.219630192161852e-15,
+                                -3.935189962387088,
+                                1.0828027955263042e-15
+                            ]
+                        },
+                        "L_Pinky_Meta": {
+                            "location": [
+                                1.1401675939705456,
+                                0.668482005581609,
+                                1.8808095455096918
+                            ],
+                            "rotation": [
+                                12.481676101684572,
+                                -13.251226425170895,
+                                -13.555809020996092
+                            ]
+                        },
+                        "L_Pinky_Pad": {
+                            "location": [
+                                4.22049665452505,
+                                -2.06476783753169,
+                                2.946213245377294
+                            ],
+                            "rotation": [
+                                0.11744779348372855,
+                                -2.0100939273834175,
+                                30.797365188598643
+                            ]
+                        },
+                        "L_Remnant_Jaw": {
+                            "location": [
+                                -1.302000045790919,
+                                1.5030000209953869,
+                                -9.094947017729282e-13
+                            ],
+                            "rotation": [
+                                -1.5902773407317587e-14,
+                                -2.2069531490250793e-31,
+                                1.5902773407317588e-15
+                            ]
+                        },
+                        "L_Remnant_Skull": {
+                            "location": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                7.062250076880254e-31,
+                                -2.544443745170814e-14,
+                                3.1805546814635176e-15
+                            ]
+                        },
+                        "L_Ring_01": {
+                            "location": [
+                                6.762905597672216,
+                                0.01041214072756702,
+                                0.09252537786414905
+                            ],
+                            "rotation": [
+                                2.0239593982696515,
+                                -12.497041702270518,
+                                0.18995247781276786
+                            ]
+                        },
+                        "L_Ring_01_End": {
+                            "location": [
+                                6.792617797866114,
+                                1.4578285217139637,
+                                0.02767865544774395
+                            ],
+                            "rotation": [
+                                -0.013724331744011877,
+                                -0.8488570451736597,
+                                -1.0654331445694
+                            ]
+                        },
+                        "L_Ring_02": {
+                            "location": [
+                                3.017324447617284,
+                                -7.275957614183426e-12,
+                                1.8903847376350313e-08
+                            ],
+                            "rotation": [
+                                -5.208833066170434e-16,
+                                -19.05925941467284,
+                                1.6999729722686146e-15
+                            ]
+                        },
+                        "L_Ring_02_End": {
+                            "location": [
+                                3.198297977432958,
+                                0.7626833915783209,
+                                1.8903847376350313e-08
+                            ],
+                            "rotation": [
+                                8.53303700605707e-15,
+                                -16.993736267089847,
+                                -2.0787570990448314e-15
+                            ]
+                        },
+                        "L_Ring_03": {
+                            "location": [
+                                2.491668224334717,
+                                -1.4551915228366852e-11,
+                                2.0764673536177725e-08
+                            ],
+                            "rotation": [
+                                6.399483010294423e-15,
+                                -7.496573925018312,
+                                3.775910925621064e-16
+                            ]
+                        },
+                        "L_Ring_03_End": {
+                            "location": [
+                                2.588475227370509,
+                                0.6762522458593594,
+                                2.0763764041475952e-08
+                            ],
+                            "rotation": [
+                                7.558215249323766e-15,
+                                -14.504209518432626,
+                                -1.6191274265049526e-14
+                            ]
+                        },
+                        "L_Ring_Meta": {
+                            "location": [
+                                1.1668694019463146,
+                                0.8035228848384577,
+                                0.9457185864448547
+                            ],
+                            "rotation": [
+                                3.0920736789703347,
+                                -7.303356647491471,
+                                -2.4480583667755047
+                            ]
+                        },
+                        "L_SoulOrb01": {
+                            "location": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                -6.361109362927035e-15,
+                                -2.648343778830095e-31,
+                                4.770832022195277e-15
+                            ]
+                        },
+                        "L_SoulOrb02": {
+                            "location": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                -6.361109362927035e-15,
+                                -2.648343778830095e-31,
+                                4.770832022195277e-15
+                            ]
+                        },
+                        "L_SoulOrb03": {
+                            "location": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                -6.361109362927035e-15,
+                                -2.648343778830095e-31,
+                                4.770832022195277e-15
+                            ]
+                        },
+                        "L_SoulOrb04": {
+                            "location": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                -6.361109362927035e-15,
+                                -2.648343778830095e-31,
+                                4.770832022195277e-15
+                            ]
+                        },
+                        "L_SoulOrb05": {
+                            "location": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                -6.361109362927035e-15,
+                                -2.648343778830095e-31,
+                                4.770832022195277e-15
+                            ]
+                        },
+                        "L_Thumb_01": {
+                            "location": [
+                                0.8770970105979359,
+                                -1.5467180013656616,
+                                -0.9521409273183963
+                            ],
+                            "rotation": [
+                                -54.949752807617195,
+                                -21.58956146240233,
+                                87.67736053466794
+                            ]
+                        },
+                        "L_Thumb_02": {
+                            "location": [
+                                4.563996315002441,
+                                0.0,
+                                1.4551915228366852e-11
+                            ],
+                            "rotation": [
+                                -1.1258344123645792e-14,
+                                -20.098155975341797,
+                                -2.7075885480346296e-14
+                            ]
+                        },
+                        "L_Thumb_03": {
+                            "location": [
+                                2.606203794464818,
+                                0.0,
+                                7.275957614183426e-12
+                            ],
+                            "rotation": [
+                                7.83025716906567e-15,
+                                -2.1568315029144265,
+                                -6.509634053042882e-15
+                            ]
+                        },
+                        "L_Thumb_03_End": {
+                            "location": [
+                                2.8271441459510243,
+                                0.7749993205288774,
+                                3.637978807091713e-12
+                            ],
+                            "rotation": [
+                                2.5398945293395128e-14,
+                                -0.2727387845516231,
+                                -1.9143834155180895e-14
+                            ]
+                        },
+                        "L_Thumb_Pad": {
+                            "location": [
+                                3.234745502471924,
+                                -4.041231632239942,
+                                -1.6173800230026245
+                            ],
+                            "rotation": [
+                                -41.17511749267577,
+                                -53.145626068115234,
+                                89.4124221801758
+                            ]
+                        },
+                        "L_Thumb_Web": {
+                            "location": [
+                                5.1108245849609375,
+                                -2.67041754724778,
+                                -3.885956287391309
+                            ],
+                            "rotation": [
+                                -38.78604125976565,
+                                -30.769126892089865,
+                                74.92385864257818
+                            ]
+                        }
+                    },
+                    "right_hand": {
+                        "R_Drone_Object": {
+                            "location": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "rotation": [
+                                -7.553817368475855e-15,
+                                -1.2722218725854073e-14,
+                                3.1805546814635187e-15
+                            ]
+                        },
+                        "R_GravGun_Grip": {
+                            "location": [
+                                61.64929580692842,
+                                -81.49478912353516,
+                                -28.472656249998636
+                            ],
+                            "rotation": [
+                                53.28499984741217,
+                                -37.80791854858401,
+                                -169.36155700683597
+                            ]
+                        },
+                        "R_GravGun_Grip_Cable01": {
+                            "location": [
+                                8.633775711052294,
+                                0.14903259275888558,
+                                -14.697398185722705
+                            ],
+                            "rotation": [
+                                -23.46306228637696,
+                                -2.59148251340808e-15,
+                                1.1501543219695261e-14
+                            ]
+                        },
+                        "R_GravGun_Grip_Cable02": {
+                            "location": [
+                                5.776580333702441,
+                                1.4551915228366852e-11,
+                                7.275957614183426e-12
+                            ],
+                            "rotation": [
+                                -1.689669674527494e-14,
+                                3.1805546814635183e-15,
+                                -4.689775441678294e-31
+                            ]
+                        },
+                        "R_GravGun_Grip_Cable03": {
+                            "location": [
+                                6.854382991808961,
+                                0.0,
+                                -1.4551915228366852e-11
+                            ],
+                            "rotation": [
+                                -0.1403934955596596,
+                                -0.3789885342121012,
+                                -0.000447129277739804
+                            ]
+                        },
+                        "R_GravGun_Grip_Cable04": {
+                            "location": [
+                                9.091755867004395,
+                                1.4551915228366852e-11,
+                                -1.4551915228366852e-11
+                            ],
+                            "rotation": [
+                                3.379339349054987e-15,
+                                -5.168401357378216e-15,
+                                7.553817368475854e-15
+                            ]
+                        },
+                        "R_GravGun_Grip_Cable05": {
+                            "location": [
+                                8.753345489512867,
+                                -1.4551915228366852e-11,
+                                1.4551915228366852e-11
+                            ],
+                            "rotation": [
+                                0.2079205065965599,
+                                1.474677562713623,
+                                -5.093081526409057e-12
+                            ]
+                        },
+                        "R_GravGun_Grip_FrontButton": {
+                            "location": [
+                                -2.2171835899425787,
+                                -0.02446365352079738,
+                                -12.258118629455566
+                            ],
+                            "rotation": [
+                                -34.81731033325195,
+                                180.0,
+                                90.00000000000004
+                            ]
+                        },
+                        "R_GravGun_Grip_Lid": {
+                            "location": [
+                                4.451080322265625,
+                                0.008457183808786795,
+                                -17.99270820617312
+                            ],
+                            "rotation": [
+                                -23.3999996185303,
+                                1.0179543157609557e-14,
+                                3.778990160103078e-15
+                            ]
+                        },
+                        "R_GravGun_Grip_SideButton": {
+                            "location": [
+                                -1.3388762474169198,
+                                4.836162567138672,
+                                -11.55998992919558
+                            ],
+                            "rotation": [
+                                -14.41169834136964,
+                                125.29887390136723,
+                                95.77132415771489
+                            ]
+                        },
+                        "R_GravGun_Grip_Switch": {
+                            "location": [
+                                0.9513516426086426,
+                                -0.051074981660349295,
+                                -16.010238647450024
+                            ],
+                            "rotation": [
+                                -23.3999996185303,
+                                1.0179543157609557e-14,
+                                3.778990160103078e-15
+                            ]
+                        },
+                        "R_GravGun_Grip_Trigger": {
+                            "location": [
+                                2.229194164272485,
+                                0.03567314147949219,
+                                -6.613403797135106
+                            ],
+                            "rotation": [
+                                -0.6641299128532285,
+                                3.076708986207172e-15,
+                                7.773203678550079e-16
+                            ]
+                        },
+                        "R_Hand_Aux": {
+                            "location": [
+                                8.613217353835353,
+                                -5.1791911125183105,
+                                0.35042533278056
+                            ],
+                            "rotation": [
+                                3.091503381729131,
+                                -1.1159347295760962,
+                                -10.537824630737315
+                            ]
+                        },
+                        "R_Hand_Object": {
+                            "location": [
+                                8.613217353835353,
+                                -5.1791911125183105,
+                                0.35042533278056
+                            ],
+                            "rotation": [
+                                3.091503381729131,
+                                -1.1159347295760962,
+                                -10.537824630737315
+                            ]
+                        },
+                        "R_Index_01": {
+                            "location": [
+                                7.471909999876516,
+                                -0.6222122311592102,
+                                3.3084053993211455
+                            ],
+                            "rotation": [
+                                11.485860824584972,
+                                -19.28048324584963,
+                                -8.439259529113778
+                            ]
+                        },
+                        "R_Index_01_End": {
+                            "location": [
+                                -0.11270051448082086,
+                                1.3630334139015758,
+                                -0.001900425078929402
+                            ],
+                            "rotation": [
+                                -0.006860571447761852,
+                                2.3189537525176993,
+                                0.08805561065673619
+                            ]
+                        },
+                        "R_Index_02": {
+                            "location": [
+                                3.6422886848595226,
+                                0.0,
+                                -7.275957614183426e-12
+                            ],
+                            "rotation": [
+                                4.945071784875831e-15,
+                                -14.628893852233897,
+                                4.175228108264649e-15
+                            ]
+                        },
+                        "R_Index_02_End": {
+                            "location": [
+                                3.8828229904174805,
+                                0.7985854148864746,
+                                0.00019268419055151753
+                            ],
+                            "rotation": [
+                                -1.6373292502276943e-15,
+                                -16.522253036499034,
+                                -2.976177648365191e-15
+                            ]
+                        },
+                        "R_Index_03": {
+                            "location": [
+                                2.565495014183398,
+                                0.00023467850405722857,
+                                -0.0002270684708491899
+                            ],
+                            "rotation": [
+                                -2.64859717967785e-15,
+                                -7.999999523162847,
+                                -9.379755866906299e-15
+                            ]
+                        },
+                        "R_Index_03_End": {
+                            "location": [
+                                2.6487631797790527,
+                                0.7001497149467468,
+                                0.00019268419782747515
+                            ],
+                            "rotation": [
+                                8.011139471691137e-15,
+                                -8.547529220581065,
+                                -1.0166941684675149e-14
+                            ]
+                        },
+                        "R_Middle_01": {
+                            "location": [
+                                7.637809753432521,
+                                0.05880933254957199,
+                                1.0425167083742508
+                            ],
+                            "rotation": [
+                                1.9335302114486697,
+                                -19.271959304809574,
+                                -4.225161075592045
+                            ]
+                        },
+                        "R_Middle_01_End": {
+                            "location": [
+                                -0.0511985942866886,
+                                1.4491558074660134,
+                                0.001226867554578348
+                            ],
+                            "rotation": [
+                                -0.051341149955989165,
+                                1.0629636049270614,
+                                -0.04562398791313281
+                            ]
+                        },
+                        "R_Middle_02": {
+                            "location": [
+                                3.888145923614502,
+                                1.4551915228366852e-11,
+                                3.637978807091713e-12
+                            ],
+                            "rotation": [
+                                -5.257223976818395e-15,
+                                -19.609556198120135,
+                                -4.739942229355738e-15
+                            ]
+                        },
+                        "R_Middle_02_End": {
+                            "location": [
+                                4.138395786256297,
+                                0.7260212898108875,
+                                5.1174688451283146e-05
+                            ],
+                            "rotation": [
+                                -4.181222929553096e-15,
+                                -19.062904357910167,
+                                1.5083258428154731e-15
+                            ]
+                        },
+                        "R_Middle_03": {
+                            "location": [
+                                2.84126830099558,
+                                0.00024398155801463872,
+                                -0.0002243734188596136
+                            ],
+                            "rotation": [
+                                -3.9563438286437596e-15,
+                                -11.310260772705075,
+                                3.917666873700584e-16
+                            ]
+                        },
+                        "R_Middle_03_End": {
+                            "location": [
+                                2.8589274883270264,
+                                0.6432461738586426,
+                                5.1176170927647036e-05
+                            ],
+                            "rotation": [
+                                5.38571262324789e-16,
+                                -12.133811950683578,
+                                -2.4560936558914173e-15
+                            ]
+                        },
+                        "R_Pinky_01": {
+                            "location": [
+                                6.620158672332764,
+                                0.27777254581451416,
+                                -0.02082815207540989
+                            ],
+                            "rotation": [
+                                0.27353468537330605,
+                                -1.886740922927853,
+                                -3.225357294082641
+                            ]
+                        },
+                        "R_Pinky_01_End": {
+                            "location": [
+                                6.317779541044729,
+                                1.4889911413483787,
+                                -0.060834098596387776
+                            ],
+                            "rotation": [
+                                5.121122837066652,
+                                -6.063117027282734,
+                                0.07330746948718757
+                            ]
+                        },
+                        "R_Pinky_02": {
+                            "location": [
+                                2.609729528427124,
+                                -2.9103830456733704e-11,
+                                -9.920768206939101e-09
+                            ],
+                            "rotation": [
+                                -3.927106972007734e-15,
+                                -17.93336296081544,
+                                6.196518846810047e-16
+                            ]
+                        },
+                        "R_Pinky_02_End": {
+                            "location": [
+                                2.7166197300102795,
+                                0.5990900993201649,
+                                -8.146645268425345e-05
+                            ],
+                            "rotation": [
+                                -1.3070475892148693e-15,
+                                -18.918838500976577,
+                                -3.0066260469866078e-15
+                            ]
+                        },
+                        "R_Pinky_03": {
+                            "location": [
+                                1.9361649751808727,
+                                0.0003489550872473046,
+                                -0.00016026651792344637
+                            ],
+                            "rotation": [
+                                6.215865960482478e-15,
+                                -9.047386169433599,
+                                -2.087032512654776e-15
+                            ]
+                        },
+                        "R_Pinky_03_End": {
+                            "location": [
+                                1.805346965789795,
+                                0.5853694676916348,
+                                -8.146132313413545e-05
+                            ],
+                            "rotation": [
+                                3.50628543130949e-15,
+                                -3.9351899623870934,
+                                9.4268363352708e-15
+                            ]
+                        },
+                        "R_Pinky_Meta": {
+                            "location": [
+                                1.1403636932664085,
+                                0.6681252121925354,
+                                -1.8805459737791352
+                            ],
+                            "rotation": [
+                                -12.47632026672364,
+                                -13.251718521118157,
+                                13.55584049224854
+                            ]
+                        },
+                        "R_Pinky_Pad": {
+                            "location": [
+                                4.220979213743703,
+                                -2.0644261836860096,
+                                -2.9458365440352736
+                            ],
+                            "rotation": [
+                                -0.7765821814537003,
+                                -1.6143380403518766,
+                                -30.799787521362333
+                            ]
+                        },
+                        "R_Ring_01": {
+                            "location": [
+                                6.7629055977013195,
+                                0.010412140778498724,
+                                -0.09252537788324844
+                            ],
+                            "rotation": [
+                                -2.0242931842803955,
+                                -12.496631622314464,
+                                -0.19022564589977248
+                            ]
+                        },
+                        "R_Ring_01_End": {
+                            "location": [
+                                6.7919960022118175,
+                                1.457810640349635,
+                                -0.02770391479407408
+                            ],
+                            "rotation": [
+                                0.013723935931920042,
+                                -0.8488357663154673,
+                                1.0654331445693994
+                            ]
+                        },
+                        "R_Ring_02": {
+                            "location": [
+                                3.017324447646388,
+                                2.9103830456733704e-11,
+                                -1.8910213839262724e-08
+                            ],
+                            "rotation": [
+                                6.010044258233024e-15,
+                                -19.059259414672862,
+                                -2.6214618749169553e-15
+                            ]
+                        },
+                        "R_Ring_02_End": {
+                            "location": [
+                                3.1976768970343983,
+                                0.7627056837227428,
+                                -1.5651146895834245e-05
+                            ],
+                            "rotation": [
+                                7.136443631416158e-15,
+                                -16.99373626708986,
+                                -6.641683415417095e-16
+                            ]
+                        },
+                        "R_Ring_03": {
+                            "location": [
+                                2.4914309978485107,
+                                0.0002843752154149115,
+                                -0.00020114253675274085
+                            ],
+                            "rotation": [
+                                8.194281893817889e-16,
+                                -7.496573925018303,
+                                3.4473805104094127e-16
+                            ]
+                        },
+                        "R_Ring_03_End": {
+                            "location": [
+                                2.587883710846654,
+                                0.676061451449641,
+                                -1.565299589856295e-05
+                            ],
+                            "rotation": [
+                                7.550686243061244e-15,
+                                -14.50420951843262,
+                                2.6461282378895713e-15
+                            ]
+                        },
+                        "R_Ring_Meta": {
+                            "location": [
+                                1.166981577887782,
+                                0.8031863570213318,
+                                -0.9454556107523331
+                            ],
+                            "rotation": [
+                                -3.0867502689361603,
+                                -7.303874492645287,
+                                2.448645114898683
+                            ]
+                        },
+                        "R_Thumb_01": {
+                            "location": [
+                                0.8770168423943687,
+                                -1.5470104217238259,
+                                0.9524291157708831
+                            ],
+                            "rotation": [
+                                54.954692840576236,
+                                -21.591133117675806,
+                                -87.6791381835938
+                            ]
+                        },
+                        "R_Thumb_02": {
+                            "location": [
+                                4.5639963149951654,
+                                0.0,
+                                7.275957614183426e-12
+                            ],
+                            "rotation": [
+                                9.8535878816041e-15,
+                                -20.098155975341815,
+                                1.1174278209245198e-14
+                            ]
+                        },
+                        "R_Thumb_03": {
+                            "location": [
+                                2.60620379447937,
+                                1.4551915228366852e-11,
+                                -7.275957614183426e-12
+                            ],
+                            "rotation": [
+                                -6.637760424111406e-15,
+                                -2.1568315029144136,
+                                6.487186341049864e-15
+                            ]
+                        },
+                        "R_Thumb_03_End": {
+                            "location": [
+                                2.8266830444335938,
+                                0.7753877639916027,
+                                0.00015140259347390383
+                            ],
+                            "rotation": [
+                                1.7890569409401365e-15,
+                                -0.27273878455162637,
+                                -4.258133331054813e-18
+                            ]
+                        },
+                        "R_Thumb_Pad": {
+                            "location": [
+                                3.2346346378471935,
+                                -4.041183948516846,
+                                1.6177178621276198
+                            ],
+                            "rotation": [
+                                41.17878723144536,
+                                -53.1487655639649,
+                                -89.41701507568364
+                            ]
+                        },
+                        "R_Thumb_Web": {
+                            "location": [
+                                5.110468387618312,
+                                -2.6706814765930176,
+                                3.8866539001458023
+                            ],
+                            "rotation": [
+                                38.79115676879886,
+                                -30.770885467529332,
+                                -74.92588806152348
+                            ]
+                        }
+                    }
+                },
+                "Left": {
+                    "AnimationID": "left_arms",
+                    "Location": [
+                        -7.599999904632568,
+                        0.0,
+                        0.0
+                    ],
+                    "Name": "L_Hand",
+                    "OptimizeAnimationsRootBone": "Root",
+                    "Rotation": [
+                        0.0,
+                        0.0,
+                        -180.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "UseDefaultPose": true
+                },
+                "Mesh": "Custom",
+                "Offset": {
+                    "Pitch": 0.0,
+                    "Roll": 0.0,
+                    "X": 0,
+                    "Y": 0,
+                    "Yaw": 0.0,
+                    "Z": 0
+                },
+                "OptimizeAnimations": true,
+                "Right": {
+                    "AnimationID": "right_arms",
+                    "Location": [
+                        -8.600000381469727,
+                        0.0,
+                        0.0
+                    ],
+                    "Name": "R_Hand",
+                    "OptimizeAnimationsRootBone": "Root",
+                    "Rotation": [
+                        0.0,
+                        10.0,
+                        0.0
+                    ],
+                    "Scale": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "UseDefaultPose": true
+                }
+            }
+        }
+    }
+}

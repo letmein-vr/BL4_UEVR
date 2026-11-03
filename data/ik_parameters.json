@@ -1,0 +1,137 @@
+{
+    "_profileLabels": {
+        "default": "Default"
+    },
+    "_profileState": {
+        "currentEditingProfile": "default"
+    },
+    "default": {
+        "animation_ik_pose_authoritative": false,
+        "animation_location_offset": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "animation_mesh": "",
+        "animation_rotation_offset": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "debug_sphere_boneElbow": true,
+        "debug_sphere_boneTwist": true,
+        "debug_sphere_desiredPole": true,
+        "debug_sphere_effector": true,
+        "debug_sphere_forearmTwist": true,
+        "debug_sphere_jointTarget": true,
+        "debug_sphere_solvedElbow": true,
+        "debug_sphere_solvedEnd": true,
+        "enhanced_stabilization": true,
+        "hide_body": false,
+        "mesh": "Custom",
+        "mesh_location_offset": [
+            -3.014,
+            0.0,
+            -90.3321
+        ],
+        "mesh_rotation_offset": [
+            0.0,
+            0.0,
+            0.0
+        ],
+        "mesh_scale_offset": [
+            1.0,
+            1.0,
+            1.0
+        ],
+        "parent_type": 1,
+        "show_debug_meshes": false,
+        "solvers": {
+            "14d8d8be-34bd-4a6e-8d20-3bed1b09d5be": {
+                "active": true,
+                "allow_stretch": true,
+                "allow_wrist_affects_elbow": true,
+                "end_bone": "R_Hand",
+                "end_bone_lock_pitch": false,
+                "end_bone_lock_roll": false,
+                "end_bone_lock_yaw": false,
+                "end_bone_offset": [
+                    -8.502,
+                    1.996,
+                    0.2989
+                ],
+                "end_control_type": 1,
+                "enhanced_stability": false,
+                "incremental_forearm_twist": false,
+                "joint_bone": "R_Forearm",
+                "label": "Right",
+                "max_stretch_scale": 1.375,
+                "max_twist_delta_deg": 12.0,
+                "pole_proj_min_len": 0.3,
+                "shoulder_swing_only": false,
+                "smoothing": 0,
+                "solver_type": 1,
+                "sort_order": 1,
+                "start_bone": "R_Upperarm",
+                "start_stretch_ratio": 1.0,
+                "twist_bones": [
+                    {
+                        "bone": "R_Forearm_Twist01",
+                        "pitch": 0.5299999713897705,
+                        "roll": 0.4699999988079071,
+                        "yaw": 0.0
+                    }
+                ],
+                "use_hemisphere_lock": true,
+                "wrist_bone": "",
+                "wrist_twist_influence": 0.35,
+                "wrist_twist_max": 75.0
+            },
+            "32083922-8e4a-4c91-b21d-0752c44718c2": {
+                "active": true,
+                "allow_stretch": true,
+                "allow_wrist_affects_elbow": true,
+                "end_bone": "L_Hand",
+                "end_bone_lock_pitch": false,
+                "end_bone_lock_roll": false,
+                "end_bone_lock_yaw": false,
+                "end_bone_offset": [
+                    -2.902,
+                    -0.401,
+                    0.499
+                ],
+                "end_bone_rotation": [
+                    0.0,
+                    0.0,
+                    181.0
+                ],
+                "end_control_type": 0,
+                "enhanced_stability": false,
+                "incremental_forearm_twist": false,
+                "joint_bone": "L_Forearm",
+                "label": "Left",
+                "max_stretch_scale": 1.5160000324249268,
+                "max_twist_delta_deg": 12.0,
+                "pole_proj_min_len": 0.3,
+                "shoulder_swing_only": false,
+                "smoothing": 0,
+                "solver_type": 1,
+                "sort_order": 2,
+                "start_bone": "L_Upperarm",
+                "start_stretch_ratio": 1.0,
+                "twist_bones": [
+                    {
+                        "bone": "L_Forearm_Twist01",
+                        "pitch": 0.5149999856948853,
+                        "roll": 0.49900001287460327,
+                        "yaw": 0.0
+                    }
+                ],
+                "use_hemisphere_lock": true,
+                "wrist_bone": "",
+                "wrist_twist_influence": 0.35,
+                "wrist_twist_max": 75.0
+            }
+        }
+    }
+}
