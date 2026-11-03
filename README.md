@@ -2,6 +2,8 @@
 
 A full motion-controller VR conversion of Borderlands 4 for UEVR, with visible hands or IK arms, guns that shoot where you point them, two-handed aiming, weapon recoil from the game's own animations, body holsters, a hand-aimed grapple and a stable, comfortable camera. Special thanks to praydog, jbusfield (for his libs framework), and joeyhodge!
 
+![Borderlands 4 VR](screenshots/borderlands4vr.png)
+
 ## IMPORTANT!
 
 - My custom UEVR backend is required - see the releases on [letmein-vr/UEVR](https://github.com/letmein-vr/UEVR/releases) to download it. It carries the Borderlands 4 fixes this profile depends on: visible first-person arms and guns in stereo, working console variables, flicker-free menus, a usable map and inventory preview, and a working Ghosting Fix.
