@@ -33,11 +33,30 @@ Direction = the barrel (socket forward) with the game's spread kept, EndLocation
 measured against muzzle → camera-ray point at the shot's EndLocation distance, so the parallax above is not mistaken
 for spread. Other projectiles are left alone.
 
+## Beam weapons (2026-11-05)
+
+Beams (`WeaponBehavior_FireBeam` → GbxGame `LightBeam`) never reach the projectile spawn. They aim from
+`PlayerCameraManager.CameraModeState.POV`, which the camera computes in the player controller's tick and which follows
+the body, not UEVR's aim. While the local pawn owns an active beam, the plugin writes the VR gun's muzzle + barrel
+into that POV at the end of the controller tick. It restores the real POV at the start of the LightBeamManager tick,
+with backstops at pre-draw, pre-stereo, post-engine-tick and the next controller tick. The camera cache copies written
+in between are corrected on restore. All tick hooks are found from class default objects and verified against
+`ExecuteTick`.
+
+## Scoped sights keep the gun visible (2026-11-05)
+
+High-magnification scopes have `WeaponBehaviorDef_Sight.bHideWeapon` set: fully zoomed, the game stops drawing the
+first-person gun natively. In VR the gun is on the hand, so it just vanished. Each `WeaponBehavior_Sight` in the held
+gun's `behaviors` points at its definition from +0x38 (not reflected). The plugin checks that the definition's
+`BehaviorClass` asset name equals the behavior's class name, then clears the flag with an SEH-guarded write. The
+offsets come from reflection. The scope mask mesh and vignette are hidden by `scripts/bl4_vr_scope.lua`.
+
 ## Config: `<profile>\plugins\BL4AimFix.txt` (optional)
 
 `Enabled`, `Mode` (0 log / 1 override), `Debug` (logs every player projectile, plus a summary every 10 s),
 `StartTolerance`, `MaxAngleFromAim`, `WeaponClass`, `MuzzleSocket`, `UseSocketRotation`, `BarrelAxis`,
-`MuzzleForwardOffset`, `PitchOffset`, `YawOffset`, `RVA_SpawnLightProjectileNative`, `RVA_ManagerSpawn`.
+`MuzzleForwardOffset`, `PitchOffset`, `YawOffset`, `RVA_SpawnLightProjectileNative`, `RVA_ManagerSpawn`,
+`BeamAim` (default 1), `ShowWeaponWhenScoped` (default 1).
 
 ## Build
 

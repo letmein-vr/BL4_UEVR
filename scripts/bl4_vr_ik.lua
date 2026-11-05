@@ -87,6 +87,12 @@ ik.init(uevrUtils.getDeveloperMode() == true, LogLevel.Warning) -- developer mod
 
 local function applyHandsMode()
 	if getHandsMode() == HANDS_MODE_IK then
+		-- drop the Hands-mode grips first (the library re-grips onto the controllers next poll). Left in place, the entry
+		-- keyed under the destroyed VR hand still says "right hand holds <that gun>", and getCurrentGrippedAttachment
+		-- returns whichever right-hand entry pairs() meets first: IK kept re-seating the OLD gun on every swap while the
+		-- new one stayed on the hidden game arms, rotated, until the stale entry happened to go (log 2026-11-05 01:36-01:37)
+		pcall(function() attachments.detachGripAttachments(Handed.Right) end)
+		pcall(function() attachments.detachGripAttachments(Handed.Left) end)
 		hands.setAutoCreateHands(false)
 		hands.destroyHands()
 		-- the solvers need the motion controllers; in IK mode nothing else creates them
@@ -322,6 +328,13 @@ end
 -- relative to the controller, so gun-on-bone = grip relative to target. Same result as the world-space version (the
 -- controller cancels out) with no controller pose needed. Tagged with the solver version it was made from.
 local function computeIKRelative(mesh)
+	-- game grip (bl4_main.lua, option on): the game's own hand -> gun offset, measured on FirstPersonArms, is already
+	-- relative to the R_Hand bone the gun rides here. Until it is measured (equip montage) the Attachments offsets below.
+	local grip = _G.bl4 ~= nil and _G.bl4.getGameGrip ~= nil and _G.bl4.getGameGrip(mesh) or nil
+	if grip ~= nil then
+		return { loc = { X = grip.loc.X, Y = grip.loc.Y, Z = grip.loc.Z },
+			rot = { Pitch = grip.rot.Pitch, Yaw = grip.rot.Yaw, Roll = grip.rot.Roll }, version = targetVersion(), at = os.clock() }
+	end
 	local result = nil
 	pcall(function()
 		local off, rotOff = rightHandTarget()

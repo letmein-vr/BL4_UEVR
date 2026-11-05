@@ -2265,6 +2265,8 @@ function M.attachToMesh(attachment, mesh, socketName, gripHand, options)
 
 		if options.reattachToOriginOnRelease == true then
 			meshAttachmentList[meshName].attachments[attachmentName].parent = attachment.AttachParent
+			-- the origin's socket: on release the attachment is on OUR socket, which detach used to reattach with
+			meshAttachmentList[meshName].attachments[attachmentName].parentSocket = attachment.AttachSocketName and attachment.AttachSocketName:to_string() or nil
 			if options.restoreTransformToOriginOnReattach == true then
 				meshAttachmentList[meshName].attachments[attachmentName].originalTransform = {}
 				if options.useZeroTransformOnReattach or useZeroTransformOnReattach then
@@ -2392,6 +2394,7 @@ function M.attachToRawController(attachment, gripHand, options, hand)
 		meshAttachmentList[meshName].attachments[attachmentName] = {attachment=attachment, detachFromParentOnRelease = options.detachFromParentOnRelease, maintainWorldPositionOnDetachFromParent = options.maintainWorldPositionOnDetachFromParent, attachType = M.AttachType.RAW_CONTROLLER, gripHand = gripHand}
 		if options.reattachToOriginOnRelease == true and attachment ~= nil and attachment.AttachParent ~= nil then
 			meshAttachmentList[meshName].attachments[attachmentName].parent = attachment.AttachParent
+			meshAttachmentList[meshName].attachments[attachmentName].parentSocket = attachment.AttachSocketName and attachment.AttachSocketName:to_string() or nil
 			if options.restoreTransformToOriginOnReattach == true then
 				meshAttachmentList[meshName].attachments[attachmentName].originalTransform = {}
 				if options.useZeroTransformOnReattach or useZeroTransformOnReattach then
@@ -2427,11 +2430,13 @@ function M.attachToRawController(attachment, gripHand, options, hand)
 	end
 end
 
-function M.detach(attachment, parent, attachType, originalTransform, detachFromParentOnRelease, maintainWorldPositionOnDetachFromParent)
+function M.detach(attachment, parent, attachType, originalTransform, detachFromParentOnRelease, maintainWorldPositionOnDetachFromParent, parentSocket)
 	--print("Detaching attachment", attachment, parent or nil, attachType)
 	if uevrUtils.getValid(attachment) ~= nil then
 		--grab the name early before its detached or else it will be lost at reattach time
 		local attachSocketName = attachment.AttachSocketName
+		-- reattach on the origin's socket (saved at attach time), not the grip socket it is on now
+		if parentSocket ~= nil then attachSocketName = uevrUtils.fname_from_string(parentSocket) end
 
 		if attachType == M.AttachType.RAW_CONTROLLER then
 			M.print("Detaching attachment from raw controller: " .. attachment:get_full_name())
@@ -2529,7 +2534,7 @@ local function detachAndCleanup(attachmentData, reattachToParent)
     end
 
     local parent = reattachToParent and attachmentData.parent or nil
-    M.detach(attachmentData.attachment, parent, attachmentData.attachType, attachmentData.originalTransform, attachmentData.detachFromParentOnRelease, attachmentData.maintainWorldPositionOnDetachFromParent)
+    M.detach(attachmentData.attachment, parent, attachmentData.attachType, attachmentData.originalTransform, attachmentData.detachFromParentOnRelease, attachmentData.maintainWorldPositionOnDetachFromParent, parent ~= nil and attachmentData.parentSocket or nil)
 	-- Remove spring arm after the weapon has been detached from it.
 	if attachmentData.springArm ~= nil then
 		destroyWeightSpringArm(attachmentData.springArm)

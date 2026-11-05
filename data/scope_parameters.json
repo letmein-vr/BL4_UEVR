@@ -1,0 +1,134 @@
+{
+    "scopes": {
+        "BOR_SG_Scope_01_L2": {
+            "zoom": 1.0
+        },
+        "BOR_SG_Scope_01_L2_Mask": {
+            "zoom": 1.0
+        },
+        "BOR_SG_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "BOR_SG_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "BOR_SG_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "BOR_SG_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "BOR_SR_Scope_01_L1": {
+            "zoom": 1.0
+        },
+        "BOR_SR_Scope_01_L1_Mask": {
+            "zoom": 1.0
+        },
+        "BOR_SR_Scope_01_L2": {
+            "lens_offset": -1.562000036239624,
+            "zoom": 1.0
+        },
+        "BOR_SR_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "BOR_SR_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "BOR_SR_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "BOR_SR_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "JAK_SG_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "JAK_SR_Scope_01_L1": {
+            "zoom": 1.0
+        },
+        "JAK_SR_Scope_01_L1_Mask": {
+            "zoom": 1.0
+        },
+        "JAK_SR_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "JAK_SR_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "JAK_SR_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "JAK_SR_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "MAL_SM_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "MAL_SR_Scope_01_L1": {
+            "zoom": 1.0
+        },
+        "MAL_SR_Scope_01_L1_Mask": {
+            "zoom": 1.0
+        },
+        "MAL_SR_Scope_01_L2_Mask": {
+            "zoom": 1.0
+        },
+        "MAL_SR_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "MAL_SR_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "MAL_SR_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "ORD_SR_Scope_01_L1": {
+            "zoom": 1.0
+        },
+        "ORD_SR_Scope_01_L1_Mask": {
+            "zoom": 1.0
+        },
+        "ORD_SR_Scope_01_L2_Mask": {
+            "zoom": 1.0
+        },
+        "ORD_SR_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "ORD_SR_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "ORD_SR_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "ORD_SR_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "TED_SG_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "VLA_SR_Scope_01_L1": {
+            "zoom": 1.0
+        },
+        "VLA_SR_Scope_01_L1_Mask": {
+            "zoom": 1.0
+        },
+        "VLA_SR_Scope_01_L2": {
+            "zoom": 1.0
+        },
+        "VLA_SR_Scope_01_L2_Mask": {
+            "zoom": 1.0
+        },
+        "VLA_SR_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "VLA_SR_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "VLA_SR_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "VLA_SR_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        }
+    }
+}

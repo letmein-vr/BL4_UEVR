@@ -1,4 +1,20 @@
 {
+    "cutscene": {
+        "autoAdjustUIWhenInGameState": 1,
+        "autoAdjustUIWhenInGameStatePriority": "0",
+        "decouplePitchWhenInGameState": 3,
+        "decouplePitchWhenInGameStatePriority": "0",
+        "handsWhenInGameState": 3,
+        "handsWhenInGameStatePriority": "0",
+        "inputWhenInGameState": 3,
+        "inputWhenInGameStatePriority": "0",
+        "lockedUIWhenInGameState": 1,
+        "lockedUIWhenInGameStatePriority": "0",
+        "remapWhenInGameState": 1,
+        "remapWhenInGameStatePriority": "0",
+        "screen2DWhenInGameState": 1,
+        "screen2DWhenInGameStatePriority": "0"
+    },
     "widgetlist": {
         "WidgetBlueprintGeneratedClass /Game/UI/WBP_Primary_Layout.WBP_Primary_Layout_C": {
             "alignment": [

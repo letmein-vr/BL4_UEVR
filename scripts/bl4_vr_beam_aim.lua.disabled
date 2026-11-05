@@ -1,0 +1,95 @@
+-- Beam weapons aim with the VR gun (Borderlands 4, 2026-11-05).
+--
+-- Game facts (MCP + exe 2026-11-05, Maliwan "Storm" SMG / underbarrel beam):
+--   * Beam weapons (WeaponBehavior_FireBeam) never reach BL4AimFix.dll's projectile hook: they spawn a GbxGame
+--     LightBeam with the gun as source (muzzle socket), the pawn as instigator, and NO direction or target.
+--   * The beam then runs from BL4's own camera-mode view: end = PlayerCameraManager.CameraModeState.POV.Location
+--     + POV.Rotation forward * 4000 (beam end Z == POV Z to 0.002 cm, yaw == POV yaw). That POV follows the game's
+--     control rotation (body yaw, pitch kept within +-5 deg by bl4_main.lua's levelGamePitch), not UEVR's aim, so the
+--     beam ignored the gun. Not GetActorEyesViewPoint / GetControlRotation (hooked, no beam caller).
+--
+-- While a beam weapon is held and the right trigger is down, the POV gets the first-person gun's muzzle + barrel at
+-- the start of the frame (before the world tick the beam runs in).
+
+local uevrUtils = require('libs/uevr_utils')
+local configui = require('libs/configui')
+
+local BEAM_CLASS = "Class /Script/OakGame.WeaponBehavior_FireBeam"
+local TRIGGER_THRESHOLD = 30
+
+local function log(text)
+	if _G.bl4 ~= nil and _G.bl4.log ~= nil then _G.bl4.log("[beam_aim] " .. tostring(text)) else print("[beam_aim] " .. tostring(text)) end
+end
+
+local triggerDown = false
+uevrUtils.registerOnPreInputGetStateCallback(function(retval, user_index, state)
+	if user_index == 0 and state ~= nil then triggerDown = state.Gamepad.bRightTrigger >= TRIGGER_THRESHOLD end
+end)
+
+-- weapon address -> true / false: has a FireBeam behaviour (its fire behaviours are subobjects of the weapon)
+local beamWeapon = {} -- weapon address -> true, or the os.clock() of the last negative check (re-checked after 2 s)
+local function isBeamWeapon(weapon)
+	local key = weapon:get_address()
+	local cached = beamWeapon[key]
+	if cached == true then return true end
+	if cached ~= nil and os.clock() - cached < 2.0 then return false end
+	local found = false
+	local ok, err = pcall(function()
+		for _, b in ipairs(uevrUtils.find_all_of(BEAM_CLASS, false) or {}) do
+			local outer = b:get_outer()
+			if outer ~= nil and outer:get_address() == key then found = true break end
+		end
+	end)
+	if not ok then log("beam check: " .. tostring(err)) end
+	beamWeapon[key] = found or os.clock()
+	if found then log("beam weapon: " .. weapon:get_full_name()) end
+	return found
+end
+uevrUtils.registerPreLevelChangeCallback(function(level) beamWeapon = {} end)
+
+local muzzleNames = { "Muzzle", "UnderbarrelMuzzle" }
+local function gunMuzzle(mesh)
+	for _, name in ipairs(muzzleNames) do
+		local fname = uevrUtils.fname_from_string(name)
+		if mesh:DoesSocketExist(fname) then return mesh:GetSocketLocation(fname), mesh:GetSocketRotation(fname) end
+	end
+	return mesh:K2_GetComponentLocation(), mesh:K2_GetComponentRotation()
+end
+
+local active = false
+local lastLog = nil
+local lastReason = nil
+local function idle(reason)
+	active = false
+	if triggerDown and reason ~= lastReason then log("not aiming: " .. reason) end
+	lastReason = reason
+end
+uevr.sdk.callbacks.on_pre_engine_tick(function(engine, delta)
+	local ok, err = pcall(function()
+		if not triggerDown then active = false lastReason = nil return end
+		if _G.bl4 == nil or not uevr.params.vr.is_hmd_active() then idle("no bl4 / HMD") return end
+		local pawn = _G.bl4.getPlayerCharacter()
+		local weapon = pawn ~= nil and _G.bl4.getHeldWeapon(pawn) or nil
+		if weapon == nil then idle("no weapon") return end
+		if not isBeamWeapon(weapon) then idle("not a beam weapon: " .. weapon:get_full_name()) return end
+		local mesh = _G.bl4.getFirstPersonWeaponMesh(weapon)
+		if mesh == nil then active = false return end
+		local pc = uevr.api:get_player_controller(0)
+		local cms = pc ~= nil and pc.PlayerCameraManager ~= nil and pc.PlayerCameraManager.CameraModeState or nil
+		if uevrUtils.getValid(cms) == nil then active = false return end
+		local loc, rot = gunMuzzle(mesh)
+		local pov = cms.POV
+		pov.Location.X, pov.Location.Y, pov.Location.Z = loc.X, loc.Y, loc.Z
+		pov.Rotation.Pitch, pov.Rotation.Yaw, pov.Rotation.Roll = rot.Pitch, rot.Yaw, 0
+		cms.POV = pov
+		if not active or os.clock() - (lastLog or 0) > 1.0 then
+			lastLog = os.clock()
+			local after = cms.POV.Rotation
+			log(string.format("gun (%.1f %.1f) -> POV now (%.1f %.1f)", rot.Pitch, rot.Yaw, after.Pitch, after.Yaw))
+		end
+		active = true
+	end)
+	if not ok then log(tostring(err)) active = false end
+end)
+
+log("loaded")

@@ -11,7 +11,10 @@
 --   * Hands mode: the gun is a child of the right VR hand (bl4_main.lua grip callback), not of the raw controller, so
 --     the right hand cannot be re-parented onto the gun (loop). The right hand mesh itself is pivoted instead (the gun
 --     follows as its child), re-applied every view from the hand's rest transform saved at grab (nothing else resets
---     it). The left hand is parented to the gun as in Hellraiser.
+--     it). The left hand is parented to the gun as in Hellraiser. Same placement as IK mode (2026-11-05): the hand
+--     turns about its wrist bone keeping the grab-time direction to the left controller (swingAbout), and the left
+--     hand's wrist bone (not the component origin) sits on the grip point with the IK offset meaning; a weapon with no
+--     Hands left-hand values uses its IK ones.
 --   * Without VR hands (gun on the raw controller): the gun is pivoted (UObjectHook resets it every view).
 --   * IK mode: Hellraiser's two-hand frame; the un-pivoted gun base comes from bl4_vr_ik.lua (_G.bl4IKWeaponBase).
 --   * Fore-grip point: along the first-person gun's origin -> Muzzle socket line (barrel = mesh +X), plus per-weapon
@@ -105,7 +108,8 @@ local grabDown = false   -- the configured grab button (grip or trigger), raw, b
 local nearGrip = false   -- left controller within the grab radius last tick (grab button hidden from the game)
 local ranThisTick = false
 local snapshots = {}     -- [hand] = { parent, socket, loc={X,Y,Z}, rot={Pitch,Yaw,Roll} }
-local rightPivot = nil   -- Hands mode: { pmc, loc, rot } = the right hand's rest relative transform (pivoted every view)
+local rightPivot = nil   -- Hands mode: { pmc, loc, rot, gripLocal } = the right hand's rest relative transform (pivoted every view)
+local leftGlide = nil    -- Hands mode off-hand glide: { pmc, sLoc, sRot, eLoc, eRot, t0, dur, home }
 local marker = nil
 local hitResult = nil
 
@@ -153,9 +157,26 @@ local function seedIKLeftHand(p)
 	return changed
 end
 
+-- Hands and IK place the left hand the same way (wrist bone at the grip point, controller rotation, same offset
+-- meaning), so a weapon without Hands values uses its IK ones; the first Hands slider edit copies them (separate after)
+local function handsLeftHandUnset(p)
+	for _, s in ipairs(LH_SLIDERS) do
+		if p[s.field] ~= nil then return false end
+	end
+	return true
+end
+local function seedHandsLeftHand(p)
+	if not handsLeftHandUnset(p) then return end
+	for _, s in ipairs(LH_SLIDERS) do p[s.field] = p[s.ik] or 0 end
+end
+
 -- the weapon's left-hand offset for the current hands mode: loc {X,Y,Z}, rot {Pitch,Yaw,Roll}
 local function leftHandOffset(p, ikValues)
-	local function v(s) return (ikValues and p[s.ik] or p[s.field]) or 0 end
+	local handsUnset = not ikValues and handsLeftHandUnset(p)
+	local function v(s)
+		if ikValues or handsUnset then return p[s.ik] or 0 end
+		return p[s.field] or 0
+	end
 	local s = LH_SLIDERS
 	return { X = v(s[1]), Y = v(s[2]), Z = v(s[3]) }, { Pitch = v(s[4]), Yaw = v(s[5]), Roll = v(s[6]) }
 end
@@ -169,8 +190,9 @@ local function loadWeaponParamsToUI(id)
 	configui.setValue("bl4_th_off_y", p.offY or 0, true)
 	configui.setValue("bl4_th_off_z", p.offZ or 0, true)
 	if seedIKLeftHand(p) then saveParams() end
+	local handsUnset = handsLeftHandUnset(p)
 	for _, s in ipairs(LH_SLIDERS) do
-		configui.setValue(s.id, p[s.field] or 0, true)
+		configui.setValue(s.id, (handsUnset and p[s.ik] or p[s.field]) or 0, true)
 		configui.setValue(s.ikId, p[s.ik] or 0, true)
 	end
 end
@@ -258,6 +280,10 @@ local function snapshotHand(hand)
 	if not alive(pmc) then return nil end
 	local ok, snap = pcall(function()
 		local loc, rot = relativeOf(pmc)
+		-- grabbed again while the left hand is still gliding home: its rest is the glide's end, not where it is now
+		if hand == Handed.Left and leftGlide ~= nil and leftGlide.home and leftGlide.pmc == pmc then
+			loc, rot = leftGlide.eLoc, leftGlide.eRot
+		end
 		return {
 			parent = pmc.AttachParent,
 			socket = (pmc.AttachSocketName and pmc.AttachSocketName:to_string()) or "",
@@ -271,7 +297,6 @@ end
 
 -- Off-hand glide, Hands mode: the left hand's relative transform eases from where it was to the target over
 -- bl4_th_offhand_glide (cubic ease-out, RLerp), in the parent's space so the pivoting gun never makes it chase. 0 = snap.
-local leftGlide = nil -- { pmc, sLoc, sRot, eLoc, eRot, t0, dur }
 
 local function glideTime()
 	local v = configui.getValue("bl4_th_offhand_glide")
@@ -312,7 +337,7 @@ local function restoreHand(hand)
 			-- back onto the controller without moving, then glide home
 			pmc:K2_AttachTo(snap.parent, uevrUtils.fname_from_string(snap.socket or ""), 1, false)
 			local sLoc, sRot = relativeOf(pmc)
-			startLeftGlide(pmc, sLoc, sRot, snap.loc, snap.rot)
+			if startLeftGlide(pmc, sLoc, sRot, snap.loc, snap.rot) then leftGlide.home = true end
 		elseif snap ~= nil and alive(snap.parent) then
 			pmc:K2_AttachTo(snap.parent, uevrUtils.fname_from_string(snap.socket or ""), 0, false)
 			uevrUtils.set_component_relative_transform(pmc, snap.loc, snap.rot, { X = 1, Y = 1, Z = 1 })
@@ -457,7 +482,7 @@ end)
 -- ---------------------------------------------------------------------------------------------
 -- Left hand placement offsets while two-handing (relative to where the hand landed at grab time)
 -- ---------------------------------------------------------------------------------------------
-local leftBaseRel = nil -- { loc={X,Y,Z}, rot={Pitch,Yaw,Roll} } captured right after parenting
+local leftBaseRel = nil -- Hands mode: { restT, wrist, loc, rot } captured right after parenting (see applyLeftOffset)
 
 -- forward declarations (IK helpers are defined further down)
 local ikBase = nil
@@ -496,34 +521,63 @@ local function placeTwoHandFrame(frame, loc, rot)
 	frame:K2_SetWorldLocationAndRotation(uevrUtils.vector(loc.X, loc.Y, loc.Z), rot, false, getHitResult(), true)
 end
 
+-- Hands mode places the left hand the way IK mode places its IK target: the hand's WRIST bone (the hands wizard's
+-- Left joint, L_Hand) goes to the grip point + offset, turned to the left controller's rotation + offset, all in the
+-- gun's space. The VR hand is a component whose origin sits away from that bone (Left joint Location -7.6 cm), so the
+-- component is placed as if a virtual left controller held it there: pmc = restRelativeToController * virtualController,
+-- virtualController.loc = target - virtualController.rot * (wrist bone in controller space).
 local function applyLeftOffset()
 	leftGlide = nil
 	if not active or leftBaseRel == nil then return end
 	local pmc = hands.getHandComponent(Handed.Left)
 	if not alive(pmc) then return end
 	local o, r = leftHandOffset(getWeaponParams(currentWeaponID) or {}, false)
-	pcall(function()
-		uevrUtils.set_component_relative_transform(pmc,
-			{ X = leftBaseRel.loc.X + o.X, Y = leftBaseRel.loc.Y + o.Y, Z = leftBaseRel.loc.Z + o.Z },
-			{ Pitch = leftBaseRel.rot.Pitch + r.Pitch, Yaw = leftBaseRel.rot.Yaw + r.Yaw, Roll = leftBaseRel.rot.Roll + r.Roll },
-			{ X = 1, Y = 1, Z = 1 })
+	local ok, err = pcall(function()
+		local b = leftBaseRel
+		local tRot = uevrUtils.rotator(b.rot.Pitch + r.Pitch, b.rot.Yaw + r.Yaw, b.rot.Roll + r.Roll)
+		local k = kismet_math_library:GreaterGreater_VectorRotator(uevrUtils.vector(b.wrist.X, b.wrist.Y, b.wrist.Z), tRot)
+		local ctrlT = kismet_math_library:MakeTransform(
+			uevrUtils.vector(b.loc.X + o.X - k.X, b.loc.Y + o.Y - k.Y, b.loc.Z + o.Z - k.Z), tRot, uevrUtils.vector(1, 1, 1))
+		local rel = kismet_math_library:ComposeTransforms(b.restT, ctrlT)
+		local t = rel.Translation
+		pmc:K2_SetRelativeLocationAndRotation(uevrUtils.vector(t.X, t.Y, t.Z), kismet_math_library:Quat_Rotator(rel.Rotation),
+			false, getHitResult(), true)
 	end)
+	if not ok then print("[bl4 two_handed] left placement: " .. tostring(err)) end
 end
 
-local function captureLeftBase()
+-- after parentHandToWeapon (snapshot taken = the hand's rest on the controller): the target in the gun's space
+-- (grip point, or the controller when not snapping) and the wrist bone's offset in controller space
+local function captureLeftBase(weaponMesh, targetPoint)
 	leftBaseRel = nil
 	local pmc = hands.getHandComponent(Handed.Left)
-	if not alive(pmc) then return end
-	pcall(function()
-		local loc, rot = relativeOf(pmc)
-		leftBaseRel = { loc = loc, rot = rot }
+	local ctrl = controllers.getController(0, true)
+	local snap = snapshots[Handed.Left]
+	if not alive(pmc) or not alive(ctrl) or snap == nil then return end
+	local ok, err = pcall(function()
+		local one = uevrUtils.vector(1, 1, 1)
+		local restT = kismet_math_library:MakeTransform(uevrUtils.vector(snap.loc.X, snap.loc.Y, snap.loc.Z),
+			uevrUtils.rotator(snap.rot.Pitch, snap.rot.Yaw, snap.rot.Roll), one)
+		local wristInPmc = kismet_math_library:MakeRelativeTransform(pmc:GetSocketTransform(getLeftTargetBone(), 0), pmc:K2_GetComponentToWorld())
+		local w = kismet_math_library:ComposeTransforms(wristInPmc, restT).Translation
+		local gunT = weaponMesh:K2_GetComponentToWorld()
+		local lp = kismet_math_library:InverseTransformLocation(gunT, targetPoint or ctrl:K2_GetComponentLocation())
+		local lr = kismet_math_library:InverseTransformRotation(gunT, ctrl:K2_GetComponentRotation())
+		leftBaseRel = {
+			restT = restT,
+			wrist = { X = w.X, Y = w.Y, Z = w.Z },
+			loc = { X = lp.X, Y = lp.Y, Z = lp.Z },
+			rot = { Pitch = lr.Pitch, Yaw = lr.Yaw, Roll = lr.Roll },
+		}
 	end)
+	if not ok then print("[bl4 two_handed] left base: " .. tostring(err)) end
 end
 
 local function onLeftHandSlider(field, value)
 	local p = getWeaponParams(currentWeaponID)
 	if p == nil then return end
 	seedIKLeftHand(p)
+	if not field:find("Ik", 1, true) then seedHandsLeftHand(p) end -- first Hands edit: start from the IK values
 	p[field] = value
 	saveParams()
 	uevrUtils.setTimeout(1, function()          -- draw thread -> game thread
@@ -621,6 +675,27 @@ local function detachIKRightHand()
 	pcall(function() uevrUtils.executeUEVRCallbacks("on_accessory_detach", Handed.Right) end)
 end
 
+-- Turns a pose (baseLoc, baseRot) about pivot so the direction pivot -> g (the left controller's grab-time point, on the
+-- un-pivoted pose) becomes pivot -> l (the left controller now). Both hand modes: the gun keeps the grab-time relation
+-- to the left controller instead of snapping its barrel onto the line between the controllers.
+local function swingAbout(baseLoc, baseRot, pivot, g, l)
+	local bx, by, bz = g.X - pivot.X, g.Y - pivot.Y, g.Z - pivot.Z -- hand -> grab point (un-pivoted gun)
+	local dx, dy, dz = l.X - pivot.X, l.Y - pivot.Y, l.Z - pivot.Z -- hand -> left controller now
+	local bl = math.sqrt(bx * bx + by * by + bz * bz)
+	local dl = math.sqrt(dx * dx + dy * dy + dz * dz)
+	if bl <= 1.0 or dl <= 1.0 then return baseLoc, baseRot end
+	bx, by, bz = bx / bl, by / bl, bz / bl
+	dx, dy, dz = dx / dl, dy / dl, dz / dl
+	local cx, cy, cz = by * dz - bz * dy, bz * dx - bx * dz, bx * dy - by * dx -- b x d
+	local s = math.sqrt(cx * cx + cy * cy + cz * cz)
+	local c = bx * dx + by * dy + bz * dz
+	if s <= 1e-5 then return baseLoc, baseRot end
+	local r = kismet_math_library:RotatorFromAxisAndAngle(uevrUtils.vector(cx / s, cy / s, cz / s), math.deg(math.atan(s, c)))
+	local newRot = kismet_math_library:ComposeRotators(baseRot, r) -- base, then the swing
+	local off = kismet_math_library:GreaterGreater_VectorRotator(uevrUtils.vector(baseLoc.X - pivot.X, baseLoc.Y - pivot.Y, baseLoc.Z - pivot.Z), r)
+	return { X = pivot.X + off.X, Y = pivot.Y + off.Y, Z = pivot.Z + off.Z }, newRot
+end
+
 local function beginIKAim(weaponMesh, leftHand)
 	ikAim = nil
 	local baseT, _, ctrlT = ikWeaponBase(weaponMesh, true)
@@ -661,25 +736,7 @@ local function applyIKAim(weaponMesh, leftHand)
 	local baseLoc = { X = bt.X, Y = bt.Y, Z = bt.Z }
 	local baseRot = kismet_math_library:Quat_Rotator(baseT.Rotation)
 	local g = kismet_math_library:TransformLocation(baseT, uevrUtils.vector(ikAim.gripLocal.X, ikAim.gripLocal.Y, ikAim.gripLocal.Z))
-	local l = leftHand:K2_GetComponentLocation()
-	local bx, by, bz = g.X - pivot.X, g.Y - pivot.Y, g.Z - pivot.Z -- hand -> grab point (un-pivoted gun)
-	local dx, dy, dz = l.X - pivot.X, l.Y - pivot.Y, l.Z - pivot.Z -- hand -> left controller now
-	local bl = math.sqrt(bx * bx + by * by + bz * bz)
-	local dl = math.sqrt(dx * dx + dy * dy + dz * dz)
-	local newLoc, newRot = baseLoc, baseRot
-	if bl > 1.0 and dl > 1.0 then
-		bx, by, bz = bx / bl, by / bl, bz / bl
-		dx, dy, dz = dx / dl, dy / dl, dz / dl
-		local cx, cy, cz = by * dz - bz * dy, bz * dx - bx * dz, bx * dy - by * dx -- b x d
-		local s = math.sqrt(cx * cx + cy * cy + cz * cz)
-		local c = bx * dx + by * dy + bz * dz
-		if s > 1e-5 then
-			local r = kismet_math_library:RotatorFromAxisAndAngle(uevrUtils.vector(cx / s, cy / s, cz / s), math.deg(math.atan(s, c)))
-			newRot = kismet_math_library:ComposeRotators(baseRot, r) -- base, then the swing
-			local off = kismet_math_library:GreaterGreater_VectorRotator(uevrUtils.vector(baseLoc.X - pivot.X, baseLoc.Y - pivot.Y, baseLoc.Z - pivot.Z), r)
-			newLoc = { X = pivot.X + off.X, Y = pivot.Y + off.Y, Z = pivot.Z + off.Z }
-		end
-	end
+	local newLoc, newRot = swingAbout(baseLoc, baseRot, pivot, g, leftHand:K2_GetComponentLocation())
 	-- weapon kick (bl4_vr_recoil.lua) on the gun's pose = the two-hand frame's: both IK hands and the gun follow it
 	if _G.bl4KickWorld ~= nil then
 		local ok, kLoc, kRot = pcall(_G.bl4KickWorld, newLoc, newRot)
@@ -701,15 +758,35 @@ end
 -- UObjectHook placement, the IK base), so repeating it is idempotent.
 local pivotArgs = nil -- { weaponMesh, rightHand, leftHand } while two-handing
 
+-- Puts the right hand back on its rest transform with the engine setter, which updates the world transform at once.
+-- uevrUtils.set_component_relative_transform writes the RelativeLocation / RelativeRotation fields only: the world
+-- rotation applyTwoHandedRotation then reads was still last view's pivoted one, so the turn was added again every view
+-- (MCP watch 2026-11-05: right hand yaw -25 -> -50 -> -75 deg, then the grip point left the release radius and the grab
+-- re-armed every ~5 frames: the weapon "freaking out" and the left hand left offset at the last release).
+local function restoreRightRest(pivot)
+    pivot.pmc:K2_SetRelativeLocationAndRotation(uevrUtils.vector(pivot.loc.X, pivot.loc.Y, pivot.loc.Z),
+        uevrUtils.rotator(pivot.rot.Pitch, pivot.rot.Yaw, pivot.rot.Roll), false, getHitResult(), true)
+end
+
 local function applyPivot()
 	local a = pivotArgs
 	if a == nil or not alive(a.weaponMesh) then return end
 	if ikMode() and applyIKAim(a.weaponMesh, a.leftHand) then return end
 	-- weapon kick (bl4_vr_recoil.lua, "Weapon kick while two-handing") goes on top of the pivot; the left hand rides the gun
 	if rightPivot ~= nil and alive(rightPivot.pmc) then
-		-- Hands mode: turn the right VR hand (the gun is its child) from its rest transform
-		uevrUtils.set_component_relative_transform(rightPivot.pmc, rightPivot.loc, rightPivot.rot, { X = 1, Y = 1, Z = 1 })
-		twoHandedAiming.applyTwoHandedRotation(rightPivot.pmc, a.rightHand, a.leftHand)
+		-- Hands mode: turn the right VR hand (the gun is its child) from its rest transform, about its wrist bone, as the
+		-- IK path turns the gun about the IK hand target (swingAbout)
+		restoreRightRest(rightPivot)
+		local pmc = rightPivot.pmc
+		local gl = rightPivot.gripLocal
+		if gl ~= nil then
+			local pivot = rightPivot.wristBone ~= nil and pmc:GetSocketLocation(rightPivot.wristBone) or a.rightHand:K2_GetComponentLocation()
+			local g = kismet_math_library:TransformLocation(pmc:K2_GetComponentToWorld(), uevrUtils.vector(gl.X, gl.Y, gl.Z))
+			local newLoc, newRot = swingAbout(pmc:K2_GetComponentLocation(), pmc:K2_GetComponentRotation(), pivot, g, a.leftHand:K2_GetComponentLocation())
+			pmc:K2_SetWorldLocationAndRotation(uevrUtils.vector(newLoc.X, newLoc.Y, newLoc.Z), newRot, false, getHitResult(), true)
+		else
+			twoHandedAiming.applyTwoHandedRotation(pmc, a.rightHand, a.leftHand)
+		end
 		if _G.bl4KickParentOfGun ~= nil then pcall(_G.bl4KickParentOfGun, rightPivot.pmc, a.weaponMesh) end
 	else
 		twoHandedAiming.applyTwoHandedRotation(a.weaponMesh, a.rightHand, a.leftHand)
@@ -744,10 +821,17 @@ local function activate(weaponMesh, gripPoint)
 			pcall(function()
 				local loc, rot = relativeOf(rightPmc)
 				rightPivot = { pmc = rightPmc, loc = loc, rot = rot }
+				-- the left controller's grab point in the right hand's space (the swing keeps it pointing at the controller)
+				local lp = kismet_math_library:InverseTransformLocation(rightPmc:K2_GetComponentToWorld(),
+					controllers.getController(0, true):K2_GetComponentLocation())
+				rightPivot.gripLocal = { X = lp.X, Y = lp.Y, Z = lp.Z }
+				local wrist = uevrUtils.fname_from_string("R_Hand")
+				if rightPmc:DoesSocketExist(wrist) then rightPivot.wristBone = wrist end
 			end)
 		end
-		local preLoc, preRot = parentHandToWeapon(Handed.Left, weaponMesh, configui.getValue("bl4_th_snap_left_hand") ~= false and gripPoint or nil)
-		captureLeftBase()
+		-- attached where it is (KeepWorld); captureLeftBase / applyLeftOffset then put its wrist on the grip point
+		local preLoc, preRot = parentHandToWeapon(Handed.Left, weaponMesh, nil)
+		captureLeftBase(weaponMesh, configui.getValue("bl4_th_snap_left_hand") ~= false and gripPoint or nil)
 		applyLeftOffset()
 		-- the final transform is now set: glide to it from where the hand was
 		local pmc = hands.getHandComponent(Handed.Left)
@@ -773,7 +857,7 @@ local function deactivate(reason)
 	ikAim = nil -- bl4_vr_ik.lua re-asserts the un-pivoted grip once _G.isTwoHandingActive is false
 	pivotArgs = nil
 	if rightPivot ~= nil and alive(rightPivot.pmc) then
-		pcall(function() uevrUtils.set_component_relative_transform(rightPivot.pmc, rightPivot.loc, rightPivot.rot, { X = 1, Y = 1, Z = 1 }) end)
+		pcall(function() restoreRightRest(rightPivot) end)
 	end
 	rightPivot = nil
 	if activeInIKMode and _G.bl4SetIKLeftArmStretch ~= nil then pcall(_G.bl4SetIKLeftArmStretch, false) end

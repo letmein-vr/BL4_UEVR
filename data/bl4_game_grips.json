@@ -1,0 +1,353 @@
+{
+    "GestaltSkeletalMesh /Game/Gear/Gadgets/HeavyWeapons/VLA/Model/Rig/SK_VLA_HW.SK_VLA_HW": {
+        "loc": {
+            "X": 11.052836532818983,
+            "Y": -24.938442425384448,
+            "Z": 4.932364063406252
+        },
+        "rot": {
+            "Pitch": 6.623534488335232,
+            "Roll": -3.356213967002657,
+            "Yaw": -3.9591641181437813
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/AssaultRifles/DAD/Model/Rig/SK_DAD_AR.SK_DAD_AR": {
+        "loc": {
+            "X": 11.693809088363896,
+            "Y": -2.790787339315022,
+            "Z": 4.424180597462026
+        },
+        "rot": {
+            "Pitch": 4.785605489611021,
+            "Roll": -2.8530926948607593,
+            "Yaw": 6.278536180218272
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/AssaultRifles/JAK/Model/Rig/SK_JAK_AR.SK_JAK_AR": {
+        "loc": {
+            "X": 14.73806504437434,
+            "Y": -3.327980037937373,
+            "Z": 4.732630043580917
+        },
+        "rot": {
+            "Pitch": 36.93220766945332,
+            "Roll": -3.5744768563484786,
+            "Yaw": 2.229387983182707
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/AssaultRifles/ORD/Model/Rig/SK_ORD_AR.SK_ORD_AR": {
+        "loc": {
+            "X": 11.987630122603532,
+            "Y": -2.664855407951171,
+            "Z": 6.5834357598414055
+        },
+        "rot": {
+            "Pitch": 26.731461585038872,
+            "Roll": -0.2499147098811729,
+            "Yaw": 7.4104285284117575
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/AssaultRifles/TED/Model/Rig/SK_TED_AR.SK_TED_AR": {
+        "loc": {
+            "X": 8.964966156838988,
+            "Y": -4.029490295931082,
+            "Z": 5.6349584183555494
+        },
+        "rot": {
+            "Pitch": 12.950679423744491,
+            "Roll": -0.2207692427448031,
+            "Yaw": 9.343219532868345
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/AssaultRifles/TOR/Model/Rig/SK_TOR_AR.SK_TOR_AR": {
+        "loc": {
+            "X": 13.153024958653226,
+            "Y": -1.364938823559946,
+            "Z": 4.216994146866383
+        },
+        "rot": {
+            "Pitch": 5.159749933628735,
+            "Roll": -2.10049787489858,
+            "Yaw": 14.944643839428432
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/AssaultRifles/VLA/Model/Rig/SK_VLA_AR.SK_VLA_AR": {
+        "loc": {
+            "X": 12.743315621158223,
+            "Y": -2.365377679611473,
+            "Z": 4.417040686564809
+        },
+        "rot": {
+            "Pitch": 13.85593976880313,
+            "Roll": -1.1246818131397307,
+            "Yaw": 8.652468409116512
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Pistols/DAD/Model/Rig/SK_DAD_PS.SK_DAD_PS": {
+        "loc": {
+            "X": 11.7657098450438,
+            "Y": -4.0238556317286545,
+            "Z": 4.251627204443162
+        },
+        "rot": {
+            "Pitch": 15.677790328438878,
+            "Roll": -3.757671649279276,
+            "Yaw": -4.300463147540297
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Pistols/JAK/Model/Rig/SK_JAK_PS.SK_JAK_PS": {
+        "loc": {
+            "X": 13.115468718301814,
+            "Y": -3.2316381124398053,
+            "Z": 4.404831345239908
+        },
+        "rot": {
+            "Pitch": 21.12643615742425,
+            "Roll": 2.9289593010567168,
+            "Yaw": 4.360837287605578
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Pistols/ORD/Model/Rig/SK_ORD_PS.SK_ORD_PS": {
+        "loc": {
+            "X": 15.36528052457561,
+            "Y": -3.2337442024355862,
+            "Z": 3.9606111516138087
+        },
+        "rot": {
+            "Pitch": 5.86946037028708,
+            "Roll": -2.399880709305555,
+            "Yaw": 0.3411879825546947
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Pistols/TED/Model/Rig/SK_TED_PS.SK_TED_PS": {
+        "loc": {
+            "X": 10.227052859490097,
+            "Y": -3.940187432494701,
+            "Z": 4.361909870376193
+        },
+        "rot": {
+            "Pitch": 7.927124355027518,
+            "Roll": -3.2004852698925923,
+            "Yaw": 0.2139966446414706
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Pistols/TOR/Model/Rig/SK_TOR_PS.SK_TOR_PS": {
+        "loc": {
+            "X": 13.299704888832352,
+            "Y": -3.7258196690757295,
+            "Z": 4.427437198726928
+        },
+        "rot": {
+            "Pitch": 17.967269755525553,
+            "Roll": -2.678906482986724,
+            "Yaw": -0.5465182131167423
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/SMG/BOR/Model/Rig/SK_BOR_SM.SK_BOR_SM": {
+        "loc": {
+            "X": 12.84730753880532,
+            "Y": -2.9042548272642428,
+            "Z": 4.70490199873203
+        },
+        "rot": {
+            "Pitch": 9.291365439678408,
+            "Roll": -1.8727964666841825,
+            "Yaw": 6.278145009529058
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/SMG/DAD/Model/Rig/SK_DAD_SM.SK_DAD_SM": {
+        "loc": {
+            "X": 13.718427693540344,
+            "Y": -2.3479943876203766,
+            "Z": 4.661384789487141
+        },
+        "rot": {
+            "Pitch": 7.125696886689024,
+            "Roll": -2.45908023833846,
+            "Yaw": 6.169404444903808
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/SMG/MAL/Model/Rig/SK_MAL_SM.SK_MAL_SM": {
+        "loc": {
+            "X": 12.589732603139167,
+            "Y": -3.4702169300864227,
+            "Z": 2.826769072893117
+        },
+        "rot": {
+            "Pitch": 14.010363690748177,
+            "Roll": -3.7287561165925105,
+            "Yaw": 1.1709727824135592
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/SMG/VLA/Model/Rig/SK_VLA_SM.SK_VLA_SM": {
+        "loc": {
+            "X": 13.68392986400515,
+            "Y": -2.723314552734452,
+            "Z": 4.114045203168205
+        },
+        "rot": {
+            "Pitch": 7.125696917492331,
+            "Roll": -2.4591172439392404,
+            "Yaw": 7.109054980222271
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Shotguns/BOR/Model/Rig/SK_BOR_SG.SK_BOR_SG": {
+        "loc": {
+            "X": 15.221325111748401,
+            "Y": -3.993186984983037,
+            "Z": 12.028189203033238
+        },
+        "rot": {
+            "Pitch": 35.263503016537015,
+            "Roll": -0.1757417783762542,
+            "Yaw": 0.01832934197157986
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Shotguns/DAD/Model/Rig/SK_DAD_SG.SK_DAD_SG": {
+        "loc": {
+            "X": 11.859479559345761,
+            "Y": -4.181158574752514,
+            "Z": 4.132448108030381
+        },
+        "rot": {
+            "Pitch": 24.976436776908912,
+            "Roll": -4.176051244748651,
+            "Yaw": -6.799923852302895
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Shotguns/JAK/Model/Rig/SK_JAK_SG.SK_JAK_SG": {
+        "loc": {
+            "X": 14.41433359924341,
+            "Y": -3.1395460298986055,
+            "Z": 4.634066966473805
+        },
+        "rot": {
+            "Pitch": 32.4483915377853,
+            "Roll": -1.5863024826843972,
+            "Yaw": 4.55582552830026
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Shotguns/MAL/Model/Rig/SK_MAL_SG.SK_MAL_SG": {
+        "loc": {
+            "X": 11.295350023640907,
+            "Y": -4.163762499006152,
+            "Z": 4.552948116555427
+        },
+        "rot": {
+            "Pitch": 26.31583116845862,
+            "Roll": -3.8909405206625256,
+            "Yaw": -1.630742844314335
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Shotguns/TED/Model/Rig/SK_TED_SG.SK_TED_SG": {
+        "loc": {
+            "X": 10.542207248059357,
+            "Y": -3.3720903713844734,
+            "Z": 3.8353571612288304
+        },
+        "rot": {
+            "Pitch": 5.950180457137776,
+            "Roll": 0.13460931069617388,
+            "Yaw": -0.03470422010958548
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Shotguns/TOR/Model/Rig/SK_TOR_SG.SK_TOR_SG": {
+        "loc": {
+            "X": 11.52912184874109,
+            "Y": -3.4037345837260022,
+            "Z": 4.087941523837674
+        },
+        "rot": {
+            "Pitch": 7.69069001401591,
+            "Roll": 1.318330682535031,
+            "Yaw": -2.593706518512142
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Sniper/BOR/Model/Rig/SK_BOR_SR.SK_BOR_SR": {
+        "loc": {
+            "X": 11.416643431740097,
+            "Y": -2.8897512946401536,
+            "Z": 4.959502851240805
+        },
+        "rot": {
+            "Pitch": 3.5442533026727054,
+            "Roll": -0.16919746967806543,
+            "Yaw": 8.196239544101946
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Sniper/JAK/Model/Rig/SK_JAK_SR.SK_JAK_SR": {
+        "loc": {
+            "X": 14.656992029580293,
+            "Y": -3.3997846600422257,
+            "Z": 1.6058537124640488
+        },
+        "rot": {
+            "Pitch": 8.953011547247861,
+            "Roll": -0.8617087460169987,
+            "Yaw": 3.2975358553484417
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Sniper/MAL/Model/Rig/SK_MAL_SR.SK_MAL_SR": {
+        "loc": {
+            "X": 10.72642896139734,
+            "Y": -3.084191103811605,
+            "Z": 4.7938361922912796
+        },
+        "rot": {
+            "Pitch": 19.390706348802343,
+            "Roll": -1.4232169779989527,
+            "Yaw": 4.925613248871924
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Sniper/ORD/Model/Rig/SK_ORD_SR.SK_ORD_SR": {
+        "loc": {
+            "X": 9.768298497669635,
+            "Y": -4.312828553027726,
+            "Z": 4.40584071064681
+        },
+        "rot": {
+            "Pitch": 9.660107084045547,
+            "Roll": -3.4761060234157912,
+            "Yaw": -2.7417963533132044
+        },
+        "v": 2
+    },
+    "GestaltSkeletalMesh /Game/Gear/Weapons/Sniper/VLA/Model/Rig/SK_VLA_SR.SK_VLA_SR": {
+        "loc": {
+            "X": 13.135845196243126,
+            "Y": -3.230018011557874,
+            "Z": 5.530501558180692
+        },
+        "rot": {
+            "Pitch": 9.488252568620506,
+            "Roll": 0.45502156181185827,
+            "Yaw": -2.044087780534403
+        },
+        "v": 2
+    }
+}

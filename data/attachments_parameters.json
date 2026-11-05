@@ -221,11 +221,11 @@
             "child": "SK_JAK_SG",
             "hand_location": [
                 -1.0,
-                1.2000000476837158,
+                1.100000023841858,
                 7.800000190734863
             ],
             "hand_rotation": [
-                -36.099998474121094,
+                -34.099998474121094,
                 0.30000001192092896,
                 0.0
             ],
@@ -332,15 +332,15 @@
             "any_parent": true,
             "child": "SK_MAL_SM",
             "hand_location": [
-                0.8999999761581421,
-                0.10000000149011612,
-                3.0999999046325684
+                0.0,
+                0.0,
+                0.0
             ],
             "id": "OakWeapon_SK_MAL_SM",
             "location": [
-                4.6,
-                -1.4,
-                4.1
+                4.5,
+                -1.399999976158142,
+                4.099999904632568
             ],
             "melee": false,
             "parent": "OakWeapon",
@@ -561,6 +561,388 @@
                 0.0
             ],
             "id": "OakWeapon_SK_MAL_SR",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "throwing_knife",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_JAK_GRN",
+            "hand_rotation": [
+                0.0,
+                1.7999999523162842,
+                0.0
+            ],
+            "id": "GrenadeGadget_SK_JAK_GRN",
+            "location": [
+                0.5,
+                2.5,
+                -1.5
+            ],
+            "melee": false,
+            "parent": "GrenadeGadget",
+            "rotation": [
+                0.10000000149011612,
+                2.4000000953674316,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": false,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "jakobs_sniper",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_JAK_SR",
+            "id": "OakWeapon_SK_JAK_SR",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "maliwan_sniper",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_ORD_SR",
+            "id": "OakWeapon_SK_ORD_SR",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "ted_ar",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_TED_AR",
+            "id": "OakWeapon_SK_TED_AR",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "vladof_sniper",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_VLA_SR",
+            "id": "OakWeapon_SK_VLA_SR",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "daedalus_smg",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_BOR_SM",
+            "id": "OakWeapon_SK_BOR_SM",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "maliwan_shotgun",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_BOR_SG",
+            "id": "OakWeapon_SK_BOR_SG",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "maliwan_sniper",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_BOR_SR",
+            "id": "OakWeapon_SK_BOR_SR",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "order_pistol",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_TED_PS",
+            "id": "OakWeapon_SK_TED_PS",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": false,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "order_ar",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_TOR_AR",
+            "id": "OakWeapon_SK_TOR_AR",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "order_pistol",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_TOR_PS",
+            "id": "OakWeapon_SK_TOR_PS",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": false,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "daedalus_smg",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_TED_SG",
+            "id": "OakWeapon_SK_TED_SG",
+            "location": [
+                4.6,
+                -1.4,
+                4.1
+            ],
+            "melee": false,
+            "parent": "OakWeapon",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": true,
+            "use_laser": false,
+            "weight": 0
+        },
+        {
+            "animation": "daedalus_smg",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_TOR_SG",
+            "id": "OakWeapon_SK_TOR_SG",
             "location": [
                 4.6,
                 -1.4,

@@ -106,14 +106,22 @@ _G.bl4KickWorld = function(loc, rot)
 	return { X = l.X, Y = l.Y, Z = l.Z }, kismet_math_library:Quat_Rotator(t.Rotation)
 end
 
+-- The gun relative to the component it hangs on (the right VR hand), from the world transforms: with the game grip
+-- (bl4_main.lua) the gun is attached to that component's R_Hand BONE, so gun.Relative* are bone-relative and put the
+-- kick on the wrong pivot (Hands-mode two-handing "goes crazy", 2026-11-05).
+local function gunRelativeToParent(gun, parent)
+	local rel = kismet_math_library:MakeRelativeTransform(gun:K2_GetComponentToWorld(), parent:K2_GetComponentToWorld())
+	local t, r = rel.Translation, kismet_math_library:Quat_Rotator(rel.Rotation)
+	return kismet_math_library:MakeTransform(uevrUtils.vector(t.X, t.Y, t.Z), r, uevrUtils.vector(1, 1, 1))
+end
+
 -- the gun hangs on parent: move parent (from its current relative transform) so the gun gets the kick
 _G.bl4KickParentOfGun = function(parent, gun)
 	local k = _G.bl4RecoilKick
 	if k == nil or not alive(parent) or not alive(gun) then return end
 	local pl, pr, ps = parent.RelativeLocation, parent.RelativeRotation, parent.RelativeScale3D
 	local parentT = kismet_math_library:MakeTransform(uevrUtils.vector(pl.X, pl.Y, pl.Z), uevrUtils.rotator(pr.Pitch, pr.Yaw, pr.Roll), uevrUtils.vector(1, 1, 1))
-	local gl, gr = gun.RelativeLocation, gun.RelativeRotation
-	local gunT = kismet_math_library:MakeTransform(uevrUtils.vector(gl.X, gl.Y, gl.Z), uevrUtils.rotator(gr.Pitch, gr.Yaw, gr.Roll), uevrUtils.vector(1, 1, 1))
+	local gunT = gunRelativeToParent(gun, parent)
 	local t = kismet_math_library:ComposeTransforms(kismet_math_library:ComposeTransforms(
 		kismet_math_library:ComposeTransforms(kismet_math_library:InvertTransform(gunT), makeT(k)), gunT), parentT)
 	local l, r = t.Translation, kismet_math_library:Quat_Rotator(t.Rotation)
@@ -149,8 +157,7 @@ local function applyToHand(gun, kickT)
 		local l, r, s = hand.RelativeLocation, hand.RelativeRotation, hand.RelativeScale3D
 		handRest = { hand = hand, loc = { X = l.X, Y = l.Y, Z = l.Z }, rot = { Pitch = r.Pitch, Yaw = r.Yaw, Roll = r.Roll }, scale = { X = s.X, Y = s.Y, Z = s.Z } }
 	end
-	local gl, gr = gun.RelativeLocation, gun.RelativeRotation
-	local gunT = kismet_math_library:MakeTransform(uevrUtils.vector(gl.X, gl.Y, gl.Z), uevrUtils.rotator(gr.Pitch, gr.Yaw, gr.Roll), uevrUtils.vector(1, 1, 1))
+	local gunT = gunRelativeToParent(gun, hand)
 	local restT = makeT(handRest)
 	local t = kismet_math_library:ComposeTransforms(kismet_math_library:ComposeTransforms(
 		kismet_math_library:ComposeTransforms(kismet_math_library:InvertTransform(gunT), kickT), gunT), restT)
