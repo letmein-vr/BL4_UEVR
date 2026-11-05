@@ -44,6 +44,7 @@ table.insert(_G.BL4_SECTIONS, { order = 0, label = "General", layout = {
 	{ widgetType = "button", id = "bl4_game_grip_reset_current", label = "Re-measure this weapon's grip", size = {200, 22} },
 	{ widgetType = "same_line" },
 	{ widgetType = "button", id = "bl4_game_grip_reset", label = "Re-measure all weapon grips", size = {200, 22} },
+	{ widgetType = "checkbox", id = "bl4_roomscale", label = "Roomscale turning (the character turns with your body)", initialValue = true },
 	{ widgetType = "checkbox", id = "bl4_world_depth", label = "Gun and hands at world depth (needed for PiP scopes; off = game's foreground layer)", initialValue = true },
 	{ widgetType = "checkbox", id = "bl4_no_camera_shake", label = "Disable camera shakes (melee, shooting, hits)", initialValue = true },
 	{ widgetType = "checkbox", id = "bl4_no_camera_anim", label = "Disable camera animations (melee etc.)", initialValue = true },
@@ -756,6 +757,18 @@ local function uevrRotationOffsetYaw()
 	return math.deg(math.atan(2 * (w * z + x * y), 1 - 2 * (y * y + z * z)))
 end
 
+-- Roomscale turning (option bl4_roomscale, default on; 2026-11-05). With the above, the head yaw lived only in UEVR's
+-- rotation offset and the rendered view: physically turning never turned the game's rotation, so the pawn, its capsule
+-- and the camera the game traces from kept facing the old way and interaction prompts did not show. OW2 / Hellraiser
+-- turn the pawn through libs/input.lua (pawnRotationMode Locked: SetControlRotation + root rotation), but BL4 reverts
+-- those writes; ClientSetRotation(rot, true) sticks and turns the camera, the pawn actor and the capsule together
+-- (MCP 2026-11-05: all three went 58.8 -> 88.8). So every frame the CHANGE of the head yaw (relative to the game, = minus
+-- UEVR's offset yaw) is added to the game rotation with ClientSetRotation; the right stick still turns on top.
+-- roomscaleApplied = head yaw already put into the game. The view takes the current head yaw at render time minus that
+-- (no double turn, no added latency), and the movement stick is only rotated by what is not applied yet.
+local roomscaleApplied = nil
+local function roomscaleEnabled() return configui.getValue("bl4_roomscale") ~= false end
+
 local kickLockActive = false
 local uevrAimActive = false
 local cameraModeState = nil
@@ -766,7 +779,7 @@ uevr.sdk.callbacks.on_early_calculate_stereo_view_offset(function(device, view_i
 		if cameraModeState == nil then return end
 		pcall(function()
 			yaw = rotation.Yaw - cameraModeState.CameraRotationOffset.Yaw - cameraModeState.BaseRotationOffset.Yaw
-				- uevrRotationOffsetYaw()
+				- uevrRotationOffsetYaw() - (roomscaleApplied or 0)
 		end)
 	else
 		local pc = uevr.api:get_player_controller(0)
@@ -792,6 +805,8 @@ uevrUtils.registerOnPreInputGetStateCallback(function(retval, user_index, state)
 	if lx == 0 and ly == 0 then return end
 	local ok, headYaw = pcall(function() return -uevrRotationOffsetYaw() end)
 	if not ok or headYaw == nil then return end
+	-- roomscale: the game's forward already carries the applied head yaw
+	headYaw = headYaw - (roomscaleApplied or 0)
 	local rad = math.rad(headYaw)
 	local c, s = math.cos(rad), math.sin(rad)
 	-- stick Y = forward, X = right; a positive (UE) yaw turns right
@@ -847,6 +862,30 @@ uevr.sdk.callbacks.on_pre_engine_tick(function(engine, delta)
 	if onFoot and configui.getValue("bl4_level_game_pitch") ~= false and (not uevrAimActive or cameraModeState ~= nil) then
 		local ok, err = pcall(levelGamePitch, uevrAimActive and cameraModeState or nil)
 		if not ok then log("level game pitch: " .. tostring(err)) end
+	end
+	-- roomscale turning (see roomscaleApplied): head aim on foot only, outside menus / cutscenes
+	local roomscaleActive = kickLockActive and cameraModeState ~= nil and uevr.params.vr.get_aim_method() == HMD_AIM_METHOD
+		and roomscaleEnabled()
+	if roomscaleActive then
+		local ok, err = pcall(function()
+			local head = -uevrRotationOffsetYaw()
+			if roomscaleApplied == nil then roomscaleApplied = 0 end -- the first frame turns the game to the view
+			local delta = uevrUtils.clampAngle180(head - roomscaleApplied)
+			if math.abs(delta) < 0.05 then return end
+			local rot = cameraModeState.POV.Rotation
+			uevr.api:get_player_controller(0):ClientSetRotation(uevrUtils.rotator(rot.Pitch, rot.Yaw + delta, 0), true)
+			roomscaleApplied = head
+		end)
+		if not ok then log("roomscale: " .. tostring(err)) end
+	elseif roomscaleApplied ~= nil then
+		-- switched off on foot: take the applied head yaw back out of the game so the view does not jump
+		if kickLockActive and cameraModeState ~= nil and not roomscaleEnabled() then
+			pcall(function()
+				local rot = cameraModeState.POV.Rotation
+				uevr.api:get_player_controller(0):ClientSetRotation(uevrUtils.rotator(rot.Pitch, rot.Yaw - roomscaleApplied, 0), true)
+			end)
+		end
+		roomscaleApplied = nil
 	end
 end)
 

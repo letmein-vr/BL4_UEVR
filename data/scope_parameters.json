@@ -40,6 +40,9 @@
         "BOR_SR_Scope_02_L2_Mask": {
             "zoom": 1.0
         },
+        "DAD_SG_Scope_02_L1": {
+            "zoom": 1.0
+        },
         "JAK_SG_Scope_02_L1_Mask": {
             "zoom": 1.0
         },
@@ -59,6 +62,12 @@
             "zoom": 1.0
         },
         "JAK_SR_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "MAL_SG_Scope_01_L1": {
+            "zoom": 1.0
+        },
+        "MAL_SM_Scope_02_L1": {
             "zoom": 1.0
         },
         "MAL_SM_Scope_02_L1_Mask": {

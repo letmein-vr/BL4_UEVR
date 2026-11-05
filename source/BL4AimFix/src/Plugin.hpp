@@ -45,6 +45,7 @@ public:
     virtual ~BL4AimFixPlugin() = default;
 
     void on_initialize() override;
+    void on_custom_event(const char* event_name, const char* event_data) override;
     void on_pre_engine_tick(uevr::API::UGameEngine* engine, float delta) override;
     void on_post_engine_tick(uevr::API::UGameEngine* engine, float delta) override;
     void on_pre_viewport_client_draw(UEVR_UGameViewportClientHandle viewport_client, UEVR_FViewportHandle viewport,
@@ -94,6 +95,18 @@ private:
     void load_config(const std::filesystem::path& file);
     void install_hooks();
     void update_scope_weapon_hide();
+    // grapple hand aim (scripts/bl4_vr_grapple.lua sends it every frame as custom event "bl4.grapple_aim")
+    Rot3 m_grapple_rot{};
+    double m_grapple_time{-1.0};
+    uint32_t m_grapple_writes{0};
+    bool m_grapple_enabled{false};
+    double m_grapple_heartbeat{-100.0};
+    bool m_grapple_hooked{false};
+    bool m_grapple_hook_failed{false};
+    void install_grapple_hook();
+public:
+    uintptr_t on_grapple_update(void* self, uintptr_t a2, uintptr_t a3, uintptr_t a4);
+private:
     uevr::API::UObject* m_scope_weapon{};
     double m_scope_next_check{0.0};
     uevr::API::UClass* m_sight_class{};

@@ -965,6 +965,35 @@
             "two_handed": true,
             "use_laser": false,
             "weight": 0
+        },
+        {
+            "animation": "throwing_knife",
+            "any_child": false,
+            "any_parent": true,
+            "child": "SK_TED_GRN",
+            "id": "GrenadeGadget_SK_TED_GRN",
+            "location": [
+                0.8999999761581421,
+                2.200000047683716,
+                -1.7000000476837158
+            ],
+            "melee": false,
+            "parent": "GrenadeGadget",
+            "rotation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "scoped": false,
+            "strip_child_suffix_length": false,
+            "two_handed": false,
+            "use_laser": false,
+            "weight": 0
         }
     ],
     "baseOffsets": {

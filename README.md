@@ -35,12 +35,19 @@ A full motion-controller VR conversion of Borderlands 4 for UEVR, with visible h
 
 - **Hand-aimed grapple.** The grapple targets where your right hand (the gun's barrel, or the controller with no gun out) points, not where your head looks.
 - **Head-directed movement.** Push forward and you walk where you're looking; the right stick still turns you.
+- **Roomscale turning.** Turn your body and your character turns with you, so interaction prompts and the crosshair follow where you face.
 
 ### Camera and comfort
 
 - **Steady camera.** Camera shakes (melee, shooting, hits), camera animations and the melee view sway are disabled.
 - **Level view.** The game's hidden pitch is kept level, which stops recoil and full-auto fire from swinging the view or turning your character.
 - **Decoupled pitch.** Looking up and down does not tilt the game camera; right stick up/down is ignored on foot with head aim.
+- **Audio follows your head.** Sound is placed from your head, not from where your right hand points.
+
+### Menus and controls
+
+- **Readable map and menus.** The map, inventory, skills and other ECHO menus are shown whole on a flat screen in both eyes while they're open, then the view returns to 3D. The main menu stays 3D.
+- **X / B swap.** X and B are swapped by default, like my other profiles; switch it off in General.
 
 ## Controls
 
@@ -53,6 +60,7 @@ A full motion-controller VR conversion of Borderlands 4 for UEVR, with visible h
 | Two-hand a gun | Bring the left hand to the fore-grip, hold left grip |
 | Switch weapon | Right grip at right hip / right shoulder / left shoulder / left hip |
 | Grapple | Point the right hand at the grapple point |
+| X / B | Swapped by default (General → Swap X and B buttons) |
 
 ## Installation
 
@@ -71,6 +79,7 @@ Everything is adjustable in the **Borderlands 4** panel in the UEVR overlay, wit
 - **Holsters** – on / off, haptic pulse, zone size and each zone's position, with a live readout of your hand's position.
 - **Grapple** – hand aim on / off.
 - **PiP Scope** – on / off, minimum magnification that counts as a scope, lens offset for the scope you're holding (saved per scope model), lens size, magnification trim and brightness.
+- **General** – roomscale turning, flat-screen menus, the X / B swap.
 - **General → Gun and hands at world depth** – on by default (needed for PiP scopes). Off restores the game's foreground drawing, which keeps the gun from poking into walls.
 
 ## Under the hood
@@ -80,5 +89,9 @@ Built on jbusfield's shared uevrlib Lua framework, running on my UEVR backend. G
 Scopes: each sight part adds a sight behaviour with the game's zoom, and a scope part maps the gun's generic `ScopeSocket` to its own socket, so a PiP is built from the parts actually fitted (`bl4_vr_pip_scope.lua`, on jbusfield's `scope.lua`). The eyepiece comes from the scope's own mask mesh, or from the scope parts' bounds when it has none. The game's flat scope mask and vignette are hidden by `bl4_vr_scope.lua`, and BL4AimFix.dll clears the sight definition's "hide weapon when zoomed" flag. The picture only sorts correctly against the gun at real depth, so by default the gun, its parts and the VR hands / IK arms are moved out of the game's foreground layer.
 
 Borderlands 4 draws the first-person arms and gun in its own foreground pass with a separate projection that the game only fills in its flat-screen path; the backend fills it from the VR projection, which is what makes the arms and gun visible in stereo. BL4 also has no player-side "equip weapon slot" function, so the holsters press the game's own number keys through `plugins/luakey.dll`, with a primer key first so the game accepts keyboard input while you're on a controller.
+
+Borderlands 4 draws its ECHO menus (map, inventory, skills) once across the whole two-eye render instead of once per eye, so each eye saw only one half. While a menu shows the cursor in game, `bl4_vr_menu_screen.lua` turns on the backend's 2D screen with the "full image in both eyes" option (`VR_2DScreenFullSource`, ported from Lorewright-Studios' UEVR fork). A backend without that option ignores it, and the menus then split between the eyes.
+
+Roomscale turning (`bl4_main.lua`): BL4 reverts plain control-rotation writes, so your body turn is applied with `ClientSetRotation`, which turns the camera, pawn and capsule together. The game's audio places its listener from the camera's cached view, so the grapple's hand aim is written into that view only for the duration of the grapple targeting call (inside BL4AimFix.dll), and the listener stays on your head.
 
 The native plugin (BL4AimFix.dll) hooks the game's light-projectile spawn: player shots start at the muzzle of the first-person gun you see and fly along its barrel. Its source is in `source/BL4AimFix` (build paths in its CMakeLists.txt point at local folders and need adjusting).

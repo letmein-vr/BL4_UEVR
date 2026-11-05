@@ -33,7 +33,7 @@
     "uevr_attachments_GrenadeGadget_SK_JAK_GRN_any_child": false,
     "uevr_attachments_GrenadeGadget_SK_JAK_GRN_any_parent": true,
     "uevr_attachments_GrenadeGadget_SK_JAK_GRN_delete_accessory_override": false,
-    "uevr_attachments_GrenadeGadget_SK_JAK_GRN_grip_animation": 14,
+    "uevr_attachments_GrenadeGadget_SK_JAK_GRN_grip_animation": 6,
     "uevr_attachments_GrenadeGadget_SK_JAK_GRN_hand_position": [
         0.0,
         0.0,
@@ -109,6 +109,111 @@
     "uevr_attachments_GrenadeGadget_SK_JAK_GRN_strip_child_suffix_length": false,
     "uevr_attachments_GrenadeGadget_SK_JAK_GRN_use_laser": false,
     "uevr_attachments_GrenadeGadget_SK_JAK_GRN_weight": 0,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_end_time": 0.0,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_existing_guid": 1,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_activation_distance": 0.0,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_activation_hand": 1,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_attach_type": 1,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_grip_animation": 1,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_grip_priority": "1",
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_id": "",
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_label": "",
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_socket_list": 1,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_socket_name": "",
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_test_left_hand": false,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_item_test_right_hand": false,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_marker_picker": 1,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_picker": 1,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_accessory_start_time": 0.0,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_any_child": false,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_any_parent": true,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_delete_accessory_override": false,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_grip_animation": 6,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_hand_position": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_hand_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_is_melee": false,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_is_scoped": false,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_is_two_handed": false,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_melee_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_position": [
+        0.8999999761581421,
+        2.200000047683716,
+        -1.7000000476837158
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_rotation": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scale": [
+        1.0,
+        1.0,
+        1.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_brightness": 2.0,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_deactivate_distance": 100000.0,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_hide_ocular_lens_on_disable": true,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_max_fov": 20.0,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_min_fov": 2.0,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_objective_lens_location": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_objective_lens_rotation": [
+        90.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_ocular_lens_location": [
+        0.0,
+        0.0,
+        20.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_ocular_lens_rotation": [
+        90.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_ocular_lens_scale": 1.0,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_show_debug": false,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_zoom_exponential": 0.5,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_scope_zoom_speed": 1.0,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_sights_position_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_sights_rotation_offset": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_strip_child_suffix_length": false,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_use_laser": false,
+    "uevr_attachments_GrenadeGadget_SK_TED_GRN_weight": 0,
     "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_end_time": 0.0,
     "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_existing_guid": 1,
     "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_accessory_item_activation_distance": 0.0,
@@ -138,7 +243,7 @@
     "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_any_child": false,
     "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_any_parent": true,
     "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_delete_accessory_override": false,
-    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_grip_animation": 9,
+    "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_grip_animation": 4,
     "uevr_attachments_HeavyWeaponGadget_SK_MAL_HW_hand_position": [
         0.0,
         0.699999988079071,
@@ -243,7 +348,7 @@
     "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_any_child": false,
     "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_any_parent": true,
     "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_delete_accessory_override": false,
-    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_grip_animation": 9,
+    "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_grip_animation": 4,
     "uevr_attachments_HeavyWeaponGadget_SK_VLA_HW_hand_position": [
         0.0,
         0.0,
@@ -348,7 +453,7 @@
     "uevr_attachments_OakWeapon_SK_BOR_SG_any_child": false,
     "uevr_attachments_OakWeapon_SK_BOR_SG_any_parent": true,
     "uevr_attachments_OakWeapon_SK_BOR_SG_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_BOR_SG_grip_animation": 6,
+    "uevr_attachments_OakWeapon_SK_BOR_SG_grip_animation": 9,
     "uevr_attachments_OakWeapon_SK_BOR_SG_hand_position": [
         0.0,
         0.0,
@@ -453,7 +558,7 @@
     "uevr_attachments_OakWeapon_SK_BOR_SM_any_child": false,
     "uevr_attachments_OakWeapon_SK_BOR_SM_any_parent": true,
     "uevr_attachments_OakWeapon_SK_BOR_SM_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_BOR_SM_grip_animation": 12,
+    "uevr_attachments_OakWeapon_SK_BOR_SM_grip_animation": 7,
     "uevr_attachments_OakWeapon_SK_BOR_SM_hand_position": [
         0.0,
         0.0,
@@ -558,7 +663,7 @@
     "uevr_attachments_OakWeapon_SK_BOR_SR_any_child": false,
     "uevr_attachments_OakWeapon_SK_BOR_SR_any_parent": true,
     "uevr_attachments_OakWeapon_SK_BOR_SR_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_BOR_SR_grip_animation": 4,
+    "uevr_attachments_OakWeapon_SK_BOR_SR_grip_animation": 12,
     "uevr_attachments_OakWeapon_SK_BOR_SR_hand_position": [
         0.0,
         0.0,
@@ -663,7 +768,7 @@
     "uevr_attachments_OakWeapon_SK_DAD_AR_any_child": false,
     "uevr_attachments_OakWeapon_SK_DAD_AR_any_parent": true,
     "uevr_attachments_OakWeapon_SK_DAD_AR_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_DAD_AR_grip_animation": 5,
+    "uevr_attachments_OakWeapon_SK_DAD_AR_grip_animation": 11,
     "uevr_attachments_OakWeapon_SK_DAD_AR_hand_position": [
         0.699999988079071,
         0.30000001192092896,
@@ -768,7 +873,7 @@
     "uevr_attachments_OakWeapon_SK_DAD_PS_any_child": false,
     "uevr_attachments_OakWeapon_SK_DAD_PS_any_parent": true,
     "uevr_attachments_OakWeapon_SK_DAD_PS_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_DAD_PS_grip_animation": 8,
+    "uevr_attachments_OakWeapon_SK_DAD_PS_grip_animation": 16,
     "uevr_attachments_OakWeapon_SK_DAD_PS_hand_position": [
         0.0,
         -0.699999988079071,
@@ -873,7 +978,7 @@
     "uevr_attachments_OakWeapon_SK_DAD_SG_any_child": false,
     "uevr_attachments_OakWeapon_SK_DAD_SG_any_parent": true,
     "uevr_attachments_OakWeapon_SK_DAD_SG_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_DAD_SG_grip_animation": 10,
+    "uevr_attachments_OakWeapon_SK_DAD_SG_grip_animation": 13,
     "uevr_attachments_OakWeapon_SK_DAD_SG_hand_position": [
         1.899999976158142,
         0.800000011920929,
@@ -978,7 +1083,7 @@
     "uevr_attachments_OakWeapon_SK_DAD_SM_any_child": false,
     "uevr_attachments_OakWeapon_SK_DAD_SM_any_parent": true,
     "uevr_attachments_OakWeapon_SK_DAD_SM_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_DAD_SM_grip_animation": 12,
+    "uevr_attachments_OakWeapon_SK_DAD_SM_grip_animation": 7,
     "uevr_attachments_OakWeapon_SK_DAD_SM_hand_position": [
         -0.6000000238418579,
         0.0,
@@ -1083,7 +1188,7 @@
     "uevr_attachments_OakWeapon_SK_JAK_AR_any_child": false,
     "uevr_attachments_OakWeapon_SK_JAK_AR_any_parent": true,
     "uevr_attachments_OakWeapon_SK_JAK_AR_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_JAK_AR_grip_animation": 5,
+    "uevr_attachments_OakWeapon_SK_JAK_AR_grip_animation": 11,
     "uevr_attachments_OakWeapon_SK_JAK_AR_hand_position": [
         -1.2999999523162842,
         0.800000011920929,
@@ -1188,7 +1293,7 @@
     "uevr_attachments_OakWeapon_SK_JAK_PS_any_child": false,
     "uevr_attachments_OakWeapon_SK_JAK_PS_any_parent": true,
     "uevr_attachments_OakWeapon_SK_JAK_PS_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_JAK_PS_grip_animation": 16,
+    "uevr_attachments_OakWeapon_SK_JAK_PS_grip_animation": 10,
     "uevr_attachments_OakWeapon_SK_JAK_PS_hand_position": [
         1.2000000476837158,
         0.4000000059604645,
@@ -1293,7 +1398,7 @@
     "uevr_attachments_OakWeapon_SK_JAK_SG_any_child": false,
     "uevr_attachments_OakWeapon_SK_JAK_SG_any_parent": true,
     "uevr_attachments_OakWeapon_SK_JAK_SG_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_JAK_SG_grip_animation": 10,
+    "uevr_attachments_OakWeapon_SK_JAK_SG_grip_animation": 13,
     "uevr_attachments_OakWeapon_SK_JAK_SG_hand_position": [
         -1.0,
         1.100000023841858,
@@ -1398,7 +1503,7 @@
     "uevr_attachments_OakWeapon_SK_JAK_SR_any_child": false,
     "uevr_attachments_OakWeapon_SK_JAK_SR_any_parent": true,
     "uevr_attachments_OakWeapon_SK_JAK_SR_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_JAK_SR_grip_animation": 17,
+    "uevr_attachments_OakWeapon_SK_JAK_SR_grip_animation": 14,
     "uevr_attachments_OakWeapon_SK_JAK_SR_hand_position": [
         0.0,
         0.0,
@@ -1503,7 +1608,7 @@
     "uevr_attachments_OakWeapon_SK_MAL_SG_any_child": false,
     "uevr_attachments_OakWeapon_SK_MAL_SG_any_parent": true,
     "uevr_attachments_OakWeapon_SK_MAL_SG_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_MAL_SG_grip_animation": 6,
+    "uevr_attachments_OakWeapon_SK_MAL_SG_grip_animation": 9,
     "uevr_attachments_OakWeapon_SK_MAL_SG_hand_position": [
         0.8999999761581421,
         0.0,
@@ -1608,7 +1713,7 @@
     "uevr_attachments_OakWeapon_SK_MAL_SM_any_child": false,
     "uevr_attachments_OakWeapon_SK_MAL_SM_any_parent": true,
     "uevr_attachments_OakWeapon_SK_MAL_SM_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_MAL_SM_grip_animation": 15,
+    "uevr_attachments_OakWeapon_SK_MAL_SM_grip_animation": 17,
     "uevr_attachments_OakWeapon_SK_MAL_SM_hand_position": [
         0.0,
         0.0,
@@ -1713,7 +1818,7 @@
     "uevr_attachments_OakWeapon_SK_MAL_SR_any_child": false,
     "uevr_attachments_OakWeapon_SK_MAL_SR_any_parent": false,
     "uevr_attachments_OakWeapon_SK_MAL_SR_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_MAL_SR_grip_animation": 4,
+    "uevr_attachments_OakWeapon_SK_MAL_SR_grip_animation": 12,
     "uevr_attachments_OakWeapon_SK_MAL_SR_hand_position": [
         2.5,
         0.4000000059604645,
@@ -1818,7 +1923,7 @@
     "uevr_attachments_OakWeapon_SK_ORD_AR_any_child": false,
     "uevr_attachments_OakWeapon_SK_ORD_AR_any_parent": true,
     "uevr_attachments_OakWeapon_SK_ORD_AR_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_ORD_AR_grip_animation": 13,
+    "uevr_attachments_OakWeapon_SK_ORD_AR_grip_animation": 5,
     "uevr_attachments_OakWeapon_SK_ORD_AR_hand_position": [
         2.4000000953674316,
         0.800000011920929,
@@ -1923,7 +2028,7 @@
     "uevr_attachments_OakWeapon_SK_ORD_PS_any_child": false,
     "uevr_attachments_OakWeapon_SK_ORD_PS_any_parent": true,
     "uevr_attachments_OakWeapon_SK_ORD_PS_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_ORD_PS_grip_animation": 3,
+    "uevr_attachments_OakWeapon_SK_ORD_PS_grip_animation": 15,
     "uevr_attachments_OakWeapon_SK_ORD_PS_hand_position": [
         -2.299999952316284,
         -0.20000000298023224,
@@ -2028,7 +2133,7 @@
     "uevr_attachments_OakWeapon_SK_ORD_SR_any_child": false,
     "uevr_attachments_OakWeapon_SK_ORD_SR_any_parent": true,
     "uevr_attachments_OakWeapon_SK_ORD_SR_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_ORD_SR_grip_animation": 4,
+    "uevr_attachments_OakWeapon_SK_ORD_SR_grip_animation": 12,
     "uevr_attachments_OakWeapon_SK_ORD_SR_hand_position": [
         0.0,
         0.0,
@@ -2133,7 +2238,7 @@
     "uevr_attachments_OakWeapon_SK_TED_AR_any_child": false,
     "uevr_attachments_OakWeapon_SK_TED_AR_any_parent": true,
     "uevr_attachments_OakWeapon_SK_TED_AR_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_TED_AR_grip_animation": 11,
+    "uevr_attachments_OakWeapon_SK_TED_AR_grip_animation": 8,
     "uevr_attachments_OakWeapon_SK_TED_AR_hand_position": [
         0.0,
         0.0,
@@ -2238,7 +2343,7 @@
     "uevr_attachments_OakWeapon_SK_TED_PS_any_child": false,
     "uevr_attachments_OakWeapon_SK_TED_PS_any_parent": true,
     "uevr_attachments_OakWeapon_SK_TED_PS_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_TED_PS_grip_animation": 3,
+    "uevr_attachments_OakWeapon_SK_TED_PS_grip_animation": 15,
     "uevr_attachments_OakWeapon_SK_TED_PS_hand_position": [
         0.0,
         0.0,
@@ -2343,7 +2448,7 @@
     "uevr_attachments_OakWeapon_SK_TED_SG_any_child": false,
     "uevr_attachments_OakWeapon_SK_TED_SG_any_parent": true,
     "uevr_attachments_OakWeapon_SK_TED_SG_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_TED_SG_grip_animation": 12,
+    "uevr_attachments_OakWeapon_SK_TED_SG_grip_animation": 7,
     "uevr_attachments_OakWeapon_SK_TED_SG_hand_position": [
         0.0,
         0.0,
@@ -2448,7 +2553,7 @@
     "uevr_attachments_OakWeapon_SK_TOR_AR_any_child": false,
     "uevr_attachments_OakWeapon_SK_TOR_AR_any_parent": true,
     "uevr_attachments_OakWeapon_SK_TOR_AR_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_TOR_AR_grip_animation": 13,
+    "uevr_attachments_OakWeapon_SK_TOR_AR_grip_animation": 5,
     "uevr_attachments_OakWeapon_SK_TOR_AR_hand_position": [
         0.0,
         0.0,
@@ -2553,7 +2658,7 @@
     "uevr_attachments_OakWeapon_SK_TOR_PS_any_child": false,
     "uevr_attachments_OakWeapon_SK_TOR_PS_any_parent": true,
     "uevr_attachments_OakWeapon_SK_TOR_PS_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_TOR_PS_grip_animation": 3,
+    "uevr_attachments_OakWeapon_SK_TOR_PS_grip_animation": 15,
     "uevr_attachments_OakWeapon_SK_TOR_PS_hand_position": [
         0.0,
         0.0,
@@ -2658,7 +2763,7 @@
     "uevr_attachments_OakWeapon_SK_TOR_SG_any_child": false,
     "uevr_attachments_OakWeapon_SK_TOR_SG_any_parent": true,
     "uevr_attachments_OakWeapon_SK_TOR_SG_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_TOR_SG_grip_animation": 12,
+    "uevr_attachments_OakWeapon_SK_TOR_SG_grip_animation": 7,
     "uevr_attachments_OakWeapon_SK_TOR_SG_hand_position": [
         0.0,
         0.0,
@@ -2763,7 +2868,7 @@
     "uevr_attachments_OakWeapon_SK_VLA_AR_any_child": false,
     "uevr_attachments_OakWeapon_SK_VLA_AR_any_parent": true,
     "uevr_attachments_OakWeapon_SK_VLA_AR_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_VLA_AR_grip_animation": 9,
+    "uevr_attachments_OakWeapon_SK_VLA_AR_grip_animation": 4,
     "uevr_attachments_OakWeapon_SK_VLA_AR_hand_position": [
         -1.100000023841858,
         -0.30000001192092896,
@@ -2868,7 +2973,7 @@
     "uevr_attachments_OakWeapon_SK_VLA_SM_any_child": false,
     "uevr_attachments_OakWeapon_SK_VLA_SM_any_parent": true,
     "uevr_attachments_OakWeapon_SK_VLA_SM_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_VLA_SM_grip_animation": 9,
+    "uevr_attachments_OakWeapon_SK_VLA_SM_grip_animation": 4,
     "uevr_attachments_OakWeapon_SK_VLA_SM_hand_position": [
         1.399999976158142,
         0.10000000149011612,
@@ -2973,7 +3078,7 @@
     "uevr_attachments_OakWeapon_SK_VLA_SR_any_child": false,
     "uevr_attachments_OakWeapon_SK_VLA_SR_any_parent": true,
     "uevr_attachments_OakWeapon_SK_VLA_SR_delete_accessory_override": false,
-    "uevr_attachments_OakWeapon_SK_VLA_SR_grip_animation": 7,
+    "uevr_attachments_OakWeapon_SK_VLA_SR_grip_animation": 3,
     "uevr_attachments_OakWeapon_SK_VLA_SR_hand_position": [
         0.0,
         0.0,

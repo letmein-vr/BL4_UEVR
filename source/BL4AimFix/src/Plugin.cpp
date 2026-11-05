@@ -588,8 +588,96 @@ void BL4AimFixPlugin::update_scope_weapon_hide() {
     }
 }
 
+// ------------------------------------------------------------------------------------------------
+// Grapple hand aim (2026-11-05). BL4 picks grapple targets from the camera's cached view (CameraCachePrivate.POV).
+// bl4_vr_grapple.lua used to write the hand's aim there after every frame, but GbxAudio places its listener from the
+// same cached view, so the sound turned with the right hand. Holding the aim only for the player controller's tick was
+// not enough: the listener is updated inside that tick too (MCP: listener yaw == muzzle yaw -71.8, camera -62.9). So the
+// aim is now held only while the GrappleTargetingStrategy updates: its one virtual of its own, vtable slot 84 (+0x2A0;
+// UObject's vtable has 84 slots), found from the live OakPlayerController.GrappleTargetingStrategy object and hooked.
+// The previous rotation is put back right after unless the call rebuilt the cache. Stale aim (> 0.25 s) = no change.
+namespace {
+using GrappleUpdateFn = uintptr_t (*)(void*, uintptr_t, uintptr_t, uintptr_t);
+GrappleUpdateFn g_grapple_orig{};
+constexpr size_t GRAPPLE_UPDATE_SLOT = 84;
+
+uintptr_t grapple_update_hook(void* self, uintptr_t a2, uintptr_t a3, uintptr_t a4) {
+    return g_plugin->on_grapple_update(self, a2, a3, a4);
+}
+} // namespace
+
+// The aim: the held gun's barrel (m_gun_rot, computed every frame for the bullet / beam fixes - the same Muzzle socket
+// axis the script used), else the right controller's aim sent by the script while no gun is out. luakey.dll logs every
+// custom event, so the script sends only an on/off heartbeat ("bl4.grapple_hand_aim", every 2 s) plus the controller
+// aim at 20 Hz while no gun is out.
+uintptr_t BL4AimFixPlugin::on_grapple_update(void* self, uintptr_t a2, uintptr_t a3, uintptr_t a4) {
+    uint8_t* rot_ptr = nullptr;
+    Rot3 saved{};
+    Rot3 aim{};
+    const double t = now_seconds();
+    bool have_aim = false;
+    if (m_grapple_enabled && t - m_grapple_heartbeat < 5.0 && m_cache_pov[0] != nullptr &&
+        GetCurrentThreadId() == m_game_thread.load()) {
+        if (m_gun_valid) {
+            aim = m_gun_rot;
+            have_aim = true;
+        } else if (m_grapple_time >= 0.0 && t - m_grapple_time < 0.25) {
+            aim = m_grapple_rot;
+            have_aim = true;
+        }
+    }
+    if (have_aim) {
+        rot_ptr = m_cache_pov[0] + sizeof(Vec3); // FMinimalViewInfo: Location (FVector), then Rotation
+        std::memcpy(&saved, rot_ptr, sizeof(Rot3));
+        std::memcpy(rot_ptr, &aim, sizeof(Rot3));
+        ++m_grapple_writes;
+    }
+    const auto result = g_grapple_orig(self, a2, a3, a4);
+    if (rot_ptr != nullptr && std::memcmp(rot_ptr, &aim, sizeof(Rot3)) == 0) {
+        std::memcpy(rot_ptr, &saved, sizeof(Rot3));
+    }
+    return result;
+}
+
+void BL4AimFixPlugin::install_grapple_hook() {
+    if (m_grapple_hooked || m_grapple_hook_failed) return;
+    auto pc = API::get()->get_player_controller(0);
+    auto strategy = get_object_prop(pc, L"GrappleTargetingStrategy");
+    if (strategy == nullptr) return; // not created yet: retried next tick
+    const auto vtable = *(const uintptr_t* const*)strategy;
+    uintptr_t fn = vtable != nullptr ? vtable[GRAPPLE_UPDATE_SLOT] : 0;
+    const auto exe = (uintptr_t)utility::get_executable();
+    const auto size = utility::get_module_size(utility::get_executable()).value_or(0);
+    INSTRUX ix{};
+    if (fn != 0 && decode(fn, ix) && ix.Instruction == ND_INS_JMPNR && ix.Length == 5) fn = rel_target(fn, ix); // jmp stub
+    if (fn < exe || fn >= exe + size) {
+        m_grapple_hook_failed = true;
+        API::get()->log_error("BL4AimFix: GrappleTargetingStrategy slot %zu is not in the exe - grapple hand aim off", GRAPPLE_UPDATE_SLOT);
+        return;
+    }
+    m_grapple_hooked = install_inline_hook(fn, (void*)&grapple_update_hook, (void**)&g_grapple_orig, "GrappleTargetingStrategy update");
+    if (!m_grapple_hooked) m_grapple_hook_failed = true;
+}
+
+// From scripts/bl4_vr_grapple.lua: "bl4.grapple_hand_aim" = "1" / "0" (option state, every 2 s) and
+// "bl4.grapple_aim" = "<pitch> <yaw>" (right controller aim in degrees, world; only while no gun is out)
+void BL4AimFixPlugin::on_custom_event(const char* event_name, const char* event_data) {
+    if (event_name == nullptr || event_data == nullptr) return;
+    if (std::strcmp(event_name, "bl4.grapple_hand_aim") == 0) {
+        m_grapple_enabled = event_data[0] == '1';
+        m_grapple_heartbeat = now_seconds();
+        return;
+    }
+    if (std::strcmp(event_name, "bl4.grapple_aim") != 0) return;
+    double pitch{}, yaw{};
+    if (sscanf_s(event_data, "%lf %lf", &pitch, &yaw) != 2) return;
+    m_grapple_rot = Rot3{pitch, yaw, 0.0};
+    m_grapple_time = now_seconds();
+}
+
 void BL4AimFixPlugin::on_pre_engine_tick(API::UGameEngine*, float) {
     m_game_thread.store(GetCurrentThreadId());
+    if (m_grapple_enabled) install_grapple_hook(); // only once the grapple script reports hand aim on
     update_scope_weapon_hide();
     if (m_cfg.enabled && m_cfg.beam_aim) {
         install_beam_hook();

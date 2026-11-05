@@ -51,6 +51,16 @@ gun's `behaviors` points at its definition from +0x38 (not reflected). The plugi
 `BehaviorClass` asset name equals the behavior's class name, then clears the flag with an SEH-guarded write. The
 offsets come from reflection. The scope mask mesh and vignette are hidden by `scripts/bl4_vr_scope.lua`.
 
+## Grapple hand aim (2026-11-05)
+
+BL4 scores grapple targets against the camera's cached view (`PlayerCameraManager.CameraCachePrivate.POV`). GbxAudio
+places its listener from that same view, so writing the hand's aim there for the whole frame made the sound follow the
+right hand. The plugin now holds the hand aim in the cached view only while the `GrappleTargetingStrategy` updates:
+its one virtual of its own (vtable slot 84, +0x2A0) is found from the live `OakPlayerController.GrappleTargetingStrategy`
+object and inline-hooked, and the real view is restored straight after the call. The aim is the gun's barrel, or with no
+gun out the right controller aim sent by `scripts/bl4_vr_grapple.lua`. The script sends custom events: `bl4.grapple_hand_aim`
+as an on/off heartbeat every 2 s, and `bl4.grapple_aim` (pitch / yaw) at 20 Hz only while no gun is out.
+
 ## Config: `<profile>\plugins\BL4AimFix.txt` (optional)
 
 `Enabled`, `Mode` (0 log / 1 override), `Debug` (logs every player projectile, plus a summary every 10 s),
