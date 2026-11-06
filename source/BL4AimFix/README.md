@@ -61,12 +61,22 @@ object and inline-hooked, and the real view is restored straight after the call.
 gun out the right controller aim sent by `scripts/bl4_vr_grapple.lua`. The script sends custom events: `bl4.grapple_hand_aim`
 as an on/off heartbeat every 2 s, and `bl4.grapple_aim` (pitch / yaw) at 20 Hz only while no gun is out.
 
+## Vehicle guns aimed with the head (2026-11-06)
+
+`OakVehicleWeapon` is an `OakWeapon`, so vehicle shots reach the same light-projectile spawn hook. While the local
+pawn is an `OakVehicle`, the hand-gun barrel path is skipped. Instead the shot keeps the game's muzzle and spread (measured
+against the game's no-spread direction, the same as for the hand gun) and points at the spot on the gaze ray that is as
+far from the eyes as the game's own target. The gaze is the midpoint and rotation of UEVR's final eye poses
+(`on_post_calculate_stereo_view_offset`). Steering is untouched, because the chase camera still follows the right stick.
+UEVR's HUD follows the head (`UI_FollowView`), so the crosshair sits on the gaze. `scripts/bl4_vr_vehicle.lua` sends the
+panel option as custom event `bl4.vehicle_gaze_aim` (`1` / `0`) on change and every 10 s.
+
 ## Config: `<profile>\plugins\BL4AimFix.txt` (optional)
 
 `Enabled`, `Mode` (0 log / 1 override), `Debug` (logs every player projectile, plus a summary every 10 s),
 `StartTolerance`, `MaxAngleFromAim`, `WeaponClass`, `MuzzleSocket`, `UseSocketRotation`, `BarrelAxis`,
 `MuzzleForwardOffset`, `PitchOffset`, `YawOffset`, `RVA_SpawnLightProjectileNative`, `RVA_ManagerSpawn`,
-`BeamAim` (default 1), `ShowWeaponWhenScoped` (default 1).
+`BeamAim` (default 1), `ShowWeaponWhenScoped` (default 1), `VehicleGazeAim` (default 1).
 
 ## Build
 

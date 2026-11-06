@@ -37,6 +37,13 @@ A full motion-controller VR conversion of Borderlands 4 for UEVR, with visible h
 - **Head-directed movement.** Push forward and you walk where you're looking; the right stick still turns you.
 - **Roomscale turning.** Turn your body and your character turns with you, so interaction prompts and the crosshair follow where you face.
 
+### Vehicles
+
+- **First person from the driver's seat.** The flat game only has a chase camera; in VR you sit at the driver's head, fixed to the vehicle, and look around freely with your head.
+- **Stick steering.** The right stick steers, as in the flat game; your head only looks around.
+- **Gaze-aimed vehicle guns.** The vehicle's guns fire where you look; the crosshair follows your head.
+- **IK arms on the controls.** In IK Arms mode the driver's own arms are hidden and your IK arms grip the vehicle's controls, hands and fingers placed exactly where the game puts the driver's - no per-vehicle tuning.
+
 ### Camera and comfort
 
 - **Steady camera.** Camera shakes (melee, shooting, hits), camera animations and the melee view sway are disabled.
@@ -61,6 +68,8 @@ A full motion-controller VR conversion of Borderlands 4 for UEVR, with visible h
 | Switch weapon | Right grip at right hip / right shoulder / left shoulder / left hip |
 | Grapple | Point the right hand at the grapple point |
 | X / B | Swapped by default (General → Swap X and B buttons) |
+| Drive | Left stick throttle, right stick steers |
+| Vehicle guns | Look at the target, fire |
 
 ## Installation
 
@@ -79,6 +88,7 @@ Everything is adjustable in the **Borderlands 4** panel in the UEVR overlay, wit
 - **Holsters** – on / off, haptic pulse, zone size and each zone's position, with a live readout of your hand's position.
 - **Grapple** – hand aim on / off.
 - **PiP Scope** – on / off, minimum magnification that counts as a scope, lens offset for the scope you're holding (saved per scope model), lens size, magnification trim and brightness.
+- **Vehicles** – first-person seat view on / off, what the view turns with (the aim or the vehicle body), eye offset, IK arms on the controls, gaze-aimed guns.
 - **General** – roomscale turning, flat-screen menus, the X / B swap.
 - **General → Gun and hands at world depth** – on by default (needed for PiP scopes). Off restores the game's foreground drawing, which keeps the gun from poking into walls.
 
@@ -89,6 +99,8 @@ Built on jbusfield's shared uevrlib Lua framework, running on my UEVR backend. G
 Scopes: each sight part adds a sight behaviour with the game's zoom, and a scope part maps the gun's generic `ScopeSocket` to its own socket, so a PiP is built from the parts actually fitted (`bl4_vr_pip_scope.lua`, on jbusfield's `scope.lua`). The eyepiece comes from the scope's own mask mesh, or from the scope parts' bounds when it has none. The game's flat scope mask and vignette are hidden by `bl4_vr_scope.lua`, and BL4AimFix.dll clears the sight definition's "hide weapon when zoomed" flag. The picture only sorts correctly against the gun at real depth, so by default the gun, its parts and the VR hands / IK arms are moved out of the game's foreground layer.
 
 Borderlands 4 draws the first-person arms and gun in its own foreground pass with a separate projection that the game only fills in its flat-screen path; the backend fills it from the VR projection, which is what makes the arms and gun visible in stereo. BL4 also has no player-side "equip weapon slot" function, so the holsters press the game's own number keys through `plugins/luakey.dll`, with a primer key first so the game accepts keyboard input while you're on a controller.
+
+Vehicles (`bl4_vr_vehicle.lua`): while driving the aim method is Game, so the chase camera keeps following the right stick (BL4 vehicles steer toward it), and the VR view is moved from the chase camera to the driver's Head bone, held in the vehicle's frame. In IK Arms mode the driver's arm bones are hidden (render only - they keep animating), the IK rig is placed with its shoulders on the driver's, and each IK hand is pinned to the driver's hand bone with the inverse of the solver's controller-to-hand offset, so it lands exactly on the game's hand; the fingers copy the driver's grip. The 1P arms and 3P body share bone names and hand axes, which is why no per-vehicle values are needed. Vehicle guns are ordinary game weapons, so BL4AimFix.dll's projectile hook re-aims their shots along the HMD gaze.
 
 Borderlands 4 draws its ECHO menus (map, inventory, skills) once across the whole two-eye render instead of once per eye, so each eye saw only one half. While a menu shows the cursor in game, `bl4_vr_menu_screen.lua` turns on the backend's 2D screen with the "full image in both eyes" option (`VR_2DScreenFullSource`, ported from Lorewright-Studios' UEVR fork). A backend without that option ignores it, and the menus then split between the eyes.
 

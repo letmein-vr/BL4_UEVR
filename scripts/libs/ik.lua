@@ -318,6 +318,13 @@ function M.setPawn(newPawnObject)
 	pawnObject = newPawnObject
 end
 
+-- fn(mesh, rig) -> worldLocation, worldRotation (or nil to keep the normal placement) for each rig mesh, every tick,
+-- after the pawn-root / HMD coupling and before solving. nil clears it.
+local meshPlacementOverride = nil
+function M.setMeshPlacementOverride(fn)
+	meshPlacementOverride = fn
+end
+
 local function getPawn()
 	return pawnObject or pawn
 end
@@ -1090,6 +1097,19 @@ function Rig:create()
 							end
 							self.meshYawLockedToHmd = false
 						end
+					end
+				end
+			end
+		end
+
+		-- Placement override (M.setMeshPlacementOverride): a profile places the rig meshes in world space itself
+		-- (e.g. in a vehicle seat), after the coupling above and before the solvers, so the solve uses that placement.
+		if meshPlacementOverride ~= nil then
+			for _, mesh in pairs(self.meshList or {}) do
+				if uevrUtils.getValid(mesh) ~= nil then
+					local ok, loc, rot = pcall(meshPlacementOverride, mesh, self)
+					if ok and loc ~= nil and rot ~= nil then
+						mesh:K2_SetWorldLocationAndRotation(loc, rot, false, reusable_hit_result, false)
 					end
 				end
 			end

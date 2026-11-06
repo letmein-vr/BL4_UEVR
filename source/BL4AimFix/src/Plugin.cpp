@@ -435,6 +435,17 @@ uintptr_t BL4AimFixPlugin::on_manager_spawn(void* manager, void* out_handle, con
         return m_orig_spawn(manager, out_handle, data);
     }
 
+    // Vehicle guns (OakVehicleWeapon is an OakWeapon, so they reach this hook): aimed along the head's gaze, never
+    // along the hand-held gun's barrel below.
+    if (self.is_vehicle_pawn(pawn)) {
+        alignas(16) uint8_t gaze_edited[SPAWN_DATA_SIZE];
+        if (self.m_cfg.vehicle_gaze_aim && self.m_vehicle_gaze_enabled && self.m_cfg.mode == 1 &&
+            API::VR::is_hmd_active() && self.gaze_aim_vehicle_shot(data, gaze_edited)) {
+            return m_orig_spawn(manager, out_handle, gaze_edited);
+        }
+        return m_orig_spawn(manager, out_handle, data);
+    }
+
     ShotContext ctx{};
     if (!self.capture_context(weapon, ctx)) {
         return m_orig_spawn(manager, out_handle, data);
@@ -493,6 +504,77 @@ uintptr_t BL4AimFixPlugin::on_manager_spawn(void* manager, void* out_handle, con
 }
 
 // ------------------------------------------------------------------------------------------------
+// Vehicle guns aimed with the head (2026-11-06). While driving, scripts/bl4_vr_vehicle.lua keeps the game camera on the
+// chase camera's aim (right stick, which also steers) and puts the VR view in the seat. The vehicle's guns fire light
+// projectiles from their own muzzles toward the chase camera's crosshair target. Here the camera ray is replaced by the
+// gaze ray (the eyes' midpoint and view rotation from UEVR's final stereo views): the shot keeps the game's muzzle and
+// its spread (measured against the game's no-spread direction, as aim_reference does for the hand gun) and points at
+// the spot on the gaze ray as far from the eyes as the game's own target. UEVR draws the HUD following the head
+// (UI_FollowView), so the crosshair sits on the gaze.
+
+bool BL4AimFixPlugin::is_vehicle_pawn(API::UObject* pawn) {
+    if (pawn == nullptr) return false;
+    if (m_vehicle_class == nullptr) m_vehicle_class = API::get()->find_uobject<API::UClass>(L"Class /Script/OakGame.OakVehicle");
+    return m_vehicle_class != nullptr && pawn->is_a(m_vehicle_class);
+}
+
+bool BL4AimFixPlugin::gaze_aim_vehicle_shot(const uint8_t* data, uint8_t* edited) {
+    const double t = now_seconds();
+    if (t - m_eye_time[0] > 0.5 || t - m_eye_time[1] > 0.5) return false;
+
+    auto pc = API::get()->get_player_controller(0);
+    auto cm = get_object_prop(pc, L"PlayerCameraManager");
+    if (cm == nullptr) return false;
+    struct { Vec3 ret; } cl{};
+    struct { Rot3 ret; } cr{};
+    cm->call_function(L"GetCameraLocation", &cl);
+    cm->call_function(L"GetCameraRotation", &cr);
+    const Vec3 cam_loc = cl.ret;
+    const Vec3 cam_fwd = normalize(rotator_forward(cr.ret));
+
+    const Vec3 loc0 = read_vec(data + SD_LOCATION);
+    const Vec3 dir0 = read_vec(data + SD_DIRECTION);
+    const Vec3 end0 = read_vec(data + SD_END_LOCATION);
+    const Vec3 dir = normalize(dir0);
+    const bool has_end = !near_zero(end0);
+    const Vec3 ref = aim_reference(loc0, end0, has_end, cam_loc, cam_fwd); // the game's direction before spread
+
+    const Vec3 eye{(m_eye_loc[0].x + m_eye_loc[1].x) * 0.5, (m_eye_loc[0].y + m_eye_loc[1].y) * 0.5,
+                   (m_eye_loc[0].z + m_eye_loc[1].z) * 0.5};
+    const Vec3 gaze = normalize(rotator_forward(m_eye_rot));
+    const double depth = has_end ? std::max(length(sub(end0, eye)), 300.0) : 20000.0;
+    const Vec3 target = add_scaled(eye, gaze, depth);
+    const Vec3 base = normalize(sub(target, loc0));
+    const Vec3 new_dir = normalize(rotate_from_to(dir, ref, base));
+
+    std::memcpy(edited, data, SPAWN_DATA_SIZE);
+    const double speed = length(dir0);
+    write_vec(edited + SD_DIRECTION, Vec3{new_dir.x * speed, new_dir.y * speed, new_dir.z * speed});
+    if (has_end) write_vec(edited + SD_END_LOCATION, add_scaled(loc0, new_dir, length(sub(end0, loc0))));
+    ++m_vehicle_overrides;
+
+    if (m_cfg.debug) {
+        API::get()->log_info("BL4AimFix[vehicle]: loc=(%.0f %.0f %.0f) eye=(%.0f %.0f %.0f) gaze=(%.3f %.3f %.3f) depth=%.0f dir=(%.3f %.3f %.3f) -> (%.3f %.3f %.3f) spread=%.2fdeg",
+            loc0.x, loc0.y, loc0.z, eye.x, eye.y, eye.z, gaze.x, gaze.y, gaze.z, depth, dir.x, dir.y, dir.z,
+            new_dir.x, new_dir.y, new_dir.z, std::acos(std::clamp(dot(dir, ref), -1.0, 1.0)) * 180.0 / 3.14159265358979323846);
+    }
+    return true;
+}
+
+void BL4AimFixPlugin::on_post_calculate_stereo_view_offset(UEVR_StereoRenderingDeviceHandle, int view_index, float,
+                                                            UEVR_Vector3f* position, UEVR_Rotatorf* rotation, bool is_double) {
+    if (view_index < 0 || view_index > 1 || position == nullptr || rotation == nullptr) return;
+    if (is_double) {
+        const auto p = (const double*)position;
+        const auto r = (const double*)rotation;
+        m_eye_loc[view_index] = Vec3{p[0], p[1], p[2]};
+        m_eye_rot = Rot3{r[0], r[1], r[2]};
+    } else {
+        m_eye_loc[view_index] = Vec3{position->x, position->y, position->z};
+        m_eye_rot = Rot3{rotation->pitch, rotation->yaw, rotation->roll};
+    }
+    m_eye_time[view_index] = now_seconds();
+}
 
 // ------------------------------------------------------------------------------------------------
 // Scoped sights: keep the gun visible (MCP 2026-11-05).
@@ -663,6 +745,10 @@ void BL4AimFixPlugin::install_grapple_hook() {
 // "bl4.grapple_aim" = "<pitch> <yaw>" (right controller aim in degrees, world; only while no gun is out)
 void BL4AimFixPlugin::on_custom_event(const char* event_name, const char* event_data) {
     if (event_name == nullptr || event_data == nullptr) return;
+    if (std::strcmp(event_name, "bl4.vehicle_gaze_aim") == 0) { // scripts/bl4_vr_vehicle.lua: option state on change
+        m_vehicle_gaze_enabled = event_data[0] == '1';
+        return;
+    }
     if (std::strcmp(event_name, "bl4.grapple_hand_aim") == 0) {
         m_grapple_enabled = event_data[0] == '1';
         m_grapple_heartbeat = now_seconds();
@@ -1223,5 +1309,6 @@ void BL4AimFixPlugin::load_config(const std::filesystem::path& file) {
         else if (key == "RVA_ManagerSpawn") { if (auto v = as_rva()) m_cfg.rva_manager_spawn = v; }
         else if (key == "BeamAim") m_cfg.beam_aim = as_bool();
         else if (key == "ShowWeaponWhenScoped") m_cfg.show_weapon_when_scoped = as_bool();
+        else if (key == "VehicleGazeAim") m_cfg.vehicle_gaze_aim = as_bool();
     }
 }

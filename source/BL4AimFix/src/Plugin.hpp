@@ -52,6 +52,8 @@ public:
                                      UEVR_FCanvasHandle canvas) override;
     void on_pre_calculate_stereo_view_offset(UEVR_StereoRenderingDeviceHandle device, int view_index, float world_to_meters,
                                              UEVR_Vector3f* position, UEVR_Rotatorf* rotation, bool is_double) override;
+    void on_post_calculate_stereo_view_offset(UEVR_StereoRenderingDeviceHandle device, int view_index, float world_to_meters,
+                                              UEVR_Vector3f* position, UEVR_Rotatorf* rotation, bool is_double) override;
 
     struct Config {
         bool enabled{true};
@@ -80,6 +82,10 @@ public:
         // gun is on the hand and must stay. Clears the flag in the held gun's sight definitions (shared game data,
         // stays cleared until the game restarts). ShowWeaponWhenScoped=0 turns this off.
         bool show_weapon_when_scoped{true};
+        // Vehicle guns aimed with the head (gaze): shots from the local vehicle pawn's weapons keep the game's muzzle
+        // and spread but point along the HMD gaze instead of the chase camera. VehicleGazeAim=0 turns this off; the
+        // panel option (scripts/bl4_vr_vehicle.lua, custom event "bl4.vehicle_gaze_aim") switches it at runtime.
+        bool vehicle_gaze_aim{true};
     };
 
 private:
@@ -121,6 +127,18 @@ private:
     uevr::API::UObject* m_mesh_cache{};
     int32_t m_mesh_cache_index{-1};
     int32_t m_mesh_cache_serial{0};
+
+    // ---- vehicle gaze aim ----
+    // final eye poses from UEVR's stereo views (world, after the HMD is applied); the gaze = their midpoint + rotation
+    Vec3 m_eye_loc[2]{};
+    Rot3 m_eye_rot{};
+    double m_eye_time[2]{-100.0, -100.0};
+    bool m_vehicle_gaze_enabled{true};       // runtime switch (panel); the config value gates it too
+    uevr::API::UClass* m_vehicle_class{};
+    uint32_t m_vehicle_overrides{0};
+    bool is_vehicle_pawn(uevr::API::UObject* pawn);
+    // returns true and fills `edited` when the shot was re-aimed along the gaze
+    bool gaze_aim_vehicle_shot(const uint8_t* data, uint8_t* edited);
 
     using ManagerSpawnFn = uintptr_t (*)(void* manager, void* out_handle, const uint8_t* data);
     static uintptr_t on_manager_spawn(void* manager, void* out_handle, const uint8_t* data);

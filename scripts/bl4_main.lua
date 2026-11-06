@@ -85,6 +85,17 @@ local function getPlayerCharacter()
 	return pawn
 end
 
+-- The possessed vehicle (OakVehicle) while driving, else nil.
+local oakVehicleClass = nil
+local function getVehicle()
+	local pawn = uevr.api:get_local_pawn(0)
+	if uevrUtils.getValid(pawn) == nil then return nil end
+	if oakVehicleClass == nil then oakVehicleClass = uevrUtils.get_class("Class /Script/OakGame.OakVehicle") end
+	local ok, isVehicle = pcall(function() return oakVehicleClass ~= nil and pawn:is_a(oakVehicleClass) end)
+	if not (ok and isVehicle) then return nil end
+	return pawn
+end
+
 local function getHeldWeapon(pawn)
 	if weaponStatics == nil then weaponStatics = uevrUtils.find_default_instance("Class /Script/GbxWeapon.WeaponStatics") end
 	if weaponStatics == nil then return nil end
@@ -219,6 +230,7 @@ end
 _G.bl4 = {
 	log = log,
 	getPlayerCharacter = getPlayerCharacter,
+	getVehicle = getVehicle,
 	getHeldWeapon = getHeldWeapon,
 	getFirstPersonWeaponMesh = getFirstPersonWeaponMesh,
 	getFirstPersonArms = getFirstPersonArms,
@@ -922,8 +934,12 @@ input.init()
 -- The libs' own cutscene check reads PlayerCameraManager.ViewTarget.Target, but BL4's reflection spells that member
 -- "target" (lowercase, MCP 2026-11-04), so it never saw the cine camera. The profile detects it itself through the
 -- GetViewTarget() function and feeds the result to the libs with setIsInCutsceneOverride.
+-- Vehicles (2026-11-06): the vehicle camera orbits the car following the control rotation, and UEVR's head aim wrote the
+-- head yaw into it, so turning the head swung the chase camera round the car and the world slid the opposite way
+-- (xaero). While driving the aim method is Game too: the right stick steers (BL4 vehicles drive toward the camera's yaw)
+-- and the head only looks around. bl4_vr_vehicle.lua puts the view in the driver's seat.
 local AIM_GAME = 0
-local menuAimActive = nil -- nil = not applied yet: the first tick sets one or the other (covers a saved Game value)
+local aimState = nil -- "menu" / "vehicle" / "pawn"; nil = not applied yet (covers a saved Game value)
 local cineCameraClass = nil
 local function isViewingCineCamera()
 	if cineCameraClass == nil then cineCameraClass = uevrUtils.get_class("Class /Script/CinematicCamera.CineCameraActor") end
@@ -945,20 +961,20 @@ uevr.sdk.callbacks.on_pre_engine_tick(function(engine, delta)
 	local noPawn = uevr.api:get_local_pawn(0) == nil
 	local inCutscene = not noPawn and isViewingCineCamera()
 	uevrUtils.setIsInCutsceneOverride(inCutscene)
-	local inMenu = noPawn or inCutscene
-	if inMenu == menuAimActive then return end
-	menuAimActive = inMenu
-	if inMenu then
-		setAimMethod(AIM_GAME)
-		pcall(function() uevr.params.vr.recenter_view() end)
-		log("menu / cutscene: aim method Game, view recentred")
-	else
+	local state = (noPawn or inCutscene) and "menu" or (getVehicle() ~= nil and "vehicle" or "pawn")
+	if state == aimState then return end
+	aimState = state
+	if state == "pawn" then
 		setAimMethod(gameplayAimMethod())
 		log("pawn: aim method " .. tostring(gameplayAimMethod()))
+	else
+		setAimMethod(AIM_GAME)
+		pcall(function() uevr.params.vr.recenter_view() end)
+		log(state .. ": aim method Game, view recentred")
 	end
 end)
 configui.onUpdate("bl4_gameplay_aim", function(value)
-	if menuAimActive == false then setAimMethod(gameplayAimMethod()) end
+	if aimState == "pawn" then setAimMethod(gameplayAimMethod()) end
 end)
 
 log("loaded")

@@ -170,7 +170,8 @@ local function loadRightHandSolver()
 				cache.rotation = solver["end_bone_rotation"] or cache.rotation
 			elseif solver["end_control_type"] == ik.ControllerType.LEFT_CONTROLLER then
 				cache.left = { id = id, allowStretch = solver["allow_stretch"] == true,
-					startStretchRatio = solver["start_stretch_ratio"] or 0.0, maxStretchScale = solver["max_stretch_scale"] or 0.0 }
+					startStretchRatio = solver["start_stretch_ratio"] or 0.0, maxStretchScale = solver["max_stretch_scale"] or 0.0,
+					offset = solver["end_bone_offset"] or { 0, 0, 0 }, rotation = solver["end_bone_rotation"] or { 0, 0, 0 } }
 			end
 		end
 	end)
@@ -260,6 +261,19 @@ local function rightHandTarget()
 	loc, rot = loc or { 0, 0, 0 }, rot or { 0, 0, 0 }
 	local r = kismet_math_library:ComposeRotators(uevrUtils.rotator(rot[1], rot[2], rot[3]), uevrUtils.rotator(rotOff[1], rotOff[2], rotOff[3]))
 	return { off[1] + loc[1], off[2] + loc[2], off[3] + loc[3] }, { r.Pitch, r.Yaw, r.Roll }
+end
+
+-- The hand-bone offsets each solver applies to its target (controller space): right = what applyRightHandTarget sets,
+-- left = the left solver's saved values. bl4_vr_vehicle.lua inverts them to pin the IK hands exactly onto bones.
+-- Returns { right = { off = {x,y,z}, rot = {p,y,r} }, left = {...} }.
+_G.bl4IKHandOffsets = function()
+	local _, rOff, rRot = rightHandSolver()
+	local off, rot = rightHandTarget()
+	local left = solverCache.left or {}
+	return {
+		right = { off = off or rOff, rot = rot or rRot },
+		left = { off = left.offset or { 0, 0, 0 }, rot = left.rotation or { 0, 0, 0 } },
+	}
 end
 
 -- what the effective target depends on; a change re-applies it to the rig and re-seats the gun
