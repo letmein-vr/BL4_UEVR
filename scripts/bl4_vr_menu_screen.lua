@@ -49,13 +49,16 @@ if getMod("VR_2DScreenFullSource") then
 end
 
 local active = false
--- in game only: the main menu (no player character) also shows the cursor but draws fine in 3D (xaero 2026-11-05)
+-- in game only: the main menu (no player character) also shows the cursor but draws fine in 3D (xaero 2026-11-05).
+-- ECHO menus only: the pause menu also shows the cursor and pauses the game, but it sits over the live world and
+-- draws fine in 3D (xaero 2026-11-07). The ECHO menu stops the world view: PC.bPlayerViewRenderingSuspended is true
+-- with the map open and false in the pause menu (MCP 2026-11-07); pause state and Prysm views are the same for both.
 local function menuOpen()
 	local open = false
 	pcall(function()
 		if _G.bl4 == nil or _G.bl4.getPlayerCharacter() == nil then return end
 		local pc = uevr.api:get_player_controller(0)
-		open = pc ~= nil and pc.bShowMouseCursor == true
+		open = pc ~= nil and pc.bShowMouseCursor == true and pc.bPlayerViewRenderingSuspended == true
 	end)
 	return open
 end

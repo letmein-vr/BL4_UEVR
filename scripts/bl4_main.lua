@@ -22,6 +22,7 @@ local attachments = require('libs/attachments')
 local input = require('libs/input')
 local pawnModule = require('libs/pawn')
 local reticule = require('libs/reticule')
+local controllers = require('libs/controllers')
 local montage = require('libs/montage')
 local ui = require('libs/ui')
 
@@ -636,6 +637,7 @@ ui.init()
 -- explicitly rather than left frozen there).
 -- ---------------------------------------------------------------------------------------------
 local muzzleSocketName = nil
+local gameReticleActive = false -- the backend's game-crosshair layer is showing (see "Game crosshair layer" below)
 reticule.init()
 reticule.registerCustomTargetCallback(function()
 	local location, rotation = nil, nil
@@ -651,9 +653,165 @@ reticule.registerCustomTargetCallback(function()
 			rotation = mesh:GetSocketRotation(muzzleSocketName)
 		end
 	end)
-	reticule.setHidden(location == nil)
+	reticule.setHidden(location == nil or gameReticleActive)
 	if location == nil then return uevrUtils.vector(0, 0, 0), uevrUtils.rotator(0, 0, 0) end
 	return location, rotation
+end)
+
+-- Reticule look ("Reticule" section): the dot is the library default (Engine Sphere + Widget3DPassThrough, unlit).
+-- Colour and brightness go on a dynamic material instance of that material: SlateUI = white texture (so the tint is
+-- the colour exactly), TintColorAndOpacity = colour x brightness (unlit, so > 1 is brighter). Size = the library's
+-- scale multiplier (reticule.setScale). The reticule is rebuilt on loads, so a 250 ms poll re-applies the material
+-- whenever the live component's material is not ours, and whenever a setting changes.
+table.insert(_G.BL4_SECTIONS, { order = 0.6, label = "Reticule", layout = {
+	{ widgetType = "checkbox", id = "bl4_ret_game", label = "Use the game's crosshair at the aim point (needs the BL4 UEVR build)", initialValue = true },
+	{ widgetType = "slider_float", id = "bl4_ret_game_scale", label = "Game crosshair size", initialValue = 1.0, range = { 0.25, 4.0 } },
+	{ widgetType = "slider_int", id = "bl4_ret_game_crop", label = "Game crosshair crop (UI pixels)", initialValue = 256, range = { 64, 512 } },
+	{ widgetType = "slider_float", id = "bl4_ret_game_maxdist", label = "Game crosshair max distance (m)", initialValue = 50.0, range = { 2.0, 100.0 } },
+	{ widgetType = "combo", id = "bl4_ret_game_pose", label = "Controller pose (the one that puts it on the barrel)", initialValue = 1, selections = { "Grip", "Aim" } },
+	{ widgetType = "text", id = "bl4_ret_game_status", label = "Game crosshair: waiting" },
+	{ widgetType = "text", label = "Dot reticule (used when the game crosshair is off or unavailable):" },
+	{ widgetType = "color_picker", id = "bl4_ret_color", label = "Colour", initialValue = "#FFFFFFFF" },
+	{ widgetType = "slider_float", id = "bl4_ret_size", label = "Size", initialValue = 1.0, range = { 0.25, 4.0 } },
+	{ widgetType = "slider_float", id = "bl4_ret_brightness", label = "Brightness", initialValue = 1.0, range = { 0.1, 10.0 } },
+}})
+
+local RETICULE_MATERIAL_PATH = "Material /Engine/EngineMaterials/Widget3DPassThrough.Widget3DPassThrough"
+local RETICULE_WHITE_TEXTURE_PATH = "Texture2D /Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture"
+local reticuleMid, reticuleMidAddress = nil, nil
+local reticuleAppliedTint, reticuleAppliedSize = nil, nil
+
+-- configui stores the picker as an integer with R in the low byte (strings only before the panel exists)
+local function reticuleColorRgba(value)
+	local hex = type(value) == "string" and value or uevrUtils.intToHexString(value or 0xFFFFFFFF)
+	local r = (tonumber(string.sub(hex, 2, 3), 16) or 255) / 255
+	local g = (tonumber(string.sub(hex, 4, 5), 16) or 255) / 255
+	local b = (tonumber(string.sub(hex, 6, 7), 16) or 255) / 255
+	local a = #hex >= 9 and ((tonumber(string.sub(hex, 8, 9), 16) or 255) / 255) or 1
+	return r, g, b, a
+end
+
+local function applyReticuleLook()
+	local size = configui.getValue("bl4_ret_size") or 1.0
+	if size ~= reticuleAppliedSize then
+		reticule.setScale(size)
+		reticuleAppliedSize = size
+	end
+
+	local component = uevrUtils.getValid(reticule.getComponent())
+	if component == nil or component.GetMaterial == nil then return end
+	local current = component:GetMaterial(0)
+	local currentAddress = current ~= nil and current:get_address() or nil
+	if reticuleMid == nil or currentAddress ~= reticuleMidAddress then
+		local template = uevrUtils.getSafeInstanceOf("Class /Script/Engine.Material", RETICULE_MATERIAL_PATH)
+		if template == nil then return end
+		reticuleMid = component:CreateDynamicMaterialInstance(0, template, uevrUtils.fname_from_string("bl4_reticule_material"))
+		if reticuleMid == nil then reticuleMidAddress = nil return end
+		reticuleMidAddress = reticuleMid:get_address()
+		local white = uevrUtils.getSafeInstanceOf("Class /Script/Engine.Texture2D", RETICULE_WHITE_TEXTURE_PATH)
+		if white ~= nil then reticuleMid:SetTextureParameterValue(uevrUtils.fname_from_string("SlateUI"), white) end
+		reticuleAppliedTint = nil
+	end
+
+	local color = configui.getValue("bl4_ret_color") or "#FFFFFFFF"
+	local brightness = configui.getValue("bl4_ret_brightness") or 1.0
+	local tintKey = tostring(color) .. "|" .. tostring(brightness)
+	if tintKey == reticuleAppliedTint then return end
+	local r, g, b, a = reticuleColorRgba(color)
+	reticuleMid:SetVectorParameterValue(uevrUtils.fname_from_string("TintColorAndOpacity"),
+		uevrUtils.color_from_rgba(r * brightness, g * brightness, b * brightness, a))
+	reticuleAppliedTint = tintKey
+end
+
+local reticuleLookLastError = nil
+uevrUtils.setInterval(250, function()
+	local ok, err = pcall(applyReticuleLook)
+	if not ok then
+		reticuleMid, reticuleMidAddress = nil, nil
+		if tostring(err) ~= reticuleLookLastError then log("reticule look: " .. tostring(err)) end
+		reticuleLookLastError = tostring(err)
+	end
+end)
+
+-- ---------------------------------------------------------------------------------------------
+-- Game crosshair layer (BL4 UEVR build only, backend src/mods/vr/Borderlands4ReticleLayer.hpp). The game's crosshair is
+-- Prysm HTML in the UI, so in the world it gets tonemapped (dark, washed out - dev test 2026-11-07). Instead the backend
+-- crops the UI centre into its own OpenXR quad layer (composited after the tonemapper like the HUD = real colours),
+-- poses it every frame from the live right-controller pose, and clears that rectangle from the UI quad. Every tick this
+-- sends "active,distance,origin xyz,dir xyz,crop,scale,pose" via set_mod_value("BL4_ReticleLayer"): the muzzle and
+-- barrel direction in the right motion controller component's local space (the gun hangs off it, so this is near
+-- constant and the backend applies it to the newest pose) and the hit distance along the barrel. The backend drops
+-- the layer if this stops for 0.5 s (script reset). The dot reticule hides only once the backend has echoed the value
+-- back (get_mod_value), so an older UEVR build keeps the dot.
+-- ---------------------------------------------------------------------------------------------
+local GAME_RETICLE_KEY = "BL4_ReticleLayer"
+local gameReticleSupported = nil -- nil = not known yet
+local gameReticleLastText = nil
+local gameReticleStatus = nil
+
+local function setGameReticleStatus(text)
+	if text == gameReticleStatus then return end
+	gameReticleStatus = text
+	configui.setLabel("bl4_ret_game_status", "Game crosshair: " .. text)
+end
+
+local function sendGameReticle(text)
+	uevr.params.vr.set_mod_value(GAME_RETICLE_KEY, text)
+	gameReticleLastText = text
+	if gameReticleSupported == nil then
+		local echoed = uevr.params.vr:get_mod_value(GAME_RETICLE_KEY)
+		gameReticleSupported = echoed ~= nil and echoed == text
+		log("game crosshair layer " .. (gameReticleSupported and "supported by this UEVR build" or "NOT supported by this UEVR build (dot reticule stays)"))
+	end
+end
+
+local function measureGameReticle()
+	local pawn = getPlayerCharacter()
+	if pawn == nil or configui.getValue("bl4_weapon_on_hand") == false then return nil, "no character" end
+	local pc = uevr.api:get_player_controller(0)
+	if pc ~= nil and pc.bShowMouseCursor == true then return nil, "menu open" end
+	local weapon = getHeldWeapon(pawn)
+	local mesh = weapon ~= nil and getFirstPersonWeaponMesh(weapon) or nil
+	if mesh == nil then return nil, "no gun" end
+	if muzzleSocketName == nil then muzzleSocketName = uevrUtils.fname_from_string("Muzzle") end
+	if not mesh:DoesSocketExist(muzzleSocketName) then return nil, "no muzzle (melee / unarmed)" end
+	local controller = uevrUtils.getValid(controllers.getController(1, true))
+	if controller == nil then return nil, "no right controller component" end
+
+	local muzzle = mesh:GetSocketLocation(muzzleSocketName)
+	local forward = kismet_math_library:GetForwardVector(mesh:GetSocketRotation(muzzleSocketName))
+	local maxDistance = (configui.getValue("bl4_ret_game_maxdist") or 50.0) * 100.0
+	local hit = uevrUtils.getTargetLocation(muzzle, forward, 0, { pawn }, false, 10, maxDistance)
+	local distance = hit ~= nil and uevrUtils.vectorDistance(muzzle, hit) or maxDistance
+	if distance < 10 then distance = 10 end
+
+	local controllerLocation = controller:K2_GetComponentLocation()
+	local controllerRotation = controller:K2_GetComponentRotation()
+	local origin = kismet_math_library:LessLess_VectorRotator(kismet_math_library:Subtract_VectorVector(muzzle, controllerLocation), controllerRotation)
+	local direction = kismet_math_library:LessLess_VectorRotator(forward, controllerRotation)
+	local poseType = (configui.getValue("bl4_ret_game_pose") or 1) - 1
+	return string.format("1,%.2f,%.3f,%.3f,%.3f,%.5f,%.5f,%.5f,%d,%.3f,%d", distance,
+		origin.X, origin.Y, origin.Z, direction.X, direction.Y, direction.Z,
+		math.floor(configui.getValue("bl4_ret_game_crop") or 256), configui.getValue("bl4_ret_game_scale") or 1.0, poseType), "showing"
+end
+
+uevrUtils.registerPreEngineTickCallback(function()
+	local text, status = nil, "off"
+	if configui.getValue("bl4_ret_game") ~= false and gameReticleSupported ~= false then
+		local ok, result, reason = pcall(measureGameReticle)
+		if ok then text, status = result, reason else status = "error: " .. tostring(result) end
+	elseif gameReticleSupported == false then
+		status = "not supported by this UEVR build"
+	end
+
+	if text ~= nil then
+		local ok = pcall(sendGameReticle, text)
+		gameReticleActive = ok and gameReticleSupported == true
+	else
+		if gameReticleLastText ~= "0" then pcall(sendGameReticle, "0") end
+		gameReticleActive = false
+	end
+	setGameReticleStatus(status)
 end)
 
 -- ---------------------------------------------------------------------------------------------
