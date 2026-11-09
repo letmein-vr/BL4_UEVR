@@ -71,12 +71,35 @@ far from the eyes as the game's own target. The gaze is the midpoint and rotatio
 UEVR's HUD follows the head (`UI_FollowView`), so the crosshair sits on the gaze. `scripts/bl4_vr_vehicle.lua` sends the
 panel option as custom event `bl4.vehicle_gaze_aim` (`1` / `0`) on change and every 10 s.
 
+## Actor-projectile guns (2026-11-09)
+
+Some guns fire `GbxGame.projectile` actors instead of light projectiles. For example, the Vladof CrowdSourced sniper
+fires `WeaponProjectile` actors (owner = the gun, instigator = the pawn), and none of its shots reach the light-projectile
+hook. Every actor is created by `UWorld::SpawnActor`, and a projectile's velocity follows its spawn rotation, so the
+plugin re-aims the spawn transform there:
+
+- The hook only acts on the game thread, on subclasses of `GbxGame.projectile`, whose spawn-parameter owner is a weapon
+  held by the local pawn (not in a vehicle). Grenades and throwing knives (owner = pawn or grenade gadget) are left to
+  `scripts/bl4_vr_throw.lua`.
+- The game spawns the shot at the first-person muzzle, aimed at the crosshair target on the camera ray. The aim line is
+  taken where the shot's line passes closest to that ray. If that point is less than 1 m ahead, or the lines are
+  parallel (a far target), camera forward is used.
+- The spawn is moved to the VR gun's muzzle and rotated by (aim line → barrel), which keeps the game's spread.
+  Shots more than `MaxAngleFromAim` off the aim line are left alone.
+- Hook chain, verified before hooking: `GameplayStatics.BeginDeferredActorSpawnFromClass` thunk → native (RVA
+  0x34F4326) → spawn helper (0x7AC6E0E) → `UWorld::SpawnActor` (0x1037E38).
+
+Also fixed since 1.3: the beam-manager pointer could go stale (the first ticking actor was adopted and never
+re-checked), which crashed about 0.4 s after picking up a carryable tank. The manager is now adopted only if it is a
+`LightBeamManager` tracked in the object array, and re-checked before every read.
+
 ## Config: `<profile>\plugins\BL4AimFix.txt` (optional)
 
 `Enabled`, `Mode` (0 log / 1 override), `Debug` (logs every player projectile, plus a summary every 10 s),
 `StartTolerance`, `MaxAngleFromAim`, `WeaponClass`, `MuzzleSocket`, `UseSocketRotation`, `BarrelAxis`,
 `MuzzleForwardOffset`, `PitchOffset`, `YawOffset`, `RVA_SpawnLightProjectileNative`, `RVA_ManagerSpawn`,
-`BeamAim` (default 1), `ShowWeaponWhenScoped` (default 1), `VehicleGazeAim` (default 1).
+`BeamAim` (default 1), `ShowWeaponWhenScoped` (default 1), `VehicleGazeAim` (default 1),
+`ActorProjectileAim` (default 1), `RVA_DeferredSpawnNative`, `RVA_DeferredSpawnHelper`, `RVA_SpawnActor`.
 
 ## Build
 

@@ -8,25 +8,12 @@
 -- proportions. This script turns VR_2DScreenMode + VR_2DScreenFullSource on while the controller shows the mouse
 -- cursor (true in the ECHO menus, MCP 2026-11-05 with the map open) and back off when it closes. Gameplay stays 3D.
 -- Needs the backend with VR_2DScreenFullSource (UEVR Build 2026-11-05, sha1 d29e7b6d); older backends ignore it.
+-- Always on: the panel option (bl4_menu_flat_screen) was removed 2026-11-09 (xaero: should be on at all times).
 
 local uevrUtils = require('libs/uevr_utils')
-local configui = require('libs/configui')
 
 local function log(text)
 	pcall(function() uevrUtils.print("[bl4 menu screen] " .. tostring(text), LogLevel.Info) end)
-end
-
--- option goes into bl4_main.lua's "General" section (a second "General" entry would make a second header)
-local OPTION = { widgetType = "checkbox", id = "bl4_menu_flat_screen", label = "Menus (map, inventory ...) on a flat screen in both eyes", initialValue = true }
-_G.BL4_SECTIONS = _G.BL4_SECTIONS or {}
-local general = nil
-for _, section in ipairs(_G.BL4_SECTIONS) do
-	if section.label == "General" then general = section end
-end
-if general ~= nil then
-	table.insert(general.layout, OPTION)
-else
-	table.insert(_G.BL4_SECTIONS, { order = 0, label = "General", layout = { OPTION } })
 end
 
 local function getMod(name)
@@ -64,7 +51,7 @@ local function menuOpen()
 end
 
 uevr.sdk.callbacks.on_pre_engine_tick(function(engine, delta)
-	local want = configui.getValue("bl4_menu_flat_screen") ~= false and menuOpen()
+	local want = menuOpen()
 	if want == active then return end
 	active = want
 	setMods(want)

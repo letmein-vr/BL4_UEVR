@@ -16,8 +16,12 @@ table.sort(sections, function(a, b) return (a.order or 99) < (b.order or 99) end
 
 -- Main panel vs "Dev Config": keyed by section label, true = the whole section is dev; a list = the widget ids that stay
 -- in the main section (everything else of that section goes to its node under Dev Config).
+-- Menu layout per xaero 2026-11-09: General keeps roomscale, aim method and the X/B swap; PiP Scope and Vehicles are dev.
 local DEV_RULES = {
+    ["General"]           = { "bl4_roomscale", "bl4_gameplay_aim", "bl4_swap_xb" },
     ["Weapon Spawner"]    = true,
+    ["PiP Scope"]         = true,
+    ["Vehicles"]          = true,
     ["Hands"]             = { "bl4_hands_mode", "bl4_hands_mode_status" },
     ["Two-Handed Aiming"] = { "bl4_th_enabled", "bl4_th_grab_button" },
     ["Recoil"]            = { "bl4_recoil_enabled", "bl4_recoil_strength_loc", "bl4_recoil_strength_rot", "bl4_recoil_two_handed" },
@@ -31,6 +35,29 @@ local FLAT_SECTIONS = {
     ["Recoil"]            = true,
     ["Grapple"]           = true,
 }
+
+-- order of the flat items at the top of the panel (xaero 2026-11-09); items not listed follow in section order
+local FLAT_ORDER = {
+    "bl4_hands_mode", "bl4_hands_mode_status",
+    "bl4_roomscale",
+    "bl4_gameplay_aim",
+    "bl4_swap_xb",
+    "bl4_th_enabled", "bl4_th_grab_button",
+    "bl4_grapple_hand_aim",
+    "bl4_recoil_enabled", "bl4_recoil_strength_loc", "bl4_recoil_strength_rot",
+    "bl4_recoil_two_handed",
+}
+
+local function sortFlat(items)
+    local rank = {}
+    for i, id in ipairs(FLAT_ORDER) do rank[id] = i end
+    local keyed = {}
+    for i, item in ipairs(items) do
+        keyed[i] = { item = item, key = (item.id ~= nil and rank[item.id]) or (#FLAT_ORDER + i) }
+    end
+    table.sort(keyed, function(a, b) return a.key < b.key end)
+    for i, k in ipairs(keyed) do items[i] = k.item end
+end
 
 local function splitSection(section)
     local rule = DEV_RULES[section.label]
@@ -70,12 +97,12 @@ for i, section in ipairs(sections) do
     if #dev > 0 then addNode(devLayout, "bl4_dev_section_" .. i, label, dev, false) end
 end
 if #flatLayout > 0 then
+    sortFlat(flatLayout)
     table.insert(flatLayout, { widgetType = "spacing" })
     for i = #flatLayout, 1, -1 do table.insert(layout, 1, flatLayout[i]) end
 end
--- the dev tuning only while developer mode is on (bl4_main.lua sets it)
-local uevrUtils = require('libs/uevr_utils')
-if #devLayout > 0 and uevrUtils.getDeveloperMode() then
+-- the dev tuning only while _G.BL4_DEV_CONFIG is on (bl4_main.lua sets it; separate from uevrlib developer mode)
+if #devLayout > 0 and _G.BL4_DEV_CONFIG == true then
     table.insert(layout, { widgetType = "tree_node", id = "bl4_dev_config", label = "Dev Config", initialOpen = false })
     for _, item in ipairs(devLayout) do table.insert(layout, item) end
     table.insert(layout, { widgetType = "tree_pop" })

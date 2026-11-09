@@ -44,6 +44,11 @@ local POLL_S = 0.25
 scope.setParameterDefault("objective_lens_rotation", {90.0, 0.0, 0.0})
 scope.setParameterDefault("objective_lens_location", {0.0, 0.0, 0.0})
 scope.setParameterDefault("lens_offset", 0.0) -- per-scope eyepiece offset toward the eye (cm), set in the panel
+-- per-scope lens tilt (deg, 2026-11-09): extra pitch about the gun's right axis on top of the 90 that faces the disc to
+-- the eye, so the lens can lean forward / back toward the eye; set in the panel
+scope.setParameterDefault("lens_tilt", 0.0)
+-- per-scope lens size (x the eyepiece, 2026-11-09; it was one panel value for every scope, saved 1.004)
+scope.setParameterDefault("lens_size", 1.0) -- read through lensSize(), defined after `current`
 scope.setParameterDefault("ocular_lens_rotation", {90.0, 0.0, 0.0})
 -- Shown only while aiming down sights (OakCharacter.ZoomState.bWantsToZoom = LT held; MCP 2026-11-05: true with State 2
 -- while scoped), switched by this script through Scope:disable. scope.lua's own eye-distance switch is kept out of the
@@ -56,8 +61,9 @@ table.insert(_G.BL4_SECTIONS, { order = 4, label = "PiP Scope", layout = {
 	{ widgetType = "checkbox", id = "bl4_pip_enabled", label = "PiP scopes on guns with a magnifying scope", initialValue = true },
 	{ widgetType = "text", id = "bl4_pip_status", label = "Scope: -" },
 	{ widgetType = "slider_float", id = "bl4_pip_min_magnification", label = "Only scopes of at least (x magnification)", initialValue = 2.0, range = { 1.0, 6.0 } },
-	{ widgetType = "slider_float", id = "bl4_pip_lens_offset", label = "Lens offset toward the eye (cm) - this scope only", initialValue = 0.0, range = { -10.0, 15.0 } },
-	{ widgetType = "slider_float", id = "bl4_pip_lens_size", label = "Lens size (x the eyepiece)", initialValue = 1.0, range = { 0.5, 2.0 } },
+	{ widgetType = "slider_float", id = "bl4_pip_lens_offset", label = "Lens offset toward the eye (cm) - this scope only", initialValue = 0.0, range = { -40.0, 15.0 } },
+	{ widgetType = "slider_float", id = "bl4_pip_lens_tilt", label = "Lens tilt forward / back (deg) - this scope only", initialValue = 0.0, range = { -60.0, 60.0 } },
+	{ widgetType = "slider_float", id = "bl4_pip_lens_size", label = "Lens size (x the eyepiece) - this scope only", initialValue = 1.0, range = { 0.5, 2.0 } },
 	{ widgetType = "slider_float", id = "bl4_pip_magnification", label = "Magnification (x the game's)", initialValue = 1.0, range = { 0.5, 2.0 } },
 	{ widgetType = "slider_float", id = "bl4_pip_brightness", label = "Brightness", initialValue = 2.0, range = { 0.1, 8.0 } },
 }})
@@ -97,6 +103,11 @@ end
 -- current = what the PiP was built for (objects compared by address)
 local current = { weapon = nil, mesh = nil, sight = nil, maskMesh = nil, instance = nil, sightObj = nil,
 	eyepiece = nil, diameter = nil, status = "" }
+
+-- this scope's lens size (x the eyepiece; scope parameter lens_size, default 1.0)
+local function lensSize()
+	return (current.scopeID ~= nil and scope.getParameter(current.scopeID, "lens_size")) or 1.0
+end
 
 local sightClass, primitiveClass = nil, nil
 local rootSocket, muzzleSocket = nil, nil
@@ -250,8 +261,8 @@ local function placeLenses(instance, mesh)
 		if mesh:DoesSocketExist(rootSocket) == true then ocular:K2_AttachToComponent(mesh, rootSocket, 0, 0, 0, false) end
 		local p = current.eyepiece
 		instance:setOcularLensRelativeLocation({ p.X - (scope.getParameter(current.scopeID, "lens_offset") or 0.0), p.Y, p.Z })
-		instance:setOcularLensRelativeRotation({ 90.0, 0.0, 0.0 })
-		instance:setOcularLensScale(current.diameter * value("bl4_pip_lens_size", 1.0) / LENS_MESH_DIAMETER)
+		instance:setOcularLensRelativeRotation({ 90.0 + (scope.getParameter(current.scopeID, "lens_tilt") or 0.0), 0.0, 0.0 })
+		instance:setOcularLensScale(current.diameter * lensSize() / LENS_MESH_DIAMETER)
 		-- depth: the lens is attached under the gun, so bl4_main.lua's "View model depth" puts it in the gun's layer
 		-- (world depth by default; the gun's foreground layer never depth-tested against a normal-scene lens)
 	end
@@ -366,8 +377,10 @@ local function update()
 		logError("PiP for " .. scopeID .. ": " .. tostring(err))
 		return
 	end
-	-- the offset slider shows (and edits) this scope's own value
+	-- the offset and tilt sliders show (and edit) this scope's own values
 	pcall(function() configui.setValue("bl4_pip_lens_offset", scope.getParameter(scopeID, "lens_offset") or 0.0, true) end)
+	pcall(function() configui.setValue("bl4_pip_lens_tilt", scope.getParameter(scopeID, "lens_tilt") or 0.0, true) end)
+	pcall(function() configui.setValue("bl4_pip_lens_size", scope.getParameter(scopeID, "lens_size") or 1.0, true) end)
 	current.status = status
 	setStatus(status)
 	log(status)
@@ -415,7 +428,7 @@ uevrUtils.registerPreEngineTickCallback(function(engine, delta)
 	pcall(function()
 		local d = lensDistance(instance)
 		if d == nil then return end
-		local radius = 0.5 * current.diameter * value("bl4_pip_lens_size", 1.0)
+		local radius = 0.5 * current.diameter * lensSize()
 		local t = (radius / math.max(d, MIN_EYE_DISTANCE)) * zoomScale(current.sightObj) / value("bl4_pip_magnification", 1.0)
 		instance:setFOV(math.max(0.2, 2.0 * math.deg(math.atan(t))))
 	end)
@@ -436,7 +449,28 @@ configui.onUpdate("bl4_pip_lens_offset", function(v)
 		pcall(function() instance:setOcularLensRelativeLocation({ p.X - v, p.Y, p.Z }) end)
 	end)
 end)
-configui.onUpdate("bl4_pip_lens_size", rebuild)
+-- lens tilt: saved for the scope currently held only (key lens_tilt), lens turned directly
+configui.onUpdate("bl4_pip_lens_tilt", function(v)
+	local id = current.instance ~= nil and current.scopeID or nil
+	if id == nil then return end
+	scope.setParameter(id, "lens_tilt", v)
+	uevrUtils.setTimeout(1, function()
+		local instance = current.instance
+		if instance == nil or current.scopeID ~= id then return end
+		pcall(function() instance:setOcularLensRelativeRotation({ 90.0 + v, 0.0, 0.0 }) end)
+	end)
+end)
+-- lens size: saved for the scope currently held only (key lens_size), lens scaled directly (the FOV follows it per frame)
+configui.onUpdate("bl4_pip_lens_size", function(v)
+	local id = current.instance ~= nil and current.scopeID or nil
+	if id == nil then return end
+	scope.setParameter(id, "lens_size", v)
+	uevrUtils.setTimeout(1, function()
+		local instance = current.instance
+		if instance == nil or current.scopeID ~= id or current.diameter == nil then return end
+		pcall(function() instance:setOcularLensScale(current.diameter * v / LENS_MESH_DIAMETER) end)
+	end)
+end)
 -- configui callbacks run on the draw thread; UFunction calls go on the game thread
 configui.onUpdate("bl4_pip_brightness", function(v)
 	uevrUtils.setTimeout(1, function()

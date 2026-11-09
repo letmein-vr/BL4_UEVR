@@ -56,6 +56,7 @@ _G.BL4_SECTIONS = _G.BL4_SECTIONS or {}
 table.insert(_G.BL4_SECTIONS, { order = 2, label = "Two-Handed Aiming", layout = {
 	{ widgetType = "checkbox", id = "bl4_th_enabled", label = "Enable Two-Handing", initialValue = true },
 	{ widgetType = "combo", id = "bl4_th_grab_button", label = "Two-hand grab button", initialValue = GRAB_GRIP, selections = { "Left grip", "Left trigger" } },
+	{ widgetType = "checkbox", id = "bl4_th_game_left_grip", label = "Left hand takes the game's own grip on the gun (hand + fingers, measured per gun; off = grip point + offsets)", initialValue = true },
 	{ widgetType = "slider_float", id = "bl4_th_offhand_glide", label = "Off-hand glide time onto / off the gun (s, 0 = snap)", initialValue = 0.15, range = { 0.0, 0.6 } },
 	{ widgetType = "checkbox", id = "bl4_th_suppress_grab", label = "Hide grab button from game near / while two-handing", initialValue = true },
 	{ widgetType = "checkbox", id = "bl4_th_snap_left_hand", label = "Snap left hand to grip point", initialValue = true },
@@ -243,6 +244,22 @@ local function distance(a, b)
 	return math.sqrt(dx * dx + dy * dy + dz * dz)
 end
 
+-- The game's own left grip on this gun (2026-11-09): bl4_main.lua measures the flat game's L_Hand relative to
+-- R_Hand_Weapon on FirstPersonArms per gun model (= the gun's own frame: the first-person gun sits on that socket). With
+-- option bl4_th_game_left_grip the left hand's L_Hand bone goes exactly there - position AND rotation - in both hand
+-- modes, and bl4_main copies the game's left finger pose onto it (_G.bl4TwoHandGameLeft). The per-weapon left-hand
+-- offsets below belong to the grip-point placement and are not applied on top. nil = not measured yet / one-handed gun:
+-- the grip-point placement as before.
+local GAME_LEFT_BONE = "L_Hand"
+local function gameLeftGripT(weaponMesh)
+	if configui.getValue("bl4_th_game_left_grip") == false then return nil end
+	if _G.bl4 == nil or _G.bl4.getGameLeftGrip == nil then return nil end
+	local ok, g = pcall(_G.bl4.getGameLeftGrip, weaponMesh)
+	if not ok or g == nil then return nil end
+	return kismet_math_library:MakeTransform(uevrUtils.vector(g.loc.X, g.loc.Y, g.loc.Z),
+		uevrUtils.rotator(g.rot.Pitch, g.rot.Yaw, g.rot.Roll), uevrUtils.vector(1, 1, 1))
+end
+
 local function updateMarker(weaponMesh, point)
 	local show = configui.getValue("bl4_th_show_marker") == true and weaponMesh ~= nil and point ~= nil
 	if show then
@@ -420,6 +437,7 @@ end
 local function applyLeftPose()
 	if not active then return end
 	if configui.getValue("bl4_th_apply_pose") == false then return end
+	if _G.bl4TwoHandGameLeft == true then return end -- the game's own finger pose is copied every tick (bl4_main.lua)
 	local pose = getLeftPose()
 	local mesh = leftHandMesh()
 	if pose == nil or not alive(mesh) then return end
@@ -534,6 +552,13 @@ local function applyLeftOffset()
 	local o, r = leftHandOffset(getWeaponParams(currentWeaponID) or {}, false)
 	local ok, err = pcall(function()
 		local b = leftBaseRel
+		if b.gameRel ~= nil then
+			-- game grip: the hand's L_Hand bone exactly on the game's grip (pmc = bone^-1 * grip, in the gun's space)
+			local t = b.gameRel.Translation
+			pmc:K2_SetRelativeLocationAndRotation(uevrUtils.vector(t.X, t.Y, t.Z), kismet_math_library:Quat_Rotator(b.gameRel.Rotation),
+				false, getHitResult(), true)
+			return
+		end
 		local tRot = uevrUtils.rotator(b.rot.Pitch + r.Pitch, b.rot.Yaw + r.Yaw, b.rot.Roll + r.Roll)
 		local k = kismet_math_library:GreaterGreater_VectorRotator(uevrUtils.vector(b.wrist.X, b.wrist.Y, b.wrist.Z), tRot)
 		local ctrlT = kismet_math_library:MakeTransform(
@@ -569,6 +594,13 @@ local function captureLeftBase(weaponMesh, targetPoint)
 			loc = { X = lp.X, Y = lp.Y, Z = lp.Z },
 			rot = { Pitch = lr.Pitch, Yaw = lr.Yaw, Roll = lr.Roll },
 		}
+		-- the game's left grip (the gun's own frame): the component placement that puts this hand's L_Hand bone on it
+		local gripT = gameLeftGripT(weaponMesh)
+		if gripT ~= nil then
+			local boneInPmc = kismet_math_library:MakeRelativeTransform(
+				pmc:GetSocketTransform(uevrUtils.fname_from_string(GAME_LEFT_BONE), 0), pmc:K2_GetComponentToWorld())
+			leftBaseRel.gameRel = kismet_math_library:ComposeTransforms(kismet_math_library:InvertTransform(boneInPmc), gripT)
+		end
 	end)
 	if not ok then print("[bl4 two_handed] left base: " .. tostring(err)) end
 end
@@ -610,6 +642,8 @@ end
 applyIKAccessory = function()
 	if not active or ikBase == nil or not alive(ikBase.parent) then return end
 	local o, r = leftHandOffset(getWeaponParams(currentWeaponID) or {}, true)
+	-- the game's grip is exact: the grip-point trims do not apply to it
+	if ikBase.game then o, r = { X = 0, Y = 0, Z = 0 }, { Pitch = 0, Yaw = 0, Roll = 0 } end
 	pcall(function()
 		uevrUtils.executeUEVRCallbacks("on_accessory_attach", Handed.Left, ikBase.parent, "", 0,
 			{ X = ikBase.loc.X + o.X, Y = ikBase.loc.Y + o.Y, Z = ikBase.loc.Z + o.Z },
@@ -618,19 +652,56 @@ applyIKAccessory = function()
 	end)
 end
 
+-- bl4_main.lua copies the game's left finger pose while this is true (the hand sits on the game's own grip)
+local function updateGameLeftFlag()
+	_G.bl4TwoHandGameLeft = active and ((leftBaseRel ~= nil and leftBaseRel.gameRel ~= nil) or (ikBase ~= nil and ikBase.game == true)) or false
+end
+
 local function attachIKLeftHand(weaponMesh, gripPoint)
 	ikBase = nil
 	local ok, err = pcall(function()
 		local leftCtrl = controllers.getController(0, true)
 		local ctrlLoc = alive(leftCtrl) and leftCtrl:K2_GetComponentLocation() or nil
 		local ctrlRot = alive(leftCtrl) and leftCtrl:K2_GetComponentRotation() or nil
-		local target = (configui.getValue("bl4_th_snap_left_hand") ~= false and gripPoint) or ctrlLoc or gripPoint
+		local snapping = configui.getValue("bl4_th_snap_left_hand") ~= false and gripPoint ~= nil
+		local target = (snapping and gripPoint) or ctrlLoc or gripPoint
 		if target == nil then return end
 		-- two-hand frame (placed at the un-pivoted gun by beginIKAim): offsets relative to it; else to the gun
 		local frame = ikAim ~= nil and ikAim.frame or nil
 		local lp, lr
+		-- the game's left grip: the solver puts L_Hand at target * (end_bone_offset, end_bone_rotation), so the target
+		-- on the frame (= the gun's own frame) is that offset's inverse composed with the grip - L_Hand lands on it
+		-- exactly (bl4_vr_vehicle.lua pins the IK hands to the driver's bones the same way)
+		local gripT = frame ~= nil and gameLeftGripT(weaponMesh) or nil
+		local offsets = nil
+		if gripT ~= nil and _G.bl4IKHandOffsets ~= nil then
+			local okOff, o = pcall(_G.bl4IKHandOffsets)
+			offsets = okOff and o or nil
+		end
+		if gripT ~= nil and offsets ~= nil and offsets.left ~= nil then
+			local l = offsets.left
+			local offT = kismet_math_library:MakeTransform(uevrUtils.vector(l.off[1], l.off[2], l.off[3]),
+				uevrUtils.rotator(l.rot[1], l.rot[2], l.rot[3]), uevrUtils.vector(1, 1, 1))
+			local ctrlRelT = kismet_math_library:ComposeTransforms(kismet_math_library:InvertTransform(offT), gripT)
+			local t, r = ctrlRelT.Translation, kismet_math_library:Quat_Rotator(ctrlRelT.Rotation)
+			ikBase = { weaponMesh = weaponMesh, parent = frame, game = true,
+				loc = { X = t.X, Y = t.Y, Z = t.Z }, rot = { Pitch = r.Pitch, Yaw = r.Yaw, Roll = r.Roll } }
+			return
+		end
 		if frame ~= nil then
-			lp = kismet_math_library:InverseTransformLocation(ikAim.baseT, target)
+			if snapping then
+				-- The grip point comes from the real gun mesh, which rides the IK rig's hand bone ONE FRAME behind the
+				-- controllers (the rig is solved in the post tick), while ikAim.baseT is this frame's pose built from the
+				-- right controller. Mixing the two put one frame of travel into the offset: two-handing while moving or
+				-- sprinting forwards left the hand further up the gun (xaero 2026-11-09). Taken in the gun's OWN space
+				-- (point and gun from the same mesh) the lag cancels; the frame is the un-pivoted gun, so gun space =
+				-- frame space.
+				local gunT = kismet_math_library:MakeTransform(weaponMesh:K2_GetComponentLocation(),
+					weaponMesh:K2_GetComponentRotation(), uevrUtils.vector(1, 1, 1)) -- unit scale, like the frame
+				lp = kismet_math_library:InverseTransformLocation(gunT, gripPoint)
+			else
+				lp = kismet_math_library:InverseTransformLocation(ikAim.baseT, target) -- controller and base: both current
+			end
 			lr = ctrlRot ~= nil and kismet_math_library:InverseTransformRotation(ikAim.baseT, ctrlRot) or nil
 		else
 			lp, lr = weaponLocalOffset(weaponMesh, target, ctrlRot)
@@ -727,7 +798,7 @@ end
 local function applyIKAim(weaponMesh, leftHand)
 	if ikAim == nil then
 		beginIKAim(weaponMesh, leftHand) -- gun handed to the IK hand after the grab
-		if ikAim ~= nil and ikAim.frame ~= nil then pcall(function() attachIKLeftHand(weaponMesh, getGripPoint(weaponMesh)) end) end
+		if ikAim ~= nil and ikAim.frame ~= nil then pcall(function() attachIKLeftHand(weaponMesh, getGripPoint(weaponMesh)) end) updateGameLeftFlag() end
 	end
 	if ikAim == nil then return false end
 	local baseT, pivot = ikWeaponBase(weaponMesh)
@@ -772,7 +843,7 @@ local function applyPivot()
 	local a = pivotArgs
 	if a == nil or not alive(a.weaponMesh) then return end
 	if ikMode() and applyIKAim(a.weaponMesh, a.leftHand) then return end
-	-- weapon kick (bl4_vr_recoil.lua, "Weapon kick while two-handing") goes on top of the pivot; the left hand rides the gun
+	-- weapon kick (bl4_vr_recoil.lua, "Recoil while two-handing") goes on top of the pivot; the left hand rides the gun
 	if rightPivot ~= nil and alive(rightPivot.pmc) then
 		-- Hands mode: turn the right VR hand (the gun is its child) from its rest transform, about its wrist bone, as the
 		-- IK path turns the gun about the IK hand target (swingAbout)
@@ -846,13 +917,15 @@ local function activate(weaponMesh, gripPoint)
 	pcall(function() hands.setHoldingAttachment(Handed.Left, (type(animName) == "string" and animName) or true) end)
 	pcall(function() if hands.setInputLocked then hands.setInputLocked(Handed.Left, true) end end)
 	_G.isTwoHandingActive = true
-	status("two-handing")
+	updateGameLeftFlag()
+	status(_G.bl4TwoHandGameLeft and "two-handing (game's left grip)" or "two-handing")
 	scheduleLeftPose()
 end
 
 local function deactivate(reason)
 	if not active then return end
 	active = false
+	_G.bl4TwoHandGameLeft = false -- bl4_main.lua hands the left fingers back on its next tick
 	leftBaseRel = nil
 	ikAim = nil -- bl4_vr_ik.lua re-asserts the un-pivoted grip once _G.isTwoHandingActive is false
 	pivotArgs = nil

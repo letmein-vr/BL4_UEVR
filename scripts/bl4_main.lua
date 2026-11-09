@@ -26,15 +26,19 @@ local controllers = require('libs/controllers')
 local montage = require('libs/montage')
 local ui = require('libs/ui')
 
--- developer mode: Input / Pawn / Attachments dev panels (settings saved in data/input_parameters.json,
--- data/pawn_parameters.json, data/attachments_parameters.json; they still apply with developer mode off)
-uevrUtils.setDeveloperMode(true)
--- hands configuration tool (hands wizard): build the VR hands from the FirstPersonArms mesh; comment out once
--- data/hands_parameters.json exists and the hands are tuned
-hands.enableConfigurationTool()
--- developer mode shows the Attachments panel (per-weapon grip offsets saved in data/); barrel along +X.
--- New weapons start at the tuned right-hand pistol grip location (xaero, 2026-10-30); saved per-weapon offsets win.
-attachments.init(true, nil, {4.6, -1.4, 4.1}, {0,0,0})
+-- uevrlib developer mode OFF (xaero 2026-11-09): no Hand Config / Attachments / Pawn / UI / Reticule / Input / IK /
+-- montage dev panels, and none of their dev-only work (the montage dev monitor records every montage played into
+-- data/montage_parameters.json; the dev save timers). Their saved settings (data/*_parameters.json) still load and
+-- apply. Set true again (and re-enable the hands configuration tool) to tune with the lib panels.
+uevrUtils.setDeveloperMode(false)
+-- hands configuration tool (hands wizard, "Hand Config" panel): only for building the hands; data/hands_parameters.json
+-- holds the tuned result
+-- hands.enableConfigurationTool()
+-- Our own "Dev Config" node in the Borderlands 4 panel (zz_bl4_vr_panel.lua), independent of uevrlib developer mode.
+_G.BL4_DEV_CONFIG = true
+-- barrel along +X. New weapons start at the tuned right-hand pistol grip location (xaero, 2026-10-30); saved
+-- per-weapon offsets win.
+attachments.init(false, nil, {4.6, -1.4, 4.1}, {0,0,0})
 
 -- Panel sections: the "Borderlands 4" panel is built by zz_bl4_vr_panel.lua from _G.BL4_SECTIONS (bl4_ik.lua and
 -- bl4_two_handed.lua add theirs); saved values live in data/bl4_config.json.
@@ -46,7 +50,6 @@ table.insert(_G.BL4_SECTIONS, { order = 0, label = "General", layout = {
 	{ widgetType = "same_line" },
 	{ widgetType = "button", id = "bl4_game_grip_reset", label = "Re-measure all weapon grips", size = {200, 22} },
 	{ widgetType = "checkbox", id = "bl4_roomscale", label = "Roomscale turning (the character turns with your body)", initialValue = true },
-	{ widgetType = "checkbox", id = "bl4_world_depth", label = "Gun and hands at world depth (needed for PiP scopes; off = game's foreground layer)", initialValue = true },
 	{ widgetType = "checkbox", id = "bl4_no_camera_shake", label = "Disable camera shakes (melee, shooting, hits)", initialValue = true },
 	{ widgetType = "checkbox", id = "bl4_no_camera_anim", label = "Disable camera animations (melee etc.)", initialValue = true },
 	{ widgetType = "checkbox", id = "bl4_no_camera_kick", label = "Disable camera kick (melee view sway)", initialValue = true },
@@ -64,6 +67,10 @@ table.insert(_G.BL4_SECTIONS, { order = 90, label = "Weapon Spawner", layout = {
 	{ widgetType = "button", id = "bl4_spawn_one", label = "Spawn weapon", size = {160, 24} },
 	{ widgetType = "same_line" },
 	{ widgetType = "button", id = "bl4_spawn_all_types", label = "Spawn all types of this manufacturer", size = {260, 24} },
+	{ widgetType = "text", label = "Ordnance (grenades / throwing knives) of the manufacturer above:" },
+	{ widgetType = "button", id = "bl4_spawn_ordnance", label = "Spawn ordnance", size = {160, 24} },
+	{ widgetType = "same_line" },
+	{ widgetType = "button", id = "bl4_spawn_all_ordnance", label = "Spawn ordnance of every manufacturer", size = {260, 24} },
 	{ widgetType = "text", id = "bl4_spawn_status", label = "" },
 }})
 
@@ -185,7 +192,8 @@ end
 
 -- view model depth state (used by the copy hook below; see "View model depth")
 _G.bl4ViewModelCopies = _G.bl4ViewModelCopies or {}
-_G.bl4WorldDepth = function() return configui.getValue("bl4_world_depth") ~= false end
+-- always world depth: the panel option (bl4_world_depth) was removed 2026-11-09 (xaero: should be on at all times)
+_G.bl4WorldDepth = function() return true end
 
 local createPoseableMeshFromSkeletalMesh = uevrUtils.createPoseableMeshFromSkeletalMesh
 uevrUtils.createPoseableMeshFromSkeletalMesh = function(skeletalMeshComponent, options)
@@ -194,7 +202,7 @@ uevrUtils.createPoseableMeshFromSkeletalMesh = function(skeletalMeshComponent, o
 	-- Copies keep their source's Gearbox foreground layer. The first-person gun is a bGbxForeground primitive; VR hands
 	-- left in the normal scene did not depth-sort against it (wrong overlap at the grip). Same layer = correct sorting
 	-- (confirmed 2026-10-30); the backend gives the foreground layer the stereo projection.
-	-- With "world depth" on (default, see "View model depth" below) the gun leaves the foreground layer, so the copies
+	-- With world depth (always on, see "View model depth" below) the gun leaves the foreground layer, so the copies
 	-- stay in the normal scene with it; every copy is tracked so the option applies live.
 	pcall(function()
 		if skeletalMeshComponent.bGbxForeground == true then
@@ -261,6 +269,16 @@ local ORDNANCE_GRIP_OPTIONS = {
 	reattachToOriginOnRelease = false, restoreTransformToOriginOnReattach = false, useZeroTransformOnReattach = false,
 	allowChildVisibilityHandling = true, allowChildHiddenInGameHandling = true, allowRenderInMainPassHandling = true,
 }
+-- Carried objects: the library must not touch the first-person copy when the grip ends. Its detach kept the RELATIVE
+-- transform, which dropped the copy at the world origin (world (0, -1.3, -22.3) = its hand offset); the game then
+-- launched the thrown tank from there and it fell out of the world (z -523000, 2026-11-09). bl4_main hands the copy
+-- back itself (handBackCarryVisual).
+local CARRY_GRIP_OPTIONS = {
+	detachFromOriginOnGrip = true, maintainWorldPositionOnDetachFromOrigin = false,
+	detachFromParentOnRelease = false, maintainWorldPositionOnDetachFromParent = true,
+	reattachToOriginOnRelease = false, restoreTransformToOriginOnReattach = false, useZeroTransformOnReattach = false,
+	allowChildVisibilityHandling = true, allowChildHiddenInGameHandling = true, allowRenderInMainPassHandling = true,
+}
 local ORDNANCE_IN_HAND = 1 -- InventoryGadget.AttachState while readied in the hand
 
 local ordnanceCache = { gadget = nil, mesh = nil }
@@ -283,8 +301,189 @@ local function getHeldOrdnanceMesh(pawn)
 end
 _G.bl4.getHeldOrdnanceMesh = getHeldOrdnanceMesh
 
+-- Carried objects (propane / CO2 tanks etc. pulled in with the grapple, thrown with LT; MCP 2026-11-09): the game's
+-- carry system, CarryableObjectStatics.GetCarriedActor(pawn) -> CarryableObject, whose root (a GbxDestructibleComponent)
+-- the game attaches to the THIRD-person CharacterMesh at L_Hand_Object with an authored offset (propane tank:
+-- (0, -1.3, -22.3) / roll 30). In VR that body hand is elsewhere, so the object floated off the VR hand at the wrong
+-- place and depth. While carried it rides the VR left hand like ordnance: the hand copies the game's left hand pose
+-- (FirstPersonArms L_Hand_Object relative to L_Hand matches CharacterMesh's within 1 cm), the object sits on the VR
+-- hand's L_Hand_Object with the game's own offset, read from the game's attachment before we move it.
+-- What the player SEES is not the root: the carried actor has a second, owner-only copy (RootStaticMesh_0,
+-- bOnlyOwnerSee, foreground) that the game hangs on FirstPersonArms L_Hand_Object at view-model scale 0.275 (offset
+-- (0, -0.8, -13.6)) - it moved with the HMD (xaero 2026-11-09). The full-size root on CharacterMesh is not drawn for
+-- the owner. So the VISIBLE copy rides the VR hand, at scale 1 with the root's real-size offset; the root stays the
+-- physics object the game throws (bl4_vr_throw steers it).
+-- The throw / drop: GetCarriedActor goes nil ~60 ms after LT, but the game LAUNCHES the object ~300 ms later, from
+-- where the first-person copy is (in the flat game: still in the hand, through the throw animation). So after the game
+-- lets go, the copy stays on the VR hand (carryCache.releasedAt; getCarriedRoot still returns the root) until the root
+-- simulates physics (launched), the game takes the copy off the hand, or CARRY_HOLD_S. Then the copy goes back where
+-- the game had it (FirstPersonArms L_Hand_Object, its own offset and 0.275 scale), as the flat game has it at that point.
+local CARRY_HOLD_S = 0.8
+local carryStatics = nil
+local carryCache = { actor = nil, root = nil, visual = nil, rel = nil, visualOrigin = nil, releasedAt = nil }
+local primitiveClassForCarry = nil
+local carryNoBone = nil
+-- The copy = the owner-only primitive the game hangs on something OUTSIDE the actor (FirstPersonArms). Its own
+-- owner-only children ride along: an object with a cap (StaticMeshComponent_Cap_0 on RootStaticMesh_0) put only the
+-- cap on the VR hand when the last owner-only primitive was taken (2026-11-09). nil until the game has attached it.
+local function findCarryVisual(actor, root)
+	local visual = nil
+	pcall(function()
+		if primitiveClassForCarry == nil then primitiveClassForCarry = uevrUtils.get_class("Class /Script/Engine.PrimitiveComponent") end
+		local actorAddress = actor:get_address()
+		for _, c in ipairs(actor:K2_GetComponentsByClass(primitiveClassForCarry) or {}) do
+			if c ~= nil and (root == nil or c:get_address() ~= root:get_address()) and c.bOnlyOwnerSee == true then
+				local parent = c.AttachParent
+				local parentOwner = parent ~= nil and parent:GetOwner() or nil
+				if parent ~= nil and (parentOwner == nil or parentOwner:get_address() ~= actorAddress) then visual = c end
+			end
+		end
+	end)
+	return visual
+end
+local function isVRLeftParent(component)
+	if component == nil then return false end
+	local address = component:get_address()
+	local hand = hands.exists() and hands.getHandComponent(Handed.Left) or nil
+	if hand ~= nil and hand:get_address() == address then return true end
+	local ok, rig = pcall(function() return require('libs/ik').getCurrentMesh(1) end)
+	return ok and rig ~= nil and uevrUtils.getValid(rig) ~= nil and rig:get_address() == address
+end
+-- the copy back where the game had it, unless the game has already taken it off the VR hand itself
+local function handBackCarryVisual(cache)
+	local visual = uevrUtils.getValid(cache.visual)
+	local o = cache.visualOrigin
+	if visual == nil or o == nil or uevrUtils.getValid(o.parent) == nil or not isVRLeftParent(visual.AttachParent) then return end
+	local ok, err = pcall(function()
+		visual:K2_AttachTo(o.parent, uevrUtils.fname_from_string(o.socket), 0, false)
+		visual:K2_SetRelativeLocationAndRotation(uevrUtils.vector(o.loc.X, o.loc.Y, o.loc.Z),
+			uevrUtils.rotator(o.rot.Pitch, o.rot.Yaw, o.rot.Roll), false, reusable_hit_result, true)
+		visual:SetRelativeScale3D(uevrUtils.vector(o.scale.X, o.scale.Y, o.scale.Z))
+	end)
+	log(ok and ("carried object's copy handed back to the game's " .. o.socket) or ("carry hand-back: " .. tostring(err)))
+end
+-- after the game let go: nil while the copy should stay on the VR hand, else why the hold is over
+local function carryHoldOver(cache)
+	if os.clock() - cache.releasedAt > CARRY_HOLD_S then return "no launch seen" end
+	local visual = uevrUtils.getValid(cache.visual)
+	if visual == nil or not isVRLeftParent(visual.AttachParent) then return "the game took the copy" end
+	local root = uevrUtils.getValid(cache.root)
+	if root == nil then return "object gone" end
+	if carryNoBone == nil then carryNoBone = uevrUtils.fname_from_string("None") end
+	if root:IsSimulatingPhysics(carryNoBone) == true then return "launched" end
+	return nil
+end
+local function getCarriedRoot(pawn)
+	if carryStatics == nil then carryStatics = uevrUtils.find_default_instance("Class /Script/OakGame.CarryableObjectStatics") end
+	if carryStatics == nil or pawn == nil then return nil end
+	local actor = nil
+	pcall(function() actor = uevrUtils.getValid(carryStatics:GetCarriedActor(pawn)) end)
+	if actor == nil then
+		if carryCache.actor ~= nil then
+			if carryCache.releasedAt == nil then
+				local visual = uevrUtils.getValid(carryCache.visual)
+				if visual ~= nil and isVRLeftParent(visual.AttachParent) then
+					carryCache.releasedAt = os.clock()
+					log("the game let go of the carried object: its copy stays on the VR hand until the launch")
+				end
+			end
+			if carryCache.releasedAt ~= nil then
+				local ok, over = pcall(carryHoldOver, carryCache)
+				if ok and over == nil then return carryCache.root end
+				-- the hypothesis check: the game launches the root from the copy (root - copy distance at the launch)
+				local gap = -1
+				pcall(function()
+					local a, b = carryCache.root:K2_GetComponentLocation(), carryCache.visual:K2_GetComponentLocation()
+					gap = math.sqrt((a.X - b.X) ^ 2 + (a.Y - b.Y) ^ 2 + (a.Z - b.Z) ^ 2)
+				end)
+				log(string.format("carried object hold over after %.0f ms: %s (root %.0f cm from the copy)",
+					(os.clock() - carryCache.releasedAt) * 1000, ok and over or tostring(over), gap))
+			end
+			handBackCarryVisual(carryCache)
+		end
+		carryCache = { actor = nil, root = nil, visual = nil, rel = nil, visualOrigin = nil, releasedAt = nil }
+		return nil
+	end
+	if carryCache.actor == nil or carryCache.actor:get_address() ~= actor:get_address() then
+		if carryCache.actor ~= nil then handBackCarryVisual(carryCache) end
+		local root = nil
+		pcall(function() root = uevrUtils.getValid(actor.RootComponent) end)
+		carryCache = { actor = actor, root = root, visual = nil, rel = nil, visualOrigin = nil, releasedAt = nil }
+		if root ~= nil then
+			local simulating = nil
+			pcall(function()
+				if carryNoBone == nil then carryNoBone = uevrUtils.fname_from_string("None") end
+				simulating = root:IsSimulatingPhysics(carryNoBone)
+			end)
+			log("carrying " .. actor:get_full_name() .. " (root simulating physics: " .. tostring(simulating) .. ")")
+		end
+	end
+	carryCache.releasedAt = nil -- carried (again)
+	-- the owner-only first-person copy can appear a tick after the carry starts; where the game has it is saved for
+	-- the hand-back (read before the attachments library moves it to the VR hand)
+	if carryCache.visual == nil then
+		local visual = findCarryVisual(actor, carryCache.root)
+		if visual ~= nil then
+			carryCache.visual = visual
+			pcall(function()
+				local s = visual.RelativeScale3D
+				local parent = visual.AttachParent
+				if parent ~= nil and not isVRLeftParent(parent) then
+					local l, r = visual.RelativeLocation, visual.RelativeRotation
+					carryCache.visualOrigin = { parent = parent,
+						socket = visual.AttachSocketName ~= nil and visual.AttachSocketName:to_string() or "None",
+						loc = { X = l.X, Y = l.Y, Z = l.Z }, rot = { Pitch = r.Pitch, Yaw = r.Yaw, Roll = r.Roll },
+						scale = { X = s.X, Y = s.Y, Z = s.Z } }
+				end
+				log(string.format("carried object's first-person copy %s (scale %.3f, on %s)", visual:get_full_name(), s.X,
+					parent ~= nil and parent:get_fname():to_string() or "nothing"))
+			end)
+		end
+	end
+	local root = carryCache.root
+	if root ~= nil and carryCache.rel == nil then
+		pcall(function()
+			local parent = root.AttachParent
+			local socket = root.AttachSocketName ~= nil and root.AttachSocketName:to_string() or ""
+			if parent ~= nil and socket == "L_Hand_Object" and not isVRLeftParent(parent) then
+				local l, r = root.RelativeLocation, root.RelativeRotation
+				-- the object's real size: the propane tank's world scale is 0.45 (mesh authored large); scale 1 on the VR
+				-- hand was over twice too big (xaero "massive", 2026-11-09)
+				local s = root:K2_GetComponentScale()
+				carryCache.rel = { loc = { X = l.X, Y = l.Y, Z = l.Z }, rot = { Pitch = r.Pitch, Yaw = r.Yaw, Roll = r.Roll },
+					scale = { X = s.X, Y = s.Y, Z = s.Z } }
+				log(string.format("carry grip from the game: (%.1f %.1f %.1f) / (%.1f %.1f %.1f) world scale %.3f", l.X, l.Y, l.Z,
+					r.Pitch, r.Yaw, r.Roll, s.X))
+			end
+		end)
+	end
+	return root
+end
+_G.bl4.getCarriedRoot = getCarriedRoot
+-- true while the game has let go but the object's copy is still held on the VR hand for the launch
+_G.bl4.isCarryReleasing = function() return carryCache.releasedAt ~= nil end
+-- The object the game actually throws: the root of the actor that OWNS the first-person copy - a second carryable the
+-- game spawns (CarryableObject_<n>), not the one GetCarriedActor names. After a throw its root was the one flying,
+-- launched from the first-person arms' hand near the world origin (z -113000 / -145000, 2026-11-09). nil = no copy yet.
+_G.bl4.getCarriedThrowRoot = function()
+	local visual = uevrUtils.getValid(carryCache.visual)
+	if visual == nil then return nil end
+	local root = nil
+	pcall(function()
+		local owner = visual:GetOwner()
+		root = owner ~= nil and uevrUtils.getValid(owner.RootComponent) or nil
+	end)
+	return root
+end
+-- the component the player sees while carrying (the first-person copy; the root when there is none)
+local function getCarriedVisual(pawn)
+	local root = getCarriedRoot(pawn)
+	if root == nil then return nil end
+	return uevrUtils.getValid(carryCache.visual) or root
+end
+
 -- ---------------------------------------------------------------------------------------------
--- View model depth (option bl4_world_depth, default on). BL4 draws the first-person gun and everything attached to it
+-- View model depth (always on; the bl4_world_depth option was removed 2026-11-09). BL4 draws the first-person gun and everything attached to it
 -- (reticle FX, scope parts) in Gearbox's foreground layer (bGbxForeground): its own depth, composited over the scene,
 -- with no depth test against normal-scene primitives. Anything added to the gun in the normal scene (the PiP scope
 -- lens) is always drawn behind and displaced, and setting the lens foreground alone did not help (2026-11-05). With the
@@ -320,6 +519,8 @@ local function setTreeForegroundLayer(root, foreground, depth)
 end
 
 local nextViewModelDepth = 0
+local depthCarried = nil -- the carried object last put in the hands' layer; back to its own layer once thrown / dropped
+local depthCarriedWas = false -- its own bGbxForeground (the first-person copy: true)
 uevr.sdk.callbacks.on_pre_engine_tick(function(engine, delta)
 	local now = os.clock()
 	if now < nextViewModelDepth then return end
@@ -327,12 +528,25 @@ uevr.sdk.callbacks.on_pre_engine_tick(function(engine, delta)
 	local foreground = not _G.bl4WorldDepth()
 	local ok, err = pcall(function()
 		local pawn = getPlayerCharacter()
+		local carried = nil
 		if pawn ~= nil then
 			local weapon = getHeldWeapon(pawn)
 			local mesh = weapon ~= nil and getFirstPersonWeaponMesh(weapon) or nil
 			if mesh ~= nil then setTreeForegroundLayer(mesh, foreground, 1) end
 			local ordnance = getHeldOrdnanceMesh(pawn)
 			if ordnance ~= nil then setTreeForegroundLayer(ordnance, foreground, 1) end
+			carried = getCarriedVisual(pawn)
+		end
+		if depthCarried ~= nil and (carried == nil or carried:get_address() ~= depthCarried:get_address()) then
+			if uevrUtils.getValid(depthCarried) ~= nil then setTreeForegroundLayer(depthCarried, depthCarriedWas, 1) end
+			depthCarried = nil
+		end
+		if carried ~= nil then
+			if depthCarried == nil then
+				depthCarriedWas = carried.bGbxForeground == true
+				depthCarried = carried
+			end
+			setTreeForegroundLayer(carried, foreground, 1)
 		end
 		local live = {}
 		for _, copy in ipairs(_G.bl4ViewModelCopies) do
@@ -462,11 +676,110 @@ local function standingStill(pawn)
 	return still
 end
 
+-- The game's LEFT hand on the gun, for two-handing (bl4_vr_two_handed.lua, 2026-11-09): L_Hand relative to
+-- R_Hand_Weapon on FirstPersonArms = where the flat game holds the fore-grip, in the gun's own frame (the first-person
+-- gun sits on R_Hand_Weapon with no offset - same position, MCP 2026-11-09; L_Hand ~27 cm from it toward the Muzzle).
+-- Measured alongside the right grip, same gate (settled after equip, no montage, standing still, steady 0.75 s), saved
+-- in the model's entry as .lefts[variant] (see below). Accepted only ON the gun: within LEFT_MAX_OFF_BARREL_CM of the line from the gun's
+-- origin to its Muzzle socket, from the origin to LEFT_MAX_PAST_MUZZLE_CM past the muzzle. A steady pose off the gun
+-- (a one-handed gun, or the game's hand doing something else) is saved as { none = true }: grip-point placement then.
+-- "Re-measure this weapon's grip" measures both hands again.
+-- Per gun VARIANT (version 2, 2026-11-09): one gestalt model (SK_JAK_SG) is assembled from different parts - a Jakobs
+-- shotgun with or without the pump fore-grip shares the model but not the grip (xaero "they recycle the same left
+-- grip"). MCP diff of two SK_JAK_SG: barrel JAK_SG_Barrel_02_B vs _02 (11 vs 9 parts), GestaltData.ReferencePoseBounds
+-- extent 44.6 x 5.1 x 14.2 vs 31.8 x 4.9 x 14.0. The part names are a TArray<FName> inside a struct (unreadable from
+-- UEVR Lua); the reference-pose bounds are plain floats, fixed per part combination: the variant key. Saved under
+-- [model].lefts[variant]; the right grip stays per model (the pistol grip does not change with the fore-grip).
+local LEFT_GRIP_VERSION = 2
+local LEFT_MAX_OFF_BARREL_CM, LEFT_MAX_PAST_MUZZLE_CM = 20.0, 15.0
+local leftProbe = { last = nil, stableSince = nil, variant = nil }
+local leftRemeasure = {} -- model -> true
+local muzzleFName = nil
+
+-- read every time (a few property reads): a cache by component address could hand a re-used address a stale key
+local function gunVariant(mesh)
+	local key = nil
+	pcall(function()
+		local b = mesh.GestaltData.ReferencePoseBounds
+		local e, o = b.BoxExtent, b.Origin
+		key = string.format("%.1f,%.1f,%.1f/%.1f,%.1f,%.1f", e.X, e.Y, e.Z, o.X, o.Y, o.Z)
+	end)
+	return key or "default"
+end
+
+local function leftGripEntry(model, mesh)
+	local g = gameGrips[model]
+	local lefts = g ~= nil and g.lefts or nil
+	local left = lefts ~= nil and lefts[gunVariant(mesh)] or nil
+	if left == nil or left.v ~= LEFT_GRIP_VERSION then return nil end
+	return left
+end
+
+local function measureLeftGrip(arms, mesh)
+	local grip = nil
+	pcall(function()
+		local rel = kismet_math_library:MakeRelativeTransform(arms:GetSocketTransform("L_Hand", 0), arms:GetSocketTransform(GUN_SOCKET, 0))
+		local t, r = rel.Translation, kismet_math_library:Quat_Rotator(rel.Rotation)
+		local onGun = false
+		if muzzleFName == nil then muzzleFName = uevrUtils.fname_from_string("Muzzle") end
+		if mesh:DoesSocketExist(muzzleFName) then
+			-- the muzzle in the gun's own unit-scale frame = in R_Hand_Weapon's frame
+			local gunT = kismet_math_library:MakeTransform(mesh:K2_GetComponentLocation(), mesh:K2_GetComponentRotation(), uevrUtils.vector(1, 1, 1))
+			local m = kismet_math_library:InverseTransformLocation(gunT, mesh:GetSocketLocation(muzzleFName))
+			local len = math.sqrt(m.X * m.X + m.Y * m.Y + m.Z * m.Z)
+			if len >= 1.0 then
+				local along = (t.X * m.X + t.Y * m.Y + t.Z * m.Z) / len
+				local px, py, pz = t.X - m.X / len * along, t.Y - m.Y / len * along, t.Z - m.Z / len * along
+				local off = math.sqrt(px * px + py * py + pz * pz)
+				onGun = along >= 0 and along <= len + LEFT_MAX_PAST_MUZZLE_CM and off <= LEFT_MAX_OFF_BARREL_CM
+			end
+		end
+		grip = { loc = { X = t.X, Y = t.Y, Z = t.Z }, rot = { Pitch = r.Pitch, Yaw = r.Yaw, Roll = r.Roll }, onGun = onGun }
+	end)
+	return grip
+end
+
+local function probeLeft(model, arms, mesh, busy, now)
+	local grip = not busy and measureLeftGrip(arms, mesh) or nil
+	if grip == nil then leftProbe.last, leftProbe.stableSince = nil, nil return end
+	if leftProbe.last ~= nil and leftProbe.last.onGun == grip.onGun and gripsClose(grip, leftProbe.last) then
+		leftProbe.stableSince = leftProbe.stableSince or now
+	else
+		leftProbe.stableSince = nil
+	end
+	leftProbe.last = grip
+	if leftProbe.stableSince == nil or now - leftProbe.stableSince < GRIP_STABLE_S then return end
+	local variant = gunVariant(mesh)
+	gameGrips[model] = gameGrips[model] or {}
+	gameGrips[model].left = nil -- version 1 (per model, any variant) is not used any more
+	gameGrips[model].lefts = gameGrips[model].lefts or {}
+	if grip.onGun then
+		gameGrips[model].lefts[variant] = { loc = grip.loc, rot = grip.rot, v = LEFT_GRIP_VERSION }
+		log(string.format("game LEFT grip %s [%s]: (%.1f %.1f %.1f) / (%.1f %.1f %.1f)", model, variant, grip.loc.X, grip.loc.Y,
+			grip.loc.Z, grip.rot.Pitch, grip.rot.Yaw, grip.rot.Roll))
+	else
+		gameGrips[model].lefts[variant] = { none = true, v = LEFT_GRIP_VERSION }
+		log(string.format("game LEFT grip %s [%s]: the game's left hand is not on the gun (%.1f %.1f %.1f) - grip-point placement",
+			model, variant, grip.loc.X, grip.loc.Y, grip.loc.Z))
+	end
+	leftRemeasure[model] = nil
+	leftProbe = { last = nil, stableSince = nil, variant = nil }
+	pcall(function() json.dump_file(GAME_GRIPS_FILE, gameGrips, 4) end)
+end
+
 local function probeGameGrip(mesh)
 	local model = weaponModel(mesh)
-	if model == nil or (getGameGrip(mesh) ~= nil and not gripRemeasure[model]) then return end
+	if model == nil then return end
+	local needRight = getGameGrip(mesh) == nil or gripRemeasure[model]
+	local needLeft = leftGripEntry(model, mesh) == nil or leftRemeasure[model]
+	if not needRight and not needLeft then return end
 	local now = os.clock()
-	if gripProbe.model ~= model then gripProbe = { model = model, since = now, last = nil, stableSince = nil } end
+	-- per model AND variant: swapping between two builds of one model settles again before measuring
+	local probeKey = model .. "|" .. gunVariant(mesh)
+	if gripProbe.model ~= probeKey then
+		gripProbe = { model = probeKey, since = now, last = nil, stableSince = nil }
+		leftProbe = { last = nil, stableSince = nil, variant = nil }
+	end
 	if now - gripProbe.since < GRIP_SETTLE_S then return end
 	local pawn = getPlayerCharacter()
 	local arms = pawn ~= nil and getFirstPersonArms(pawn) or nil
@@ -474,6 +787,8 @@ local function probeGameGrip(mesh)
 	local busy = true
 	pcall(function() busy = arms:GetAnimInstance():IsAnyMontagePlaying() == true end)
 	if not busy and not standingStill(pawn) then busy = true end
+	if needLeft then probeLeft(model, arms, mesh, busy, now) end
+	if not needRight then return end
 	local grip = not busy and measureGrip(arms) or nil
 	if grip == nil then
 		gripProbe.last, gripProbe.stableSince = nil, nil
@@ -487,6 +802,7 @@ local function probeGameGrip(mesh)
 	gripProbe.last = grip
 	if gripProbe.stableSince == nil or now - gripProbe.stableSince < GRIP_STABLE_S then return end
 	grip.v = GRIP_VERSION
+	grip.lefts = gameGrips[model] ~= nil and gameGrips[model].lefts or nil -- keep the measured left grips
 	gameGrips[model] = grip
 	gripRemeasure[model] = nil
 	pcall(function() json.dump_file(GAME_GRIPS_FILE, gameGrips, 4) end)
@@ -509,6 +825,7 @@ configui.onUpdate("bl4_game_grip_reset_current", function(value)
 		local model = gun ~= nil and weaponModel(gun) or nil
 		if model == nil then log("re-measure grip: no weapon held") return end
 		gripRemeasure[model] = true
+		leftRemeasure[model] = true
 		gripProbe = { model = nil, since = 0, last = nil, stableSince = nil }
 		log("re-measuring the grip of " .. model .. " - stand still for 2 s")
 	end)
@@ -516,6 +833,14 @@ end)
 _G.bl4.getGameGrip = function(mesh)
 	if not gameGripEnabled() then return nil end
 	return getGameGrip(mesh)
+end
+-- the game's left hand on this gun (gun-local, relative to R_Hand_Weapon = the gun's own frame): { loc, rot } or nil
+-- (this variant not measured yet, or the game holds it one-handed). bl4_vr_two_handed.lua places the left hand with it.
+_G.bl4.getGameLeftGrip = function(mesh)
+	local model = mesh ~= nil and weaponModel(mesh) or nil
+	local left = model ~= nil and leftGripEntry(model, mesh) or nil
+	if left == nil or left.none or left.loc == nil then return nil end
+	return left
 end
 
 -- Ordnance trim (Throwing panel, default 0 = the game's own grip) on the L_Hand_Object socket, applied on attach and
@@ -541,7 +866,14 @@ local function setRelative(mesh, loc, rot)
 end
 
 -- re-seat on the game grip after the attachments library attached (it applies the Attachments entry offsets first)
-local ordnanceApplied, gunApplied = nil, nil
+local ordnanceApplied, gunApplied, carryApplied = nil, nil, nil
+-- carried objects always go on L_Hand_Object (their game offset is relative to it), VR left hand or IK rig
+local function carryParent()
+	local parent = hands.exists() and hands.getHandComponent(Handed.Left) or ikRig()
+	if parent == nil then return nil, nil end
+	if hasSocket(parent, ORDNANCE_SOCKET) then return parent, ORDNANCE_SOCKET end
+	return parent, nil
+end
 uevr.sdk.callbacks.on_pre_engine_tick(function(engine, delta)
 	local ok, err = pcall(function()
 		local mesh = ordnanceCache.mesh
@@ -559,6 +891,34 @@ uevr.sdk.callbacks.on_pre_engine_tick(function(engine, delta)
 		end
 	end)
 	if not ok then log("ordnance grip: " .. tostring(err)) ordnanceApplied = nil end
+
+	-- carried object: the game's own offset on the VR hand's L_Hand_Object (getCarriedRoot read it from the game's
+	-- attachment before the attachments library moved it)
+	ok, err = pcall(function()
+		-- the visible first-person copy (else the root), at the real object's world size (the copy is 0.275 on the arms)
+		local root, rel = uevrUtils.getValid(carryCache.visual) or carryCache.root, carryCache.rel
+		local parent, socket = nil, nil
+		if root ~= nil and rel ~= nil and uevrUtils.getValid(root) ~= nil then parent, socket = carryParent() end
+		if socket ~= nil and onSocketOf(root, parent, socket) then
+			-- the attachments library writes its own (default) offset after attaching, so check every tick rather than
+			-- once (2026-11-09: the tank sat at the library's (4.6, -1.4, 4.1) instead of the game's (0, -1.3, -22.3))
+			local l, r, s = root.RelativeLocation, root.RelativeRotation, root:K2_GetComponentScale()
+			local want = rel.scale or { X = 1, Y = 1, Z = 1 }
+			local off = math.abs(l.X - rel.loc.X) + math.abs(l.Y - rel.loc.Y) + math.abs(l.Z - rel.loc.Z)
+				+ (math.abs(r.Pitch - rel.rot.Pitch) + math.abs(r.Yaw - rel.rot.Yaw) + math.abs(r.Roll - rel.rot.Roll)) * 0.1
+				+ math.abs(s.X - want.X) * 10
+			if off > 0.05 then
+				setRelative(root, rel.loc, rel.rot)
+				root:SetWorldScale3D(uevrUtils.vector(want.X, want.Y, want.Z))
+				local key = root:get_address() .. "|" .. parent:get_address()
+				if key ~= carryApplied then log("carried object seated on the VR hand with the game's grip") end
+				carryApplied = key
+			end
+		else
+			carryApplied = nil
+		end
+	end)
+	if not ok then log("carry grip: " .. tostring(err)) carryApplied = nil end
 
 	-- grip probe (both modes) + Hands mode gun (IK mode: bl4_vr_ik.lua uses the same grip)
 	ok, err = pcall(function()
@@ -580,6 +940,103 @@ uevr.sdk.callbacks.on_pre_engine_tick(function(engine, delta)
 	if not ok then log("gun grip: " .. tostring(err)) gunApplied = nil end
 end)
 
+-- Left hand takes the game's grip while ordnance is in hand (Hands mode, option bl4_ordnance_game_pose, default on).
+-- L_Hand_Object is an animated BONE (index 34, child of L_Hand; MCP 2026-11-09), not a fixed socket: the game's arm
+-- animation places it - and curls the fingers - per item. Nothing animates the VR hand copy, so every knife / grenade
+-- sat at the bone's reference spot with a generic hand pose and each needed its own offsets. While an item is readied
+-- every bone BELOW L_Hand (fingers + L_Hand_Object) is copied from the game's FirstPersonArms onto the VR left hand,
+-- relative to the wrist (animation.copyDescendantTransforms): the VR wrist stays on the controller, the fingers and
+-- L_Hand_Object are where the game has them, so the item rides L_Hand_Object exactly as in the flat game, for any item,
+-- with no per-item data. Not the hands lib's full animate-from-mesh: that rebuilds the wrist from the copied Root bone,
+-- which on FirstPersonArms sits in camera space - the left hand vanished (xaero 2026-11-09). Copied in the post-engine
+-- tick so it lands after the hands lib's own finger animation; on release the hand's default pose comes back.
+-- IK mode too (2026-11-09): the target is the IK rig, one poseable copy of FirstPersonArms with both arms, whose L_Hand
+-- is the left solver's end bone. Without the copy its left fingers - and L_Hand_Object, a descendant of L_Hand - were
+-- posed by the hands animation lib from the left controller's grip / trigger state: the item's rotation changed with
+-- that input ("sometimes wrong") and the fingers never took the game's grip (xaero 2026-11-09). The copy stores bone-
+-- local transforms below L_Hand, so the IK solve moving L_Hand (same post tick, either order) carries them along.
+-- Release in IK mode: the rig's bones below L_Hand get back the exact local transforms they had before the first copy
+-- (snapshot). hands.updateAnimationState was not enough (xaero 2026-11-09: "IK hand stuck in the throwable pose until
+-- I press grip / trigger / thumb"): at the release the attachments library still lists the item as held (it re-checks
+-- on a timer), so it re-posed the knife grip, and its later open_left resets only the finger 01-03 rotations - the
+-- copied locations and other hand bones stayed.
+local animationLib = require('libs/animation')
+local ordnancePose = { arms = nil, active = false, target = nil, mode = nil, snapshot = nil }
+local function snapshotHandBones(rig)
+	local saved = {}
+	for _, name in ipairs(animationLib.getDescendantBones(rig, "L_Hand", false) or {}) do
+		local fname = uevrUtils.fname_from_string(name)
+		local rot, loc, scale = animationLib.getBoneSpaceLocalTransform(rig, fname)
+		if rot ~= nil and loc ~= nil and scale ~= nil then
+			table.insert(saved, { fname = fname, rot = uevrUtils.rotator(rot.Pitch, rot.Yaw, rot.Roll),
+				loc = uevrUtils.vector(loc.X, loc.Y, loc.Z), scale = uevrUtils.vector(scale.X, scale.Y, scale.Z) })
+		end
+	end
+	return saved
+end
+local function restoreHandBones(rig, saved)
+	for _, b in ipairs(saved or {}) do
+		animationLib.setBoneSpaceLocalTransform(rig, b.fname, kismet_math_library:MakeTransform(b.loc, b.rot, b.scale))
+	end
+end
+-- the left hand the game grip is copied onto: the VR left hand (Hands mode) or the IK rig (IK mode)
+local function ordnancePoseTarget()
+	if hands.exists() then
+		local hand = uevrUtils.getValid(hands.getHandComponent(Handed.Left))
+		return hand, hand ~= nil and "hands" or nil
+	end
+	local rig = ikRig()
+	return rig, rig ~= nil and "ik" or nil
+end
+local function releaseOrdnancePose()
+	if not ordnancePose.active then return end
+	ordnancePose.active = false
+	if ordnancePose.mode == "ik" then
+		local rig, saved = ordnancePose.target, ordnancePose.snapshot
+		local ok, err = pcall(function()
+			if uevrUtils.getValid(rig) ~= nil then restoreHandBones(rig, saved) end
+		end)
+		if not ok then log("ordnance pose restore: " .. tostring(err)) end
+	else
+		pcall(function() hands.setInitialTransform(Handed.Left) end)
+	end
+	ordnancePose.mode, ordnancePose.snapshot = nil, nil
+end
+uevr.sdk.callbacks.on_pre_engine_tick(function(engine, delta)
+	local arms, target, mode = nil, nil, nil
+	pcall(function()
+		local pawn = getPlayerCharacter()
+		if pawn == nil then return end
+		-- ordnance / carried objects (Throwing option), or two-handing on the game's left grip (bl4_vr_two_handed.lua
+		-- sets _G.bl4TwoHandGameLeft while the left hand sits where the flat game holds the gun: its fingers too)
+		local ordnance = configui.getValue("bl4_ordnance_game_pose") ~= false
+			and (getHeldOrdnanceMesh(pawn) ~= nil or getCarriedRoot(pawn) ~= nil)
+		if not ordnance and _G.bl4TwoHandGameLeft ~= true then return end
+		target, mode = ordnancePoseTarget()
+		if target ~= nil then arms = getFirstPersonArms(pawn) end
+	end)
+	-- a hand mode switch mid-hold: hand the old target back first (release restores ordnancePose.target, the old one)
+	if ordnancePose.active and mode ~= ordnancePose.mode then releaseOrdnancePose() end
+	if arms == nil then releaseOrdnancePose() end
+	ordnancePose.arms, ordnancePose.target = arms, target
+	if arms ~= nil and mode ~= ordnancePose.mode and not ordnancePose.active then
+		ordnancePose.mode = mode
+		log("ordnance: left hand takes the game's grip (" .. mode .. " mode)")
+	end
+end)
+uevr.sdk.callbacks.on_post_engine_tick(function(engine, delta)
+	local arms, target = ordnancePose.arms, ordnancePose.target
+	if arms == nil or target == nil then return end
+	local ok, err = pcall(function()
+		if uevrUtils.getValid(target) == nil or uevrUtils.getValid(arms) == nil then return end
+		-- IK: keep the rig hand's own pose for the release (the VR hand has setInitialTransform instead)
+		if not ordnancePose.active and ordnancePose.mode == "ik" then ordnancePose.snapshot = snapshotHandBones(target) end
+		animationLib.copyDescendantTransforms(arms, target, "L_Hand", false)
+		ordnancePose.active = true
+	end)
+	if not ok then log("ordnance pose: " .. tostring(err)) ordnancePose.arms = nil end
+end)
+
 attachments.registerOnGripUpdateCallback(function()
 	if configui.getValue("bl4_weapon_on_hand") == false then return end
 	local pawn = getPlayerCharacter()
@@ -591,14 +1048,18 @@ attachments.registerOnGripUpdateCallback(function()
 		if mesh ~= nil and mesh.SkeletalMesh ~= nil then gun = mesh end -- no mesh asset yet in the first frames after equip
 	end
 	local ordnance = getHeldOrdnanceMesh(pawn)
-	if gun == nil and ordnance == nil then return end
+	local carried = ordnance == nil and getCarriedVisual(pawn) or nil
+	if gun == nil and ordnance == nil and carried == nil then return end
 	local rightParent, rightSocket, leftParent, leftSocket = nil, nil, nil, nil
 	if hands.exists() then
 		rightParent = hands.getHandComponent(Handed.Right)
 		if gameGripEnabled() then rightSocket = GUN_HAND_BONE end
 	end
-	if ordnance ~= nil then leftParent, leftSocket = ordnanceParent() end
-	return gun, rightParent, rightSocket, ordnance, leftParent, leftSocket, GUN_GRIP_OPTIONS, ORDNANCE_GRIP_OPTIONS
+	if ordnance ~= nil then leftParent, leftSocket = ordnanceParent()
+	elseif carried ~= nil then leftParent, leftSocket = carryParent() end
+	-- ordnance: the game detaches it itself at the throw; carried objects: handBackCarryVisual puts the copy back
+	return gun, rightParent, rightSocket, ordnance or carried, leftParent, leftSocket, GUN_GRIP_OPTIONS,
+		ordnance ~= nil and ORDNANCE_GRIP_OPTIONS or CARRY_GRIP_OPTIONS
 end)
 
 -- ---------------------------------------------------------------------------------------------
@@ -736,9 +1197,10 @@ end)
 -- ---------------------------------------------------------------------------------------------
 -- Game crosshair layer (BL4 UEVR build only, backend src/mods/vr/Borderlands4ReticleLayer.hpp). The game's crosshair is
 -- Prysm HTML in the UI, so in the world it gets tonemapped (dark, washed out - dev test 2026-11-07). Instead the backend
--- crops the UI centre into its own OpenXR quad layer (composited after the tonemapper like the HUD = real colours),
--- poses it every frame from the live right-controller pose, and clears that rectangle from the UI quad. Every tick this
--- sends "active,distance,origin xyz,dir xyz,crop,scale,pose" via set_mod_value("BL4_ReticleLayer"): the muzzle and
+-- takes the key-coloured crosshair pixels (see the colour key below) from the UI centre into its own OpenXR quad layer
+-- (composited after the tonemapper like the HUD = real colours), poses it every frame from the live right-controller
+-- pose, and erases only those pixels from the UI quad. Every tick this sends
+-- "active,distance,origin xyz,dir xyz,crop,scale,pose,0,0,real colours" via set_mod_value("BL4_ReticleLayer"): the muzzle and
 -- barrel direction in the right motion controller component's local space (the gun hangs off it, so this is near
 -- constant and the backend applies it to the newest pose) and the hit distance along the barrel. The backend drops
 -- the layer if this stops for 0.5 s (script reset). The dot reticule hides only once the backend has echoed the value
@@ -752,6 +1214,7 @@ local gameReticleStatus = nil
 local function setGameReticleStatus(text)
 	if text == gameReticleStatus then return end
 	gameReticleStatus = text
+	log("game crosshair: " .. text)
 	configui.setLabel("bl4_ret_game_status", "Game crosshair: " .. text)
 end
 
@@ -764,6 +1227,140 @@ local function sendGameReticle(text)
 		log("game crosshair layer " .. (gameReticleSupported and "supported by this UEVR build" or "NOT supported by this UEVR build (dot reticule stays)"))
 	end
 end
+
+-- Colour key (backend shaders/bl4_reticle_key.fx). The backend can't tell the crosshair from other HUD content near
+-- the screen centre (item cards, prompts, damage numbers), so while the layer is active the game's own crosshair
+-- colour settings are switched to key colours no other HUD element uses (red/blue mixes with zero green). The backend
+-- moves only the key-coloured pixels to the gun, recoloured to the player's real colours, and leaves the rest of the
+-- HUD alone. The real colours are kept in data/bl4_crosshair_colors.txt (a crash can leave the keys in the game's
+-- saved settings; the next session reads the real ones back from there) and restored whenever the layer is off and
+-- on script reset.
+local CROSSHAIR_KEYS = {
+	{ get = "GetCrosshairNeutralColor", set = "SetCrosshairNeutralColor", key = { 1.0, 0.0, 1.0 }, default = { 1.0, 1.0, 1.0 } },
+	{ get = "GetCrosshairEnemyColor", set = "SetCrosshairEnemyColor", key = { 1.0, 0.0, 0.12 }, default = { 1.0, 0.142361, 0.167265 } },
+	{ get = "GetCrosshairFriendlyColor", set = "SetCrosshairFriendlyColor", key = { 0.12, 0.0, 1.0 }, default = { 0.226316, 0.938686, 0.461698 } },
+}
+local CROSSHAIR_COLORS_FILE = "bl4_crosshair_colors.txt"
+local crosshairOriginals = nil -- { {r,g,b}, x3 } linear, the player's real colours
+local crosshairKeysApplied = false
+local crosshairKeyNextCheck = 0
+local crosshairColorsCsv = nil
+
+local oakLocalPlayer = nil
+local function getOakLocalPlayer()
+	if oakLocalPlayer == nil or not uevrUtils.getValid(oakLocalPlayer) then
+		local pc = uevr.api:get_player_controller(0)
+		oakLocalPlayer = pc ~= nil and uevrUtils.getValid(pc.Player) or nil
+		if oakLocalPlayer == nil then
+			oakLocalPlayer = uevrUtils.find_first_of("Class /Script/OakGame.OakLocalPlayer", false)
+		end
+	end
+	return oakLocalPlayer
+end
+
+local function isKeyColor(c, key)
+	return c ~= nil and math.abs(c.R - key[1]) < 0.01 and math.abs(c.G - key[2]) < 0.01 and math.abs(c.B - key[3]) < 0.01
+end
+
+-- any key colour this or an earlier version used (zero green, full red or blue): never taken as the player's colour
+local function looksLikeKey(c)
+	return c ~= nil and c.G < 0.005 and math.max(c.R, c.B) > 0.99
+end
+
+local function linearToSrgb(v)
+	v = math.max(0.0, math.min(1.0, v))
+	if v <= 0.0031308 then return v * 12.92 end
+	return 1.055 * v ^ (1.0 / 2.4) - 0.055
+end
+
+local function updateCrosshairColorsCsv()
+	local parts = {}
+	for i = 1, 3 do
+		local c = crosshairOriginals[i] or CROSSHAIR_KEYS[i].default
+		parts[#parts + 1] = string.format("%.4f,%.4f,%.4f", linearToSrgb(c[1]), linearToSrgb(c[2]), linearToSrgb(c[3]))
+	end
+	crosshairColorsCsv = table.concat(parts, ",")
+end
+
+local function loadCrosshairOriginals()
+	local originals = {}
+	local ok, text = pcall(fs.read, CROSSHAIR_COLORS_FILE)
+	if ok and type(text) == "string" then
+		local i = 0
+		for r, g, b in text:gmatch("([%d%.%-]+),([%d%.%-]+),([%d%.%-]+)") do
+			i = i + 1
+			if i <= 3 then originals[i] = { tonumber(r), tonumber(g), tonumber(b) } end
+		end
+	end
+	return originals
+end
+
+local function saveCrosshairOriginals()
+	local lines = {}
+	for i = 1, 3 do
+		local c = crosshairOriginals[i] or CROSSHAIR_KEYS[i].default
+		lines[#lines + 1] = string.format("%.6f,%.6f,%.6f", c[1], c[2], c[3])
+	end
+	pcall(fs.write, CROSSHAIR_COLORS_FILE, table.concat(lines, "\n") .. "\n")
+end
+
+-- Switches the game's crosshair colours to the keys; a colour that is not a key is the player's own (first run, or
+-- changed in the game's options since) and becomes the colour shown on the gun.
+local function applyCrosshairKeys()
+	local now = os.clock()
+	if crosshairKeysApplied and now < crosshairKeyNextCheck then return true end
+	crosshairKeyNextCheck = now + 0.5
+	local player = getOakLocalPlayer()
+	if player == nil then return false end
+	if crosshairOriginals == nil then crosshairOriginals = loadCrosshairOriginals() end
+	local changed = false
+	for i, k in ipairs(CROSSHAIR_KEYS) do
+		local c = player[k.get](player)
+		if c ~= nil and not isKeyColor(c, k.key) then
+			if not looksLikeKey(c) then
+				crosshairOriginals[i] = { c.R, c.G, c.B }
+				changed = true
+			end
+			player[k.set](player, uevrUtils.color_from_rgba(k.key[1], k.key[2], k.key[3], 1.0))
+		end
+	end
+	if changed then
+		saveCrosshairOriginals()
+		log("game crosshair: colour key on (real colours saved)")
+	end
+	if changed or crosshairColorsCsv == nil then updateCrosshairColorsCsv() end
+	crosshairKeysApplied = true
+	return true
+end
+
+local function restoreCrosshairColors()
+	if not crosshairKeysApplied then return end
+	crosshairKeysApplied = false
+	local player = getOakLocalPlayer()
+	if player == nil or crosshairOriginals == nil then return end
+	for i, k in ipairs(CROSSHAIR_KEYS) do
+		local c = crosshairOriginals[i] or k.default
+		player[k.set](player, uevrUtils.color_from_rgba(c[1], c[2], c[3], 1.0))
+	end
+end
+
+-- once per session: keys left in the game's settings by a crash go back to the saved real colours
+local crosshairLeftoverChecked = false
+local function restoreLeftoverCrosshairKeys()
+	local player = getOakLocalPlayer()
+	if player == nil then return false end
+	local originals = loadCrosshairOriginals()
+	for i, k in ipairs(CROSSHAIR_KEYS) do
+		if looksLikeKey(player[k.get](player)) then
+			local c = originals[i] or k.default
+			player[k.set](player, uevrUtils.color_from_rgba(c[1], c[2], c[3], 1.0))
+			log("game crosshair: restored a leftover key colour")
+		end
+	end
+	return true
+end
+
+uevr.sdk.callbacks.on_script_reset(function() pcall(restoreCrosshairColors) end)
 
 local function measureGameReticle()
 	local pawn = getPlayerCharacter()
@@ -790,9 +1387,11 @@ local function measureGameReticle()
 	local origin = kismet_math_library:LessLess_VectorRotator(kismet_math_library:Subtract_VectorVector(muzzle, controllerLocation), controllerRotation)
 	local direction = kismet_math_library:LessLess_VectorRotator(forward, controllerRotation)
 	local poseType = (configui.getValue("bl4_ret_game_pose") or 1) - 1
-	return string.format("1,%.2f,%.3f,%.3f,%.3f,%.5f,%.5f,%.5f,%d,%.3f,%d", distance,
+	if not applyCrosshairKeys() then return nil, "no local player" end
+	return string.format("1,%.2f,%.3f,%.3f,%.3f,%.5f,%.5f,%.5f,%d,%.3f,%d,0,0,%s", distance,
 		origin.X, origin.Y, origin.Z, direction.X, direction.Y, direction.Z,
-		math.floor(configui.getValue("bl4_ret_game_crop") or 256), configui.getValue("bl4_ret_game_scale") or 1.0, poseType), "showing"
+		math.floor(configui.getValue("bl4_ret_game_crop") or 256), configui.getValue("bl4_ret_game_scale") or 1.0, poseType,
+		crosshairColorsCsv), "showing"
 end
 
 uevrUtils.registerPreEngineTickCallback(function()
@@ -810,6 +1409,15 @@ uevrUtils.registerPreEngineTickCallback(function()
 	else
 		if gameReticleLastText ~= "0" then pcall(sendGameReticle, "0") end
 		gameReticleActive = false
+	end
+	-- the keys only while the backend is moving the crosshair; otherwise the HUD shows the player's real colours
+	if not gameReticleActive then
+		if crosshairKeysApplied then
+			pcall(restoreCrosshairColors)
+		elseif not crosshairLeftoverChecked then
+			local ok, done = pcall(restoreLeftoverCrosshairKeys)
+			crosshairLeftoverChecked = not ok or done == true
+		end
 	end
 	setGameReticleStatus(status)
 end)
@@ -849,9 +1457,30 @@ local function spawnSelected(allTypes)
 	log(text)
 end
 
+-- Ordnance: the same loot call with the inventory root "<mfr>_grenade_gadget" (lowercase; Ripper = "borg"). The asset
+-- names (Body_TOR_GRN_Inv, SK_JAK_GRN) are NOT inventory types: "<MFR>_GRN" spawned nothing (2026-11-09). The roots come
+-- from item serials (superexboom/Borderlands4-SaveEditor embedded_serial_catalog.json: dad/jak/ord/tor/vla/borg seen,
+-- next to the weapon roots DAD_PS etc. that this spawner already uses). A manufacturer without ordnance spawns nothing.
+local ORDNANCE_ROOT_PREFIX = { DAD = "dad", JAK = "jak", MAL = "mal", ORD = "ord", BOR = "borg", TED = "ted", TOR = "tor", VLA = "vla" }
+local function spawnOrdnance(allManufacturers)
+	local manufacturers = allManufacturers and SPAWN_MANUFACTURERS
+		or { SPAWN_MANUFACTURERS[configui.getValue("bl4_spawn_manufacturer") or 1] }
+	local requested = {}
+	for _, manufacturer in ipairs(manufacturers) do
+		local name = (ORDNANCE_ROOT_PREFIX[manufacturer] or manufacturer:lower()) .. "_grenade_gadget"
+		if spawnWeapon(name) then table.insert(requested, name) end
+	end
+	local text = #requested > 0 and ("Requested " .. table.concat(requested, ", ") .. " - drops near you in a moment (manufacturers without ordnance spawn nothing)")
+		or "Not spawned - load into gameplay as your character first"
+	configui.setLabel("bl4_spawn_status", text)
+	log(text)
+end
+
 -- configui button callbacks run on the draw thread; UFunction calls go on the game thread
 configui.onUpdate("bl4_spawn_one", function() uevrUtils.setTimeout(1, function() spawnSelected(false) end) end)
 configui.onUpdate("bl4_spawn_all_types", function() uevrUtils.setTimeout(1, function() spawnSelected(true) end) end)
+configui.onUpdate("bl4_spawn_ordnance", function() uevrUtils.setTimeout(1, function() spawnOrdnance(false) end) end)
+configui.onUpdate("bl4_spawn_all_ordnance", function() uevrUtils.setTimeout(1, function() spawnOrdnance(true) end) end)
 
 -- ---------------------------------------------------------------------------------------------
 -- Camera stabilisation (as Hellraiser's camera_stabilize.lua). OakPlayerCameraManager.ModifierList (MCP 2026-10-30):

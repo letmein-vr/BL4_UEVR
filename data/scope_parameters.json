@@ -40,16 +40,92 @@
         "BOR_SR_Scope_02_L2_Mask": {
             "zoom": 1.0
         },
+        "DAD_AR_Scope_01_L2": {
+            "lens_offset": -2.2660000324249268,
+            "zoom": 1.0
+        },
+        "DAD_AR_Scope_02": {
+            "zoom": 1.0
+        },
+        "DAD_PS_Scope_01_L2": {
+            "zoom": 1.0
+        },
+        "DAD_PS_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "DAD_PS_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "DAD_PS_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "DAD_SG_Scope_01_L2": {
+            "lens_offset": -17.483999252319336,
+            "zoom": 1.0
+        },
         "DAD_SG_Scope_02_L1": {
             "zoom": 1.0
         },
+        "DAD_SG_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "DAD_SG_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "DAD_SG_Scope_02_L2_Mask": {
+            "lens_offset": -0.3440000116825104,
+            "zoom": 1.0
+        },
+        "DAD_SM_Scope_01_L1": {
+            "zoom": 1.0
+        },
+        "DAD_SM_Scope_02_B_Mask": {
+            "zoom": 1.0
+        },
+        "DAD_SM_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "DAD_SM_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "DAD_SM_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "JAK_AR_Scope_01_L1": {
+            "zoom": 1.0
+        },
+        "JAK_AR_Scope_01_L2": {
+            "zoom": 1.0
+        },
+        "JAK_AR_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "JAK_AR_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "JAK_SG_Scope_01_L2": {
+            "zoom": 1.0
+        },
+        "JAK_SG_Scope_01_L2_Mask": {
+            "zoom": 1.0
+        },
+        "JAK_SG_Scope_02_L1": {
+            "zoom": 1.0
+        },
         "JAK_SG_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "JAK_SG_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "JAK_SG_Scope_02_L2_Mask": {
             "zoom": 1.0
         },
         "JAK_SR_Scope_01_L1": {
             "zoom": 1.0
         },
         "JAK_SR_Scope_01_L1_Mask": {
+            "lens_offset": 1.5470000505447388,
             "zoom": 1.0
         },
         "JAK_SR_Scope_02_L1": {
@@ -65,6 +141,25 @@
             "zoom": 1.0
         },
         "MAL_SG_Scope_01_L1": {
+            "lens_offset": -7.515999794006348,
+            "zoom": 1.0
+        },
+        "MAL_SG_Scope_01_L2": {
+            "lens_offset": -1.843999981880188,
+            "zoom": 1.0
+        },
+        "MAL_SG_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "MAL_SG_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "MAL_SG_Scope_02_L2": {
+            "lens_offset": -1.718999981880188,
+            "zoom": 1.0
+        },
+        "MAL_SM_Scope_01_L1": {
+            "lens_offset": -13.75,
             "zoom": 1.0
         },
         "MAL_SM_Scope_02_L1": {
@@ -73,13 +168,27 @@
         "MAL_SM_Scope_02_L1_Mask": {
             "zoom": 1.0
         },
+        "MAL_SM_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "MAL_SM_Scope_02_L2_Mask": {
+            "lens_offset": -0.029999999329447746,
+            "zoom": 1.0
+        },
         "MAL_SR_Scope_01_L1": {
             "zoom": 1.0
         },
         "MAL_SR_Scope_01_L1_Mask": {
+            "lens_offset": 6.750999927520752,
+            "lens_size": 1.6009999513626099,
+            "zoom": 1.0
+        },
+        "MAL_SR_Scope_01_L2": {
             "zoom": 1.0
         },
         "MAL_SR_Scope_01_L2_Mask": {
+            "lens_offset": 4.625999927520752,
+            "lens_size": 1.4570000171661377,
             "zoom": 1.0
         },
         "MAL_SR_Scope_02_L1": {
@@ -92,6 +201,23 @@
             "zoom": 1.0
         },
         "MAL_SR_Scope_02_L2_Mask": {
+            "lens_offset": -0.6330000162124634,
+            "lens_tilt": -39.224998474121094,
+            "zoom": 1.0
+        },
+        "ORD_AR_Scope_01_L1": {
+            "zoom": 1.0
+        },
+        "ORD_AR_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "ORD_AR_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "ORD_AR_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "ORD_AR_Scope_02_L2_Mask": {
             "zoom": 1.0
         },
         "ORD_PS_Scope_02_L1": {
@@ -101,6 +227,9 @@
             "zoom": 1.0
         },
         "ORD_SR_Scope_01_L1_Mask": {
+            "zoom": 1.0
+        },
+        "ORD_SR_Scope_01_L2": {
             "zoom": 1.0
         },
         "ORD_SR_Scope_01_L2_Mask": {
@@ -118,7 +247,110 @@
         "ORD_SR_Scope_02_L2_Mask": {
             "zoom": 1.0
         },
+        "SK_DAD_AR_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "SK_DAD_AR_Scope_02_L2_Mask": {
+            "lens_offset": -0.31200000643730164,
+            "zoom": 1.0
+        },
+        "SK_JAK_AR_Scope_01_L1_Mask": {
+            "zoom": 1.0
+        },
+        "SK_JAK_AR_Scope_01_Mask": {
+            "lens_offset": 9.156000137329102,
+            "zoom": 1.0
+        },
+        "SK_JAK_AR_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "SK_JAK_AR_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "TED_AR_Scope_01_L1": {
+            "zoom": 1.0
+        },
+        "TED_AR_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "TED_AR_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "TED_AR_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "TED_AR_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "TED_SG_Scope_01_L1_Mask": {
+            "zoom": 1.0
+        },
         "TED_SG_Scope_02_L2": {
+            "lens_offset": -9.302000045776367,
+            "zoom": 1.0
+        },
+        "TOR_AR_Scope_01_L2": {
+            "lens_offset": -12.854999542236328,
+            "lens_size": 1.2949999570846558,
+            "zoom": 1.0
+        },
+        "TOR_AR_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "TOR_AR_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "TOR_PS_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "TOR_PS_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "TOR_SG_Scope_01_L2": {
+            "lens_offset": -12.144000053405762,
+            "zoom": 1.0
+        },
+        "TOR_SG_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "TOR_SG_Scope_02_L1_Mask": {
+            "lens_offset": -0.5680000185966492,
+            "zoom": 1.0
+        },
+        "TOR_SG_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "TOR_SG_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "VLA_AR_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "VLA_AR_Scope_02_L1_Mask": {
+            "zoom": 1.0
+        },
+        "VLA_AR_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "VLA_AR_Scope_02_L2_Mask": {
+            "lens_offset": -0.2840000092983246,
+            "zoom": 1.0
+        },
+        "VLA_SM_Scope_01_L1": {
+            "lens_offset": -10.723999977111816,
+            "zoom": 1.0
+        },
+        "VLA_SM_Scope_02_L1": {
+            "zoom": 1.0
+        },
+        "VLA_SM_Scope_02_L1_Mask": {
+            "lens_offset": -0.859000027179718,
+            "zoom": 1.0
+        },
+        "VLA_SM_Scope_02_L2": {
+            "zoom": 1.0
+        },
+        "VLA_SM_Scope_02_L2_Mask": {
             "zoom": 1.0
         },
         "VLA_SR_Scope_01_L1": {

@@ -356,6 +356,16 @@ uevr.sdk.callbacks.on_pre_engine_tick(function(engine, delta)
 	end
 end)
 
+-- Hands mode: the VR hands are hidden while driving (xaero 2026-11-09) - nothing drives them in a vehicle (no motion
+-- controller components) and the game's driver body already shows its hands on the controls. Voted through the hands
+-- lib's is_hands_hidden callback (polled every 200 ms, highest priority wins). ik.lua reads the same vote, so it is only
+-- cast in Hands mode: IK Arms keeps its hands on the handlebars (IK seat above).
+local HIDE_HANDS_PRIORITY = 100
+hands.registerIsHiddenCallback(function()
+	if inVehicle and _G.getHandsMode ~= nil and _G.getHandsMode() ~= HANDS_MODE_IK then return true, HIDE_HANDS_PRIORITY end
+	return nil
+end)
+
 uevr.sdk.callbacks.on_early_calculate_stereo_view_offset(function(device, view_index, world_to_meters, position, rotation, is_double)
 	if rotation == nil or position == nil or not firstPersonEnabled() then return end
 	if frame.tick ~= tick then computeFrame() end

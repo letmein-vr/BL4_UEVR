@@ -32,10 +32,10 @@ end
 
 _G.BL4_SECTIONS = _G.BL4_SECTIONS or {}
 table.insert(_G.BL4_SECTIONS, { order = 3, label = "Recoil", layout = {
-	{ widgetType = "checkbox", id = "bl4_recoil_enabled", label = "Weapon kick (from the game's arm animation)", initialValue = true },
+	{ widgetType = "checkbox", id = "bl4_recoil_enabled", label = "Recoil (from the game's arm animation)", initialValue = true },
 	{ widgetType = "slider_float", id = "bl4_recoil_strength_loc", label = "Kick distance strength", initialValue = 1.0, range = { 0.0, 3.0 } },
 	{ widgetType = "slider_float", id = "bl4_recoil_strength_rot", label = "Kick rotation strength", initialValue = 1.0, range = { 0.0, 3.0 } },
-	{ widgetType = "checkbox", id = "bl4_recoil_two_handed", label = "Weapon kick while two-handing", initialValue = true },
+	{ widgetType = "checkbox", id = "bl4_recoil_two_handed", label = "Recoil while two-handing", initialValue = true },
 	{ widgetType = "slider_float", id = "bl4_recoil_tail", label = "Recovery time after release (s)", initialValue = 0.35, range = { 0.05, 1.5 } },
 	{ widgetType = "slider_float", id = "bl4_recoil_max_cm", label = "Ignore motions larger than (cm)", initialValue = 12.0, range = { 2.0, 40.0 } },
 	{ widgetType = "slider_float", id = "bl4_recoil_max_deg", label = "Ignore rotations larger than (deg)", initialValue = 25.0, range = { 2.0, 90.0 } },

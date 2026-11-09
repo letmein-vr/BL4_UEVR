@@ -72,6 +72,15 @@ public:
         // SpawnLightProjectile thunk -> native -> tail jump to the static spawn helper -> call to the manager spawn.
         uintptr_t rva_spawn_light_projectile_native{0x130E0A2};
         uintptr_t rva_manager_spawn{0x842D26};
+        // Actor projectiles (GbxGame.projectile, e.g. WeaponProjectile from the Vladof CrowdSourced sniper, 2026-11-09)
+        // never reach the light-projectile spawn. They are re-aimed in UWorld::SpawnActor(UClass*, const FTransform*,
+        // const FActorSpawnParameters&) - their velocity follows the spawn rotation. The chain is verified before
+        // hooking: GameplayStatics.BeginDeferredActorSpawnFromClass thunk -> native -> spawn helper -> SpawnActor.
+        // ActorProjectileAim=0 turns this off.
+        bool actor_projectile_aim{true};
+        uintptr_t rva_deferred_spawn_native{0x34F4326};
+        uintptr_t rva_deferred_spawn_helper{0x7AC6E0E};
+        uintptr_t rva_spawn_actor{0x1037E38};
         int axis_index{0};
         double axis_sign{1.0};
         // Beam weapons (WeaponBehavior_FireBeam -> GbxGame LightBeam): beams aim from the camera mode's POV
@@ -144,6 +153,18 @@ private:
     static uintptr_t on_manager_spawn(void* manager, void* out_handle, const uint8_t* data);
     inline static ManagerSpawnFn m_orig_spawn{};
 
+    // ---- actor projectiles: UWorld::SpawnActor ----
+    using SpawnActorFn = void* (*)(void* world, uevr::API::UClass* cls, const uint8_t* transform, const uint8_t* params);
+    static void* on_spawn_actor(void* world, uevr::API::UClass* cls, const uint8_t* transform, const uint8_t* params);
+    inline static SpawnActorFn m_orig_spawn_actor{};
+    void install_spawn_actor_hook();
+    bool m_spawn_actor_hooked{false};
+    uevr::API::UClass* m_projectile_class{};
+    uint32_t m_sa_player{0};
+    uint32_t m_sa_overrides{0};
+    uint32_t m_sa_kept{0};
+    uint32_t m_sa_logged{0};
+
     // ---- beam aim: tick wrappers (beam manager, held weapon, player character, player controller) ----
     // Each wrapper can hold the camera-mode POV on the gun while the original runs (restored after) and records whether
     // an active beam's end point changed during the call - to find where the game aims its beams.
@@ -164,6 +185,14 @@ private:
     int m_tick_hooks{0};
     bool m_beam_hooked{false};
     void* m_manager{nullptr};
+    // The LightBeamManager is adopted only from an actor that IS one (class check) and re-validated through its
+    // object-array slot before every read: the raw first-actor pointer was kept forever, went stale and crashed reading
+    // its beam list (AV reading 0x800000008 in beam_target_sum, 2026-11-09).
+    int32_t m_manager_index{-1};
+    int32_t m_manager_serial{0};
+    uevr::API::UClass* m_manager_class{};
+    bool adopt_manager(void* actor);
+    void* live_manager() const;
     void* m_held_weapon{nullptr};
     void* m_local_pawn_ptr{nullptr};
     void* m_local_pc_ptr{nullptr};

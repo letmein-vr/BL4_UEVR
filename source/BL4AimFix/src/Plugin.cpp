@@ -143,6 +143,17 @@ uintptr_t first_tail_jump(uintptr_t fn) {
     return 0;
 }
 
+// True if a direct call (E8) to `target` appears within `range` bytes of `fn`, past early-out RETs.
+bool calls_within(uintptr_t fn, uintptr_t target, size_t range) {
+    for (uintptr_t ip = fn, end = fn + range; ip < end;) {
+        INSTRUX ix{};
+        if (!decode(ip, ix)) { ++ip; continue; }
+        if (ix.Instruction == ND_INS_CALLNR && rel_target(ip, ix) == target) return true;
+        ip += ix.Length;
+    }
+    return false;
+}
+
 // Last direct call before the first RET.
 uintptr_t last_call_before_ret(uintptr_t fn) {
     uintptr_t last = 0;
@@ -204,6 +215,74 @@ Vec3 aim_reference(const Vec3& loc, const Vec3& end, bool has_end, const Vec3& c
     return normalize(sub(add_scaled(cam_loc, cam_fwd, s), loc));
 }
 
+// The same aim line for a shot without an end point (actor projectiles carry only a spawn transform). Spawned at the
+// first-person muzzle, the game points the shot at the crosshair target on the camera ray; the target is taken where
+// the shot's line passes closest to that ray. A far target makes the two lines nearly parallel and the spread then
+// decides where they pass closest - often behind the muzzle (clamping that to 1 m read as ~90 deg off the aim and
+// kept 10 of 39 CrowdSourced shots on the screen centre, 2026-11-09) - so a closest point less than MIN_TARGET ahead
+// means a far target: aim line = camera forward. Spawned at the camera, the aim line is camera forward too.
+Vec3 aim_reference_no_end(const Vec3& loc, const Vec3& dir, bool at_muzzle, const Vec3& cam_loc, const Vec3& cam_fwd,
+                          double& target_dist) {
+    target_dist = 0.0;
+    if (!at_muzzle) return cam_fwd;
+    constexpr double MIN_TARGET = 100.0, MAX_TARGET = 100000.0; // cm
+    const Vec3 w0 = sub(loc, cam_loc);
+    const double b = dot(dir, cam_fwd);
+    const double denom = 1.0 - b * b;
+    if (denom <= 1e-9) return cam_fwd;
+    const double s = (dot(cam_fwd, w0) - b * dot(dir, w0)) / denom;
+    if (s < MIN_TARGET) return cam_fwd;
+    target_dist = std::min(s, MAX_TARGET);
+    return normalize(sub(add_scaled(cam_loc, cam_fwd, target_dist), loc));
+}
+
+// FQuat (doubles: X, Y, Z, W). mul(a, b) applies b, then a (UE's operator*).
+struct Quat { double x{}, y{}, z{}, w{1.0}; };
+Quat quat_mul(const Quat& a, const Quat& b) {
+    return Quat{
+        a.w * b.x + a.x * b.w + a.y * b.z - a.z * b.y,
+        a.w * b.y - a.x * b.z + a.y * b.w + a.z * b.x,
+        a.w * b.z + a.x * b.y - a.y * b.x + a.z * b.w,
+        a.w * b.w - a.x * b.x - a.y * b.y - a.z * b.z,
+    };
+}
+Vec3 quat_forward(const Quat& q) {
+    return Vec3{1.0 - 2.0 * (q.y * q.y + q.z * q.z), 2.0 * (q.x * q.y + q.w * q.z), 2.0 * (q.x * q.z - q.w * q.y)};
+}
+// the rotation taking unit vector `from` onto unit vector `to`
+Quat quat_from_to(const Vec3& from, const Vec3& to) {
+    const Vec3 axis = cross(from, to);
+    const double s = length(axis);
+    const double c = std::clamp(dot(from, to), -1.0, 1.0);
+    if (s < 1e-9) return Quat{};
+    const double half = std::atan2(s, c) * 0.5, sh = std::sin(half) / s;
+    return Quat{axis.x * sh, axis.y * sh, axis.z * sh, std::cos(half)};
+}
+
+// FTransform (doubles): Rotation +0x00, Translation +0x20, Scale3D +0x40
+constexpr size_t TRANSFORM_SIZE = 0x60;
+constexpr size_t TR_ROTATION = 0x00;
+constexpr size_t TR_TRANSLATION = 0x20;
+// FActorSpawnParameters: Owner +0x10, Instigator +0x18 (UGameplayStatics spawn helper, 2026-11-09)
+constexpr size_t SP_OWNER = 0x10;
+constexpr size_t SP_INSTIGATOR = 0x18;
+
+// "rva rva rva ..." of the calling frames inside the game exe (debug)
+std::string stack_rvas(int skip, int count) {
+    void* frames[24]{};
+    const auto n = RtlCaptureStackBackTrace((ULONG)skip, (ULONG)std::min(count, 24), frames, nullptr);
+    const auto base = (uintptr_t)utility::get_executable();
+    std::string s;
+    for (USHORT i = 0; i < n; ++i) {
+        const auto a = (uintptr_t)frames[i];
+        char buf[32];
+        if (a >= base && a < base + 0x10000000) std::snprintf(buf, sizeof(buf), " %llX", (unsigned long long)(a - base));
+        else std::snprintf(buf, sizeof(buf), " ext");
+        s += buf;
+    }
+    return s;
+}
+
 Vec3 read_vec(const uint8_t* p) { Vec3 v{}; std::memcpy(&v, p, sizeof(v)); return v; }
 void write_vec(uint8_t* p, const Vec3& v) { std::memcpy(p, &v, sizeof(v)); }
 
@@ -226,6 +305,7 @@ void BL4AimFixPlugin::on_initialize() {
         return;
     }
     install_hooks();
+    if (m_cfg.actor_projectile_aim) install_spawn_actor_hook();
 }
 
 void BL4AimFixPlugin::install_hooks() {
@@ -504,6 +584,106 @@ uintptr_t BL4AimFixPlugin::on_manager_spawn(void* manager, void* out_handle, con
 }
 
 // ------------------------------------------------------------------------------------------------
+// Actor projectiles (2026-11-09). Some guns fire GbxGame.projectile actors instead of light projectiles: the Vladof
+// CrowdSourced sniper fires WeaponProjectile "Weapon_VLA_SR_CrowdSourced" (owner = the gun, instigator = the pawn,
+// 13000 cm/s), and none of its shots reached the light-projectile hook. Every actor is created by UWorld::SpawnActor,
+// and the projectile's velocity follows its spawn rotation, so re-aiming the spawn transform re-aims the shot
+// (probe: dot(velocity, barrel) 0.996-1.000 for every re-aimed shot). The Blueprint ProjectileStatics path's spawn
+// request constructor (RVA 0x15E3B80) was tried first: the CrowdSourced never reaches it.
+
+void BL4AimFixPlugin::install_spawn_actor_hook() {
+    const auto base = (uintptr_t)utility::get_executable();
+    const auto thunk = ufunction_thunk(L"Class /Script/Engine.GameplayStatics", L"BeginDeferredActorSpawnFromClass");
+    const auto native = base + m_cfg.rva_deferred_spawn_native;
+    const auto helper = base + m_cfg.rva_deferred_spawn_helper;
+    const auto spawn = base + m_cfg.rva_spawn_actor;
+    if (thunk == 0 || !calls_within(thunk, native, 0x400) || !calls_within(native, helper, 0x200) || !calls_before_ret(helper, spawn)) {
+        API::get()->log_error("BL4AimFix: UWorld::SpawnActor chain not found (thunk RVA 0x%llX) - game build changed? Not hooked",
+            (unsigned long long)(thunk != 0 ? thunk - base : 0));
+        return;
+    }
+    m_spawn_actor_hooked = install_inline_hook(spawn, (void*)&on_spawn_actor, (void**)&m_orig_spawn_actor, "UWorld::SpawnActor");
+}
+
+// Actor projectile spawns (GbxGame.projectile subclasses) fired by the local pawn's gun: the spawn transform is the
+// shot's start and aim. Spawned at the muzzle / camera along the aim line, it is re-aimed like on_manager_spawn
+// (start = muzzle, rotation turned by aim line -> barrel). Debug logs the calling frames (to find the fire path).
+void* BL4AimFixPlugin::on_spawn_actor(void* world, API::UClass* cls, const uint8_t* transform, const uint8_t* params) {
+    auto& p = *g_plugin;
+    if (!p.m_spawn_actor_hooked || cls == nullptr || params == nullptr) return m_orig_spawn_actor(world, cls, transform, params);
+    if (p.m_game_thread.load() == 0 || GetCurrentThreadId() != p.m_game_thread.load()) return m_orig_spawn_actor(world, cls, transform, params);
+    if (p.m_projectile_class == nullptr) {
+        p.m_projectile_class = API::get()->find_uobject<API::UClass>(L"Class /Script/GbxGame.projectile");
+        if (p.m_projectile_class == nullptr) return m_orig_spawn_actor(world, cls, transform, params);
+    }
+    bool is_projectile = false;
+    int depth = 0;
+    for (const API::UStruct* s = cls; s != nullptr && depth < 48; s = s->get_super_struct(), ++depth) {
+        if (s == p.m_projectile_class) { is_projectile = true; break; }
+    }
+    if (!is_projectile) return m_orig_spawn_actor(world, cls, transform, params);
+
+    auto pawn = API::get()->get_local_pawn(0);
+    API::UObject* owner{};
+    API::UObject* instigator{};
+    std::memcpy(&owner, params + SP_OWNER, sizeof(owner));
+    std::memcpy(&instigator, params + SP_INSTIGATOR, sizeof(instigator));
+    API::UObject* weapon = p.is_weapon(owner) ? owner : nullptr;
+    bool held = false;
+    if (weapon != nullptr && pawn != nullptr) {
+        struct { API::UObject* ret; } r{};
+        weapon->call_function(L"GetInstigator", &r);
+        held = r.ret == pawn;
+        if (!held) { r.ret = nullptr; weapon->call_function(L"GetOwner", &r); held = r.ret == pawn; }
+    }
+    const bool mine = pawn != nullptr && (instigator == pawn || held);
+    if (!mine) return m_orig_spawn_actor(world, cls, transform, params);
+    ++p.m_sa_player;
+
+    alignas(16) uint8_t edited[TRANSFORM_SIZE];
+    const uint8_t* pass = transform;
+    bool overridden = false;
+    ShotContext ctx{};
+    const bool have_ctx = weapon != nullptr && held && !p.is_vehicle_pawn(pawn) && transform != nullptr && p.capture_context(weapon, ctx);
+    Vec3 loc0{}, f0{};
+    double from_cam = -1.0, from_muzzle = -1.0, spread = -1.0, target_dist = 0.0;
+    if (have_ctx) {
+        Quat q0{};
+        std::memcpy(&q0, transform + TR_ROTATION, sizeof(q0));
+        loc0 = read_vec(transform + TR_TRANSLATION);
+        f0 = normalize(quat_forward(q0));
+        from_cam = length(sub(loc0, ctx.cam_loc));
+        from_muzzle = length(sub(loc0, ctx.muzzle));
+        const bool at_muzzle = from_muzzle <= MUZZLE_START_TOLERANCE;
+        const bool from_camera = from_cam <= p.m_cfg.start_tolerance || at_muzzle;
+        const Vec3 ref = aim_reference_no_end(loc0, f0, at_muzzle, ctx.cam_loc, ctx.cam_fwd, target_dist);
+        const double aim_dot = dot(f0, ref);
+        spread = std::acos(std::clamp(aim_dot, -1.0, 1.0)) * 180.0 / 3.14159265358979323846;
+        if (from_camera && aim_dot >= std::cos(deg2rad(p.m_cfg.max_angle_from_aim)) && p.m_cfg.mode == 1 && API::VR::is_hmd_active()) {
+            std::memcpy(edited, transform, TRANSFORM_SIZE);
+            const Quat q1 = quat_mul(quat_from_to(ref, ctx.barrel), q0);
+            std::memcpy(edited + TR_ROTATION, &q1, sizeof(q1));
+            write_vec(edited + TR_TRANSLATION, ctx.muzzle);
+            pass = edited;
+            overridden = true;
+            ++p.m_sa_overrides;
+        } else {
+            ++p.m_sa_kept;
+        }
+    }
+
+    if (p.m_cfg.debug && p.m_sa_logged < 12) {
+        ++p.m_sa_logged;
+        API::get()->log_info("BL4AimFix[spawnactor]: class=%ls owner=%ls instigator=%ls held=%d loc=(%.0f %.0f %.0f) fromCam=%.1f fromMuzzle=%.1f fwd=(%.3f %.3f %.3f) dot(fwd,camFwd)=%.4f dot(fwd,barrel)=%.4f spread=%.2f target=%.0f %s stack:%s",
+            object_name(cls).c_str(), object_name(owner).c_str(), object_name(instigator).c_str(), (int)held,
+            loc0.x, loc0.y, loc0.z, from_cam, from_muzzle, f0.x, f0.y, f0.z, have_ctx ? dot(f0, ctx.cam_fwd) : 0.0,
+            have_ctx ? dot(f0, ctx.barrel) : 0.0, spread, target_dist, overridden ? "OVERRIDDEN" : "kept",
+            stack_rvas(1, 16).c_str());
+    }
+    return m_orig_spawn_actor(world, cls, pass, params);
+}
+
+// ------------------------------------------------------------------------------------------------
 // Vehicle guns aimed with the head (2026-11-06). While driving, scripts/bl4_vr_vehicle.lua keeps the game camera on the
 // chase camera's aim (right stick, which also steers) and puts the VR view in the seat. The vehicle's guns fire light
 // projectiles from their own muzzles toward the chase camera's crosshair target. Here the camera ray is replaced by the
@@ -772,9 +952,11 @@ void BL4AimFixPlugin::on_pre_engine_tick(API::UGameEngine*, float) {
         // install_camera_hook() / install_pvr_hook(): diagnostics from 2026-11-05, not installed (BL4 never calls
         // UpdateCamera; ProcessViewRotation is never called inside the hold, and that hook would sit on top of UEVR's).
         // between frames: did any beam end point change since the last frame (sanity check for the per-tick counters)
-        const double sum = beam_target_sum();
-        if (sum != m_last_frame_target_sum) ++m_frames_target_changed;
-        m_last_frame_target_sum = sum;
+        if (m_cfg.debug) {
+            const double sum = beam_target_sum();
+            if (sum != m_last_frame_target_sum) ++m_frames_target_changed;
+            m_last_frame_target_sum = sum;
+        }
         // the gun pose is held in the POV from the end of the player controller's tick (see tick_wrapper) to the end
         // of the frame; never across a controller tick, where the camera computes the view from it
         restore_pov();
@@ -786,6 +968,10 @@ void BL4AimFixPlugin::on_pre_engine_tick(API::UGameEngine*, float) {
     if (m_hooks_ok) {
         API::get()->log_info("BL4AimFix[sum]: playerSpawns=%u overrides=%u keptNotAlongAim=%u keptNotFromCamera=%u notFromWeapon=%u noMuzzle=%u socketMissing=%u offThread=%u",
             m_player_spawns, m_overrides, m_kept_angle, m_kept_far, m_no_weapon, m_no_muzzle, m_socket_missing, m_off_thread);
+    }
+    if (m_spawn_actor_hooked) {
+        API::get()->log_info("BL4AimFix[spawnactorsum]: playerProjectiles=%u overrides=%u kept=%u", m_sa_player, m_sa_overrides, m_sa_kept);
+        m_sa_logged = 0;
     }
     if (m_beam_hooked) {
         static const char* names[ROLE_COUNT]{"manager", "weapon", "pawn", "controller", "camera"};
@@ -910,10 +1096,39 @@ void BL4AimFixPlugin::restore_pov() {
     }
 }
 
+// The manager while its object-array slot still holds it (same object, same serial), else nullptr. Any thread.
+void* BL4AimFixPlugin::live_manager() const {
+    if (m_manager == nullptr || m_manager_index < 0) return nullptr;
+    auto array = API::FUObjectArray::get();
+    if (array == nullptr || m_manager_index >= array->get_object_count()) return nullptr;
+    auto item = array->get_item(m_manager_index);
+    if (item == nullptr || (void*)item->object != m_manager || item->serial_number != m_manager_serial) return nullptr;
+    return m_manager;
+}
+
+// Adopt a ticking actor as the beam manager only if it is a LightBeamManager tracked in the object array.
+bool BL4AimFixPlugin::adopt_manager(void* actor) {
+    if (actor == nullptr) return false;
+    if (m_manager_class == nullptr) m_manager_class = API::get()->find_uobject<API::UClass>(L"Class /Script/GbxGame.LightBeamManager");
+    if (m_manager_class == nullptr || !((API::UObject*)actor)->is_a(m_manager_class)) return false;
+    int32_t index{}; // UObjectBase::InternalIndex (+0xC)
+    std::memcpy(&index, (const uint8_t*)actor + 0xC, sizeof(index));
+    auto array = API::FUObjectArray::get();
+    auto item = (array != nullptr && index >= 0 && index < array->get_object_count()) ? array->get_item(index) : nullptr;
+    if (item == nullptr || (void*)item->object != actor) return false;
+    const bool changed = m_manager != nullptr && m_manager != actor;
+    m_manager = actor;
+    m_manager_index = index;
+    m_manager_serial = item->serial_number;
+    if (changed) API::get()->log_info("BL4AimFix: LightBeamManager changed - adopted the new one");
+    return true;
+}
+
 // true while the local pawn owns an active beam (ALightBeamManager.ActiveBeams +0x390, beam instigator +0x188)
 bool BL4AimFixPlugin::player_beam_active() const {
-    if (m_manager == nullptr || m_local_pawn_ptr == nullptr) return false;
-    const auto arr = (const uint8_t*)m_manager + 0x390;
+    const auto manager = live_manager();
+    if (manager == nullptr || m_local_pawn_ptr == nullptr) return false;
+    const auto arr = (const uint8_t*)manager + 0x390;
     uint8_t* const* data = nullptr;
     int32_t num = 0;
     std::memcpy(&data, arr, sizeof(data));
@@ -1105,8 +1320,9 @@ void BL4AimFixPlugin::poll_beam_flags() {
 // unit aim direction the beam uses (yaw == control yaw, pitch level), +0x488 end = muzzle + direction * ~4000.
 // Cheap change detector. Game thread.
 double BL4AimFixPlugin::beam_target_sum() const {
-    if (m_manager == nullptr) return 0.0;
-    const auto arr = (const uint8_t*)m_manager + 0x390;
+    const auto manager = live_manager();
+    if (manager == nullptr) return 0.0;
+    const auto arr = (const uint8_t*)manager + 0x390;
     API::UObject* const* data = nullptr;
     int32_t num = 0;
     std::memcpy(&data, arr, sizeof(data));
@@ -1169,8 +1385,8 @@ void BL4AimFixPlugin::tick_wrapper(int slot, void* actor, float delta, uintptr_t
     int role = -1;
     if (actor != nullptr) {
         if (m_slot_roles[slot][ROLE_MANAGER]) {
-            if (m_manager == nullptr) m_manager = actor;
-            if (actor == m_manager) role = ROLE_MANAGER;
+            if (actor == m_manager && live_manager() != nullptr) role = ROLE_MANAGER;
+            else if (adopt_manager(actor)) role = ROLE_MANAGER;
         }
         if (role < 0 && m_slot_roles[slot][ROLE_WEAPON] && actor == m_held_weapon) role = ROLE_WEAPON;
         if (role < 0 && m_slot_roles[slot][ROLE_PAWN] && actor == m_local_pawn_ptr) role = ROLE_PAWN;
@@ -1205,9 +1421,10 @@ void BL4AimFixPlugin::tick_wrapper(int slot, void* actor, float delta, uintptr_t
     }
     // (aim_player_beams() before the manager tick re-aimed the stored fields but the beam still fired along the body:
     // the aim is computed, traced and drawn before this tick. Kept for reference, not called.)
-    const double before = beam_target_sum();
+    // beamEndChanged per role: a debug-log diagnostic only (it walks the beam list twice per hooked tick)
+    const double before = m_cfg.debug ? beam_target_sum() : 0.0;
     orig(actor, delta, a3, a4);
-    if (beam_target_sum() != before) ++m_role_target_changed[role];
+    if (m_cfg.debug && beam_target_sum() != before) ++m_role_target_changed[role];
     if (pov != nullptr) {
         std::memcpy(pov, &saved_loc, sizeof(Vec3));
         std::memcpy(pov + sizeof(Vec3), &saved_rot, sizeof(Rot3));
@@ -1239,10 +1456,11 @@ void BL4AimFixPlugin::tick_wrapper(int slot, void* actor, float delta, uintptr_t
 // ClientState (+0xA8) .instigator (+0xE0) = the pawn that fired. Only the local pawn's beams are re-aimed: origin = the
 // first-person muzzle, direction = the barrel, end = origin + barrel * the game's length (its trace / max length).
 void BL4AimFixPlugin::aim_player_beams() {
-    if (m_manager == nullptr || !m_gun_valid || m_local_pawn_ptr == nullptr) return;
+    const auto manager = live_manager();
+    if (manager == nullptr || !m_gun_valid || m_local_pawn_ptr == nullptr) return;
     constexpr size_t ACTIVE_BEAMS = 0x390, INSTIGATOR = 0xA8 + 0xE0;
     constexpr size_t AIM_ORIGIN = 0x388, AIM_DIR = 0x3A0, AIM_DIR_COPY = 0x4B8, END = 0x488, END_COPY = 0x4A0;
-    const auto arr = (const uint8_t*)m_manager + ACTIVE_BEAMS;
+    const auto arr = (const uint8_t*)manager + ACTIVE_BEAMS;
     uint8_t* const* data = nullptr;
     int32_t num = 0;
     std::memcpy(&data, arr, sizeof(data));
@@ -1308,6 +1526,10 @@ void BL4AimFixPlugin::load_config(const std::filesystem::path& file) {
         else if (key == "RVA_SpawnLightProjectileNative") { if (auto v = as_rva()) m_cfg.rva_spawn_light_projectile_native = v; }
         else if (key == "RVA_ManagerSpawn") { if (auto v = as_rva()) m_cfg.rva_manager_spawn = v; }
         else if (key == "BeamAim") m_cfg.beam_aim = as_bool();
+        else if (key == "ActorProjectileAim") m_cfg.actor_projectile_aim = as_bool();
+        else if (key == "RVA_DeferredSpawnNative") { if (auto v = as_rva()) m_cfg.rva_deferred_spawn_native = v; }
+        else if (key == "RVA_DeferredSpawnHelper") { if (auto v = as_rva()) m_cfg.rva_deferred_spawn_helper = v; }
+        else if (key == "RVA_SpawnActor") { if (auto v = as_rva()) m_cfg.rva_spawn_actor = v; }
         else if (key == "ShowWeaponWhenScoped") m_cfg.show_weapon_when_scoped = as_bool();
         else if (key == "VehicleGazeAim") m_cfg.vehicle_gaze_aim = as_bool();
     }
