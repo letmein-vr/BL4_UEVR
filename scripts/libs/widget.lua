@@ -30,6 +30,10 @@ Usage
     widgetModule.enableTextureCache - when true, Image:setTexture keeps imported textures by file name and reuses them.
 		Default false. An entry that is no longer a Texture2D is imported again. destroyAll clears the cache.
 
+    widgetModule.loadTexture(imageName, (optional)path) - imports "$data/" .. path .. imageName as a Texture2D and
+		returns it, or nil when the import fails. path defaults to "images/". Uses the texture cache when
+		enableTextureCache is true. Pass the result to image:setTextureObject.
+
     widgetModule.Image.ALIGN - anchor points as {x, y} from 0 to 1:
 		TOP_LEFT, TOP_CENTER, TOP_RIGHT, CENTER_LEFT, CENTER, CENTER_RIGHT,
 		BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT.
@@ -52,6 +56,17 @@ Usage
 		path defaults to "images/". hideIfMissing defaults to true: a failed import collapses an image that is
 		already on a widget and returns false. Returns true when the texture is applied.
 		Call it before or after addToWidget.
+
+    image:setTextureObject(texture) - applies an already loaded Texture2D, such as one from widgetModule.loadTexture,
+		and sizes the brush so its longest side is maxDim. Returns false, leaving the image unchanged, when texture
+		is not a valid Texture2D. Call it before or after addToWidget.
+    image:setVisible(visible) - shows or collapses the image. A hidden image stays collapsed when a texture is set.
+		A shown image stays collapsed until it has a texture or a color.
+    image:setColor(hex) - tints the image, "#RRGGBB" or "#RRGGBBAA". An image with a color and no texture
+		draws as a solid rectangle of its draw size.
+    image:setSize(size2D) - sets the draw size directly. A later setTexture or setTextureObject sizes it from maxDim.
+    image:setRenderScale(scale) - scales the drawn image about its center without changing its layout size.
+		A large maxDim scaled down this way keeps a large texture sharp at a small size.
 
     image:addToWidget(widget, (optional)opts) - parents a UImage on widget's CanvasPanel root.
 		Returns false when widget has no CanvasPanel root or the image could not be created. See Canvas layout.
@@ -81,6 +96,8 @@ Usage
     text:setLayout(opts) - applies Canvas layout to text addToWidget has parented. The slot stays auto-sized.
     text:setPosition(position2D) - setLayout with that position.
     text:remove() - RemoveFromParent, then drops the text block and slot.
+    text:setVisible(visible) - shows or collapses the text block. Can be called before addToWidget.
+    text:getDesiredSize() - the laid out size of the text as a vector2D, or nil before addToWidget.
 
     widgetModule.createHostWidget() - creates an empty host UserWidget whose root is a CanvasPanel.
 		Returns hostWidget or nil if no host widget class could be found or created.
@@ -203,48 +220,72 @@ function Image.destroyAll()
 	Image.textureCache = {}
 end
 
-function Image:setTexture(imageName, path, hideIfMissing)
-	if hideIfMissing == nil then hideIfMissing = true end
-    if path == nil then path = "images/" end
-	local function hideMissing()
-		if hideIfMissing and self.image ~= nil then
-			self.image:SetVisibility(1) -- Collapsed
-		end
-		return false
-	end
-	local function importTexture()
-		local result = plugin.executeFunction(kismet_rendering_library, "ImportFileAsTexture2D", uevrUtils.get_world(), "$data/" .. path .. imageName)
-		local texture = result and result.ReturnValue
-		if uevrUtils.getValid(texture) == nil then return nil end
-		if M.enableTextureCache then
-			Image.textureCache[imageName] = texture
-		end
-		return texture
-	end
+-- hex is "#RRGGBB" or "#RRGGBBAA"
+local function linearColorFromHex(hex)
+	local function channel(i, default) return (tonumber(hex:sub(i, i + 1), 16) or default) / 255 end
+	return uevrUtils.color_from_rgba(channel(2, 0), channel(4, 0), channel(6, 0), channel(8, 255))
+end
 
-	local texture = nil
+-- stale/recycled cache entries can pass getValid but lose Texture2D methods
+local function isTexture(texture)
+	return uevrUtils.getValid(texture) ~= nil and texture.Blueprint_GetSizeX ~= nil and texture.Blueprint_GetSizeY ~= nil
+end
+
+function M.loadTexture(imageName, path)
+	if imageName == nil then return nil end
+	if path == nil then path = "images/" end
+	local fileName = path .. imageName
+	-- KNOWN ISSUE: this cache can return the wrong image. Imported textures are not rooted, so one that no image
+	-- is showing can be garbage collected. A later import (another file) can then reuse its address, and
+	-- isTexture still passes because a valid Texture2D is there, so this file name returns the other file's
+	-- texture. Comparing the cached texture's full name (see isSameLiveObject) would reject it. tutorial.lua's
+	-- getTexture had the same issue.
 	if M.enableTextureCache then
-		texture = Image.textureCache[imageName]
-		if uevrUtils.getValid(texture) == nil then
-			texture = nil
-			Image.textureCache[imageName] = nil
-		end
+		local texture = Image.textureCache[fileName]
+		if isTexture(texture) then return texture end
+		Image.textureCache[fileName] = nil
 	end
-	if texture == nil then
-		texture = importTexture()
-		if texture == nil then return hideMissing() end
+	local result = plugin.executeFunction(kismet_rendering_library, "ImportFileAsTexture2D", uevrUtils.get_world(), "$data/" .. fileName)
+	local texture = result and result.ReturnValue
+	if not isTexture(texture) then return nil end
+	if M.enableTextureCache then
+		Image.textureCache[fileName] = texture
 	end
-	-- stale/recycled cache entries can pass getValid but lose Texture2D methods
-	if texture.Blueprint_GetSizeX == nil or texture.Blueprint_GetSizeY == nil then
-		if M.enableTextureCache then
-			Image.textureCache[imageName] = nil
-		end
-		texture = importTexture()
-		if texture == nil or texture.Blueprint_GetSizeX == nil or texture.Blueprint_GetSizeY == nil then
-			return hideMissing()
-		end
-	end
+	return texture
+end
 
+-- exists() passes for a new object that reuses a freed address; the full name rejects it
+local function isSameLiveObject(obj, fullName)
+	return uevrUtils.getValid(obj) ~= nil and fullName ~= nil and obj:get_full_name() == fullName
+end
+
+-- The image and its slot, only while they are still the ones addToWidget created
+local function liveImage(image)
+	return isSameLiveObject(image.image, image.imageName) and image.image or nil
+end
+local function liveSlot(image)
+	return isSameLiveObject(image.slot, image.slotName) and image.slot or nil
+end
+
+-- UImage::SetBrushSize is gone from UE 5.6 (Hellraiser): SetDesiredSizeOverride (UE 5.x) sets the same desired size
+local function setBrushSize(widget, size)
+	if widget.SetBrushSize ~= nil then
+		widget:SetBrushSize(size)
+	elseif widget.SetDesiredSizeOverride ~= nil then
+		widget:SetDesiredSizeOverride(size)
+	end
+end
+
+-- Collapsed while hidden or while there is nothing to draw
+local function updateImageVisibility(image)
+	local widget = liveImage(image)
+	if widget == nil then return end
+	local visible = not image.hidden and (image.texture ~= nil or image.color ~= nil)
+	widget:SetVisibility(visible and 0 or 1) -- Visible or Collapsed
+end
+
+function Image:setTextureObject(texture)
+	if not isTexture(texture) then return false end
 	self.texture = texture
 	local w, h = texture:Blueprint_GetSizeX(), texture:Blueprint_GetSizeY()
 	if w > 0 and h > 0 then
@@ -253,15 +294,64 @@ function Image:setTexture(imageName, path, hideIfMissing)
 	else
 		self.drawSize = uevrUtils.vector2D(self.maxDim, self.maxDim)
 	end
-	if self.image ~= nil then
-		self.image:SetBrushFromTexture(texture, true)
-		self.image:SetBrushSize(self.drawSize)
-		self.image:SetVisibility(0) -- Visible
-		if self.slot ~= nil then
-			self.slot:SetSize(self.drawSize)
+	local widget = liveImage(self)
+	if widget ~= nil then
+		widget:SetBrushFromTexture(texture, true)
+		setBrushSize(widget, self.drawSize)
+		updateImageVisibility(self)
+		local slot = liveSlot(self)
+		if slot ~= nil then
+			slot:SetSize(self.drawSize)
 		end
 	end
 	return true
+end
+
+function Image:setTexture(imageName, path, hideIfMissing)
+	if hideIfMissing == nil then hideIfMissing = true end
+	if self:setTextureObject(M.loadTexture(imageName, path)) then return true end
+	local widget = hideIfMissing and liveImage(self) or nil
+	if widget ~= nil then
+		widget:SetVisibility(1) -- Collapsed
+	end
+	return false
+end
+
+function Image:setVisible(visible)
+	self.hidden = visible == false
+	updateImageVisibility(self)
+end
+
+-- Without a texture the image draws as a solid rectangle of this color
+function Image:setColor(hex)
+	if type(hex) ~= "string" then return end
+	self.color = hex
+	local widget = liveImage(self)
+	if widget ~= nil then
+		widget:SetColorAndOpacity(linearColorFromHex(hex))
+		updateImageVisibility(self)
+	end
+end
+
+function Image:setRenderScale(scale)
+	self.renderScale = scale
+	local widget = liveImage(self)
+	if widget ~= nil then
+		widget:SetRenderScale(uevrUtils.vector2D(scale, scale))
+	end
+end
+
+function Image:setSize(size2D)
+	if size2D == nil then return end
+	self.drawSize = uevrUtils.vector2D(size2D.X, size2D.Y)
+	local widget = liveImage(self)
+	if widget ~= nil then
+		setBrushSize(widget, self.drawSize)
+		local slot = liveSlot(self)
+		if slot ~= nil then
+			slot:SetSize(self.drawSize)
+		end
+	end
 end
 
 local function setSlotLayout(slot, opts)
@@ -288,9 +378,10 @@ local function setSlotLayout(slot, opts)
 end
 
 function Image:setLayout(opts)
-	if self.slot == nil then return end
-	if setSlotLayout(self.slot, opts) then
-		self.slot:SetSize(self.drawSize)
+	local slot = liveSlot(self)
+	if slot == nil then return end
+	if setSlotLayout(slot, opts) then
+		slot:SetSize(self.drawSize)
 	end
 end
 
@@ -301,14 +392,22 @@ function Image:addToWidget(widget, opts)
 	if self.image == nil then
 		self.image = uevrUtils.spawn_object("Class /Script/UMG.Image", widget.WidgetTree)
 		if self.image == nil then return false end
+		self.imageName = self.image:get_full_name()
 		if self.texture ~= nil then
 			self.image:SetBrushFromTexture(self.texture, true)
-			self.image:SetBrushSize(self.drawSize)
-		else
-			self.image:SetBrushSize(self.drawSize)
-			self.image:SetVisibility(1) -- Collapsed until setTexture
+		end
+		setBrushSize(self.image, self.drawSize)
+		if self.color ~= nil then
+			self.image:SetColorAndOpacity(linearColorFromHex(self.color))
+		end
+		if self.renderScale ~= nil then
+			self.image:SetRenderScale(uevrUtils.vector2D(self.renderScale, self.renderScale))
+		end
+		if self.hidden or (self.texture == nil and self.color == nil) then
+			self.image:SetVisibility(1) -- Collapsed until shown and given a texture or color
 		end
 		self.slot = panel:AddChildToCanvas(self.image)
+		self.slotName = self.slot ~= nil and self.slot:get_full_name() or nil
 	end
 	if opts ~= nil and opts.X ~= nil then
 		opts = { position = opts }
@@ -322,11 +421,14 @@ function Image:setPosition(position2D)
 end
 
 function Image:remove()
-	if uevrUtils.getValid(self.image) ~= nil and self.image.RemoveFromParent ~= nil then
-		self.image:RemoveFromParent()
+	local widget = liveImage(self)
+	if widget ~= nil and widget.RemoveFromParent ~= nil then
+		widget:RemoveFromParent()
 	end
 	self.image = nil
+	self.imageName = nil
 	self.slot = nil
+	self.slotName = nil
 	self.texture = nil
 end
 
@@ -357,7 +459,7 @@ end
 -- Native UEVR Lua cannot marshal FText, so SetText goes through the plugin
 function Text:setText(text)
 	self.text = text or ""
-	if self.textBlock ~= nil then
+	if isSameLiveObject(self.textBlock, self.textBlockName) then
 		plugin.executeFunction(self.textBlock, "SetText", self.text)
 	end
 end
@@ -366,9 +468,8 @@ end
 function Text:setColor(hex)
 	self.color = hex
 	if self.textBlock == nil or type(hex) ~= "string" then return end
-	local function channel(i, default) return (tonumber(hex:sub(i, i + 1), 16) or default) / 255 end
 	local color = self.textBlock.ColorAndOpacity
-	color.SpecifiedColor = uevrUtils.color_from_rgba(channel(2, 0), channel(4, 0), channel(6, 0), channel(8, 255))
+	color.SpecifiedColor = linearColorFromHex(hex)
 	self.textBlock:SetColorAndOpacity(color)
 end
 
@@ -415,10 +516,12 @@ function Text:addToWidget(widget, opts)
 	if self.textBlock == nil then
 		self.textBlock = uevrUtils.spawn_object("Class /Script/UMG.TextBlock", widget.WidgetTree)
 		if self.textBlock == nil then return false end
+		self.textBlockName = self.textBlock:get_full_name()
 		self.slot = panel:AddChildToCanvas(self.textBlock)
 		self:setText(self.text)
 		if self.color ~= nil then self:setColor(self.color) end
 		applyFont(self)
+		if self.hidden then self.textBlock:SetVisibility(1) end -- Collapsed
 	end
 	if opts ~= nil and opts.X ~= nil then
 		opts = { position = opts }
@@ -436,7 +539,24 @@ function Text:remove()
 		self.textBlock:RemoveFromParent()
 	end
 	self.textBlock = nil
+	self.textBlockName = nil
 	self.slot = nil
+end
+
+function Text:setVisible(visible)
+	self.hidden = visible == false
+	if self.textBlock ~= nil then
+		self.textBlock:SetVisibility(self.hidden and 1 or 0) -- Collapsed or Visible
+	end
+end
+
+-- Lays out the text block first so the size matches the current text and font
+function Text:getDesiredSize()
+	if self.textBlock == nil then return nil end
+	if self.textBlock.ForceLayoutPrepass ~= nil then
+		self.textBlock:ForceLayoutPrepass()
+	end
+	return self.textBlock:GetDesiredSize()
 end
 
 M.Text = Text
@@ -466,11 +586,39 @@ local function getGenericUserWidgetClassName()
 	M.print("No host widget class found", LogLevel.Warning)
 end
 
+-- Fallback when no such Widget Blueprint class is loaded (Borderlands 4, 2026-11-18: its only loaded WBPs -
+-- WBP_Primary_Layout, WBP_MainHud, WBP_TravelStationLabel - all have an ubergraph, and the UI is Coherent Prysm).
+-- Concrete NATIVE UserWidget classes need no Blueprint at all: UUserWidget::Initialize gives a native widget an empty
+-- transient WidgetTree, and these classes add no gameplay logic. UUserWidget itself is abstract (Create refuses it).
+-- First one that exists in the game and creates is used.
+local NATIVE_HOST_CLASSES = {
+	"Class /Script/CommonUI.CommonUserWidget",
+	"Class /Script/GbxUIUMG.GbxUIUMGUserWidget",
+}
+local nativeHostClassName = nil
+local function createNativeHostWidget()
+	local candidates = nativeHostClassName ~= nil and { nativeHostClassName } or NATIVE_HOST_CLASSES
+	for _, className in ipairs(candidates) do
+		if uevrUtils.get_class(className) ~= nil then
+			local ok, widget = pcall(uevrUtils.createWidget, className)
+			widget = ok and uevrUtils.getValid(widget) or nil
+			if widget ~= nil and uevrUtils.getValid(widget.WidgetTree) ~= nil then
+				if nativeHostClassName == nil then M.print("Using native host widget class " .. className) end
+				nativeHostClassName = className
+				return widget
+			end
+		end
+	end
+	M.print("No native host widget class could be created", LogLevel.Warning)
+	return nil
+end
+
 -- Creates an empty host UserWidget. The host's original tree is replaced with a fresh CanvasPanel root
 function M.createHostWidget()
+	local hostWidget = nil
 	local className = getGenericUserWidgetClassName()
-	if className == nil then return nil end
-	local hostWidget = uevrUtils.getValid(uevrUtils.createWidget(className))
+	if className ~= nil then hostWidget = uevrUtils.getValid(uevrUtils.createWidget(className)) end
+	if hostWidget == nil then hostWidget = createNativeHostWidget() end
 	if hostWidget == nil then return nil end
 	hostWidget.WidgetTree.RootWidget = uevrUtils.spawn_object("Class /Script/UMG.CanvasPanel", hostWidget.WidgetTree)
 	return hostWidget
@@ -1079,6 +1227,12 @@ Image.setTexture = uevrUtils.profiler:wrap("Widget: set texture", Image.setTextu
 Image.setLayout = uevrUtils.profiler:wrap("Widget: set image layout", Image.setLayout)
 Image.addToWidget = uevrUtils.profiler:wrap("Widget: add image", Image.addToWidget)
 Image.remove = uevrUtils.profiler:wrap("Widget: remove image", Image.remove)
+M.loadTexture = uevrUtils.profiler:wrap("Widget: load texture", M.loadTexture)
+Image.setTextureObject = uevrUtils.profiler:wrap("Widget: set texture object", Image.setTextureObject)
+Image.setVisible = uevrUtils.profiler:wrap("Widget: set image visibility", Image.setVisible)
+Image.setColor = uevrUtils.profiler:wrap("Widget: set image color", Image.setColor)
+Image.setSize = uevrUtils.profiler:wrap("Widget: set image size", Image.setSize)
+Image.setRenderScale = uevrUtils.profiler:wrap("Widget: set image render scale", Image.setRenderScale)
 
 Text.new = uevrUtils.profiler:wrap("Widget: new text", Text.new)
 Text.destroyAll = uevrUtils.profiler:wrap("Widget: destroy texts", Text.destroyAll)
@@ -1089,6 +1243,8 @@ Text.setFont = uevrUtils.profiler:wrap("Widget: set font", Text.setFont)
 Text.setLayout = uevrUtils.profiler:wrap("Widget: set text layout", Text.setLayout)
 Text.addToWidget = uevrUtils.profiler:wrap("Widget: add text", Text.addToWidget)
 Text.remove = uevrUtils.profiler:wrap("Widget: remove text", Text.remove)
+Text.setVisible = uevrUtils.profiler:wrap("Widget: set text visibility", Text.setVisible)
+Text.getDesiredSize = uevrUtils.profiler:wrap("Widget: get text size", Text.getDesiredSize)
 
 M.createHostWidget = uevrUtils.profiler:wrap("Widget: create host", M.createHostWidget)
 M.createImageWidget = uevrUtils.profiler:wrap("Widget: create image widget", M.createImageWidget)

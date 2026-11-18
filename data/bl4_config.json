@@ -112,6 +112,9 @@
     "bl4_thr_pitch_trim": -3.121999979019165,
     "bl4_thr_spawn_dist": 20.0,
     "bl4_thr_speed": 1.0,
+    "bl4_tut_gesture": true,
+    "bl4_tut_pause": true,
+    "bl4_tut_startup": true,
     "bl4_vehicle_eye_offset": [
         0.0,
         0.0,

@@ -6,7 +6,7 @@ A full motion-controller VR conversion of Borderlands 4 for UEVR, with visible h
 
 ## IMPORTANT!
 
-- My custom UEVR backend is required - see the releases on [letmein-vr/UEVR](https://github.com/letmein-vr/UEVR/releases) to download it. It carries the Borderlands 4 fixes this profile depends on: visible first-person arms and guns in stereo, working console variables, flicker-free menus, a usable map and inventory preview, and a working Ghosting Fix.
+- My custom UEVR backend is required - use the `UEVR.zip` attached to this profile's [release](https://github.com/letmein-vr/BL4_UEVR/releases/latest) (or the VR launcher there, which installs everything). It carries the Borderlands 4 fixes this profile depends on: visible first-person arms and guns in stereo, working console variables, flicker-free menus, a usable map and inventory preview, and a working Ghosting Fix.
 - Inject UEVR at the main menu.
 
 ## Features
@@ -59,6 +59,7 @@ A full motion-controller VR conversion of Borderlands 4 for UEVR, with visible h
 
 - **Readable map and menus.** The map, inventory, skills and other ECHO menus are shown whole on a flat screen in both eyes while they're open, then the view returns to 3D. The main menu and the pause menu stay 3D.
 - **X / B swap.** X and B are swapped by default, like my other profiles; switch it off at the top of the Borderlands 4 panel.
+- **VR tutorial.** Illustrated pages explain the VR controls: shooting, scopes, two hands, holsters, grenades, the grapple, getting around, vehicles and menus. It opens by itself the first time you reach gameplay and keeps doing so until you close it once. After that, bring your left controller up to your eyes and pull the left trigger to open it again on foot; the same gesture closes it. A next, X back, B close, Y hide at startup. The game pauses while it is open.
 
 ## Controls
 
@@ -74,10 +75,11 @@ A full motion-controller VR conversion of Borderlands 4 for UEVR, with visible h
 | X / B | Swapped by default (Borderlands 4 panel → Swap X and B buttons) |
 | Drive | Left stick throttle, right stick steers |
 | Vehicle guns | Look at the target, fire |
+| VR tutorial | Left controller to your eyes, pull the left trigger (on foot) |
 
 ## Installation
 
-1. Install my custom UEVR (see above).
+1. Install my custom UEVR from this release's `UEVR.zip` (see above), or use `Borderlands4VR_Launcher.exe` from the release, which installs the profile and UEVR and injects for you.
 2. Import this profile in UEVR (or copy the files into `%APPDATA%\UnrealVRMod\Borderlands4`).
 3. Start the game and inject UEVR at the main menu.
 
@@ -89,6 +91,7 @@ The **Borderlands 4** panel in the UEVR overlay is the only panel the profile sh
 - **Reticule** – the game crosshair on / off, its size, crop and maximum distance, and which controller pose it follows; colour, size and brightness of the fallback dot.
 - **Holsters** – on / off, haptic pulse, zone size and each zone's position, with a live readout of your hand's position.
 - **Throwing** – throw tuning for grenades, knives and carried objects.
+- **VR Tutorial** – show the tutorial now, show it when gameplay starts, open it with the gesture, pause the game while it is open, and show it again at the next start.
 
 The finer tuning is in **Dev Config** at the bottom of the panel: weapon on the hand, the game's grip (with re-measure buttons), the camera options (shakes, animations, kick, level pitch, right stick pitch), hiding the full-screen effects, the game's left-hand grip, the hands / IK, two-handed and recoil details, **PiP Scope** (minimum magnification, per-scope lens offset / size / tilt, magnification trim, brightness) and **Vehicles** (seat view, what the view turns with, eye offset, IK arms on the controls, gaze-aimed guns). The ECHO menus on a flat screen, the hidden scope mask and the gun at world depth (needed for PiP scopes) are always on.
 
@@ -104,7 +107,7 @@ Vehicles (`bl4_vr_vehicle.lua`): while driving the aim method is Game, so the ch
 
 Borderlands 4 draws its ECHO menus (map, inventory, skills) once across the whole two-eye render instead of once per eye, so each eye saw only one half. While a menu shows the cursor in game, `bl4_vr_menu_screen.lua` turns on the backend's 2D screen with the "full image in both eyes" option (`VR_2DScreenFullSource`, ported from Lorewright-Studios' UEVR fork). A backend without that option ignores it, and the menus then split between the eyes. The pause menu also shows the cursor but draws over the live world, which is fine in 3D, so it is left alone: only the ECHO menus stop the world view (`bPlayerViewRenderingSuspended` on the player controller), and that is what switches the flat screen on.
 
-Game crosshair (`bl4_main.lua` + the backend's Borderlands 4 reticle layer): the crosshair is Coherent Prysm HTML drawn into the HUD, so it only exists on the flat UI layer. Drawn on a surface in the game world it goes through the game's tonemapper and comes out dark and washed out, so the backend does it in the compositor instead. The backend can't tell the crosshair from other HUD content near the centre (item cards, prompts, damage numbers), so while the layer is on the script switches the game's own crosshair colour settings to key colours no other HUD element uses. Each frame the backend moves only the key-coloured pixels of the UI image into its own small OpenXR quad layer, recoloured to your real crosshair colours, and leaves the rest of the HUD alone. Your real colours are kept in `data/bl4_crosshair_colors.txt` and put back whenever the layer is off. The layer is placed from the live controller pose and the muzzle offset the script measures, so it follows the gun without lag; only the hit distance comes from the game, from a trace along the barrel. Being a compositor layer like the HUD itself, it keeps the HUD's colours. The script turns the dot reticule off only once the backend confirms it has the layer. The backend part is Borderlands 4-only and not in a [letmein-vr/UEVR](https://github.com/letmein-vr/UEVR/releases) release yet.
+Game crosshair (`bl4_main.lua` + the backend's Borderlands 4 reticle layer): the crosshair is Coherent Prysm HTML drawn into the HUD, so it only exists on the flat UI layer. Drawn on a surface in the game world it goes through the game's tonemapper and comes out dark and washed out, so the backend does it in the compositor instead. The backend can't tell the crosshair from other HUD content near the centre (item cards, prompts, damage numbers), so while the layer is on the script switches the game's own crosshair colour settings to key colours no other HUD element uses. Each frame the backend moves only the key-coloured pixels of the UI image into its own small OpenXR quad layer, recoloured to your real crosshair colours, and leaves the rest of the HUD alone. Your real colours are kept in `data/bl4_crosshair_colors.txt` and put back whenever the layer is off. The layer is placed from the live controller pose and the muzzle offset the script measures, so it follows the gun without lag; only the hit distance comes from the game, from a trace along the barrel. Being a compositor layer like the HUD itself, it keeps the HUD's colours. The script turns the dot reticule off only once the backend confirms it has the layer. The backend part is Borderlands 4-only and is in the UEVR.zip attached to this profile's releases (and in [letmein-vr/UEVR](https://github.com/letmein-vr/UEVR/releases) releases from 2026-11-16 on).
 
 Roomscale turning (`bl4_main.lua`): BL4 reverts plain control-rotation writes, so your body turn is applied with `ClientSetRotation`, which turns the camera, pawn and capsule together. The game's audio places its listener from the camera's cached view, so the grapple's hand aim is written into that view only for the duration of the grapple targeting call (inside BL4AimFix.dll), and the listener stays on your head.
 
