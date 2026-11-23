@@ -2,3 +2,5 @@
 data/bl4_crosshair_colors.txt
 # per-player tutorial progress (closed / finished / last page); a fresh install shows the tutorial
 data/tutorial_state.json
+# manual reload analyzer frame dumps (dev only, DUMP_FRAMES in bl4_vr_reload_analyzer.lua)
+data/bl4_reload_frames_*.json

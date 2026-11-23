@@ -119,8 +119,14 @@ end
 
 -- the weapon's first-person mesh: the owner-only skeletal mesh that is not the RootComponent (cached per weapon)
 local meshCache = { weapon = nil, mesh = nil }
+-- the cache also checks the mesh's owner: BL4 reuses addresses, a new weapon can come up where a destroyed one was
+-- (2026-11-23, a Daedalus AR at a Jakobs AR's address)
+local function ownedBy(mesh, weapon)
+	local ok, same = pcall(function() return mesh:GetOwner():get_fname():to_string() == weapon:get_fname():to_string() end)
+	return ok and same == true
+end
 local function getFirstPersonWeaponMesh(weapon)
-	if meshCache.weapon == weapon and uevrUtils.getValid(meshCache.mesh) ~= nil then return meshCache.mesh end
+	if meshCache.weapon == weapon and uevrUtils.getValid(meshCache.mesh) ~= nil and ownedBy(meshCache.mesh, weapon) then return meshCache.mesh end
 	meshCache.weapon, meshCache.mesh = nil, nil
 	local class = getSkeletalMeshClass()
 	if class == nil then return nil end

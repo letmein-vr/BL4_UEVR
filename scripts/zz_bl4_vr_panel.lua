@@ -25,6 +25,9 @@ local DEV_RULES = {
     ["Hands"]             = { "bl4_hands_mode", "bl4_hands_mode_status" },
     ["Two-Handed Aiming"] = { "bl4_th_enabled", "bl4_th_grab_button" },
     ["Recoil"]            = { "bl4_recoil_enabled", "bl4_recoil_strength_loc", "bl4_recoil_strength_rot", "bl4_recoil_two_handed" },
+    ["Manual Reload"]     = { "mr_enabled", "mr_rack", "mr_status" },
+    ["Manual Reload - Analysis"] = true,
+    ["Manual Reload - Tuning (this gun)"] = true,
 }
 
 -- sections whose main part is shown without a collapsible header, together at the top of the panel

@@ -1042,6 +1042,13 @@ local function tick()
 		updateMarker(nil, nil)
 		return
 	end
+	-- manual reload (bl4_vr_manual_reload.lua) owns the left hand while it runs: let go and stay off
+	if _G.bl4ManualReloadBusy == true then
+		if active then deactivate("manual reload") end
+		nearGrip = false
+		updateMarker(nil, nil)
+		return
+	end
 
 	-- IK mode: have the two-hand frame ready before a grab (ik.lua needs it known to UObjectHook)
 	if ikMode() then pcall(ensureTwoHandFrame) end

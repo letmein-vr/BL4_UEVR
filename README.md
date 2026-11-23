@@ -31,6 +31,7 @@ A full motion-controller VR conversion of Borderlands 4 for UEVR, with visible h
 - **Clean ADS.** Aiming down sights no longer puts the game's flat-screen scope mask (a black square with a peephole) in front of your face, and scoped guns stay visible instead of vanishing.
 - **Thrown ordnance.** Grenades and throwing knives are held in your left hand, in the game's own grip, and thrown with a real throwing motion.
 - **Carried objects.** Tanks and other objects pulled in with the grapple ride your left hand and are thrown with a swing: the harder the swing, the further they fly.
+- **Manual reload.** Press reload and the magazine drops out of the gun; a fresh one waits on your left hip. Take it with the left grip (your left hand takes the game's own grip on it) and push it into the gun. Guns that need it after an empty magazine want their slide or bolt pulled back by hand; revolvers and break actions swing open, you load them and flick the gun to snap it shut; shell-by-shell guns take one shell at a time until you pull the trigger. Every gun works it out from its own native reload animation: the first time you reload a gun (once with rounds left, once from empty) the game reloads it normally while the mod learns which part comes out, where it goes back in and what has to open or be racked. Most guns ship already learned. Switch it off, or the slide / bolt racking, in the Borderlands 4 panel's Manual Reload section.
 - **Body holsters.** Press the right grip with your hand at a body spot to switch weapons: right hip, right shoulder, left shoulder, left hip (weapon slots 1-4). A short pulse tells you when your hand is in a holster zone.
 
 ### Movement
@@ -59,7 +60,7 @@ A full motion-controller VR conversion of Borderlands 4 for UEVR, with visible h
 
 - **Readable map and menus.** The map, inventory, skills and other ECHO menus are shown whole on a flat screen in both eyes while they're open, then the view returns to 3D. The main menu and the pause menu stay 3D.
 - **X / B swap.** X and B are swapped by default, like my other profiles; switch it off at the top of the Borderlands 4 panel.
-- **VR tutorial.** Illustrated pages explain the VR controls: shooting, scopes, two hands, holsters, grenades, the grapple, getting around, vehicles and menus. It opens by itself the first time you reach gameplay and keeps doing so until you close it once. After that, bring your left controller up to your eyes and pull the left trigger to open it again on foot; the same gesture closes it. A next, X back, B close, Y hide at startup. The game pauses while it is open.
+- **VR tutorial.** Illustrated pages explain the VR controls: shooting, scopes, two hands, reloading, holsters, grenades, the grapple, getting around, vehicles and menus. It opens by itself the first time you reach gameplay and keeps doing so until you close it once. After that, bring your left controller up to your eyes and pull the left trigger to open it again on foot; the same gesture closes it. A next, X back, B close, Y hide at startup. The game pauses while it is open.
 
 ## Controls
 
@@ -70,6 +71,8 @@ A full motion-controller VR conversion of Borderlands 4 for UEVR, with visible h
 | Aim / fire | Point the right controller, right trigger |
 | Aim down sights / PiP scope | Left trigger |
 | Two-hand a gun | Bring the left hand to the fore-grip, hold left grip |
+| Reload | Press reload, take the new magazine from your left hip with the left grip and push it into the gun |
+| Close a swung-out cylinder / break | Flick the gun |
 | Switch weapon | Right grip at right hip / right shoulder / left shoulder / left hip |
 | Grapple | Point the right hand at the grapple point |
 | X / B | Swapped by default (Borderlands 4 panel → Swap X and B buttons) |
@@ -90,16 +93,19 @@ The **Borderlands 4** panel in the UEVR overlay is the only panel the profile sh
 - **Weapon Aim** – left / right and up / down trim of the gun's aim.
 - **Reticule** – the game crosshair on / off, its size, crop and maximum distance, and which controller pose it follows; colour, size and brightness of the fallback dot.
 - **Holsters** – on / off, haptic pulse, zone size and each zone's position, with a live readout of your hand's position.
+- **Manual Reload** – manual reload on / off, slide / bolt racking on / off, and a status line.
 - **Throwing** – throw tuning for grenades, knives and carried objects.
 - **VR Tutorial** – show the tutorial now, show it when gameplay starts, open it with the gesture, pause the game while it is open, and show it again at the next start.
 
-The finer tuning is in **Dev Config** at the bottom of the panel: weapon on the hand, the game's grip (with re-measure buttons), the camera options (shakes, animations, kick, level pitch, right stick pitch), hiding the full-screen effects, the game's left-hand grip, the hands / IK, two-handed and recoil details, **PiP Scope** (minimum magnification, per-scope lens offset / size / tilt, magnification trim, brightness) and **Vehicles** (seat view, what the view turns with, eye offset, IK arms on the controls, gaze-aimed guns). The ECHO menus on a flat screen, the hidden scope mask and the gun at world depth (needed for PiP scopes) are always on.
+The finer tuning is in **Dev Config** at the bottom of the panel: weapon on the hand, the game's grip (with re-measure buttons), the camera options (shakes, animations, kick, level pitch, right stick pitch), hiding the full-screen effects, the game's left-hand grip, the hands / IK, two-handed and recoil details, **PiP Scope** (minimum magnification, per-scope lens offset / size / tilt, magnification trim, brightness), **Manual Reload** (hip pouch position, grab / insert / rack distances, glide times, flick to close, haptics), **Manual Reload - Analysis** (re-learn the gun in your hand), **Manual Reload - Tuning** (per-gun hold and seat offsets for the magazine) and **Vehicles** (seat view, what the view turns with, eye offset, IK arms on the controls, gaze-aimed guns). The ECHO menus on a flat screen, the hidden scope mask and the gun at world depth (needed for PiP scopes) are always on.
 
 ## Under the hood
 
 Built on jbusfield's shared uevrlib Lua framework, running on my UEVR backend. Game-specific logic lives in small scripts on top of the framework: the weapon and hands bootstrap and camera handling (`bl4_main.lua`), the hands / IK mode switch (`bl4_vr_ik.lua`), two-handed aiming, recoil, holsters and the grapple aim.
 
 Scopes: each sight part adds a sight behaviour with the game's zoom, and a scope part maps the gun's generic `ScopeSocket` to its own socket, so a PiP is built from the parts actually fitted (`bl4_vr_pip_scope.lua`, on jbusfield's `scope.lua`). The eyepiece comes from the scope's own mask mesh, or from the scope parts' bounds when it has none. The game's flat scope mask and vignette are hidden by `bl4_vr_scope.lua`, and BL4AimFix.dll clears the sight definition's "hide weapon when zoomed" flag. The picture only sorts correctly against the gun at real depth, so the gun, its parts and the VR hands / IK arms are always moved out of the game's foreground layer (the gun can poke into walls as a result).
+
+Manual reload (`bl4_vr_reload_analyzer.lua` + `bl4_vr_manual_reload.lua`, a port of my Outer Worlds 2 manual reload): the analyzer records the gun's bones during a native reload and works out the item that leaves the gun (magazine, cylinder cap, clip, shells), the seat it goes back into, the hand and finger pose that carries it, and any part that has to open or be racked (a break or cylinder the item rides on, a slide, a bolt). Learned guns are kept in `data/bl4_manual_reload_auto.json`, one entry per gun rig and magazine part. BL4 guns are gestalt meshes: one rig carries the bones of every part variant and the fitted parts are chosen per gun, so a copy of the gun would show the default parts. The script therefore never copies a magazine: it leader-poses the real first-person gun onto a hidden poseable driver and moves the magazine's bones there, and it draws the magazine outside the gun (falling, on the hip, in your hand) with the weapon's own third-person gun, which has the same parts, cut down to the magazine. When you seat it, the game's reload is cancelled and a 0.05 s native reload moves the ammo, so the game's ammo and reserve accounting stay its own.
 
 Borderlands 4 draws the first-person arms and gun in its own foreground pass with a separate projection that the game only fills in its flat-screen path; the backend fills it from the VR projection, which is what makes the arms and gun visible in stereo. BL4 also has no player-side "equip weapon slot" function, so the holsters press the game's own number keys through `plugins/luakey.dll`, with a primer key first so the game accepts keyboard input while you're on a controller.
 

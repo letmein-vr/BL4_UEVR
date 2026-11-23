@@ -2,7 +2,7 @@
 -- (Cronos 1.7 rules, itself a port of Hellraiser's) ported to Borderlands 4. libs/tutorial.lua = the OW2 / Cronos copy
 -- (jbusfield's Atomic Heart lib + gate option, gestureCloses, setCompleted, pageOffset, slot-0 guard).
 -- Pages: data/tutorial/intro.png + 1.png .. N.png (counted at runtime), icons data/tutorial/buttons/. They are rendered
--- from the repo art (screenshots/borderlands4vr.png) by UnrealVRMod\0. Borderlands 4 Tutorial\make_pages.ps1.
+-- from the repo art (screenshots/borderlands4vr.png) by D:\UEVR Dev\Tutorials\Borderlands 4\make_pages.ps1.
 --
 --   * Startup: shown once real gameplay is reached (never in the main menu, see inGameplay), unless the panel option
 --     "Show it when gameplay starts" (bl4_tut_startup) is off, at every start until the player closes it once (B or the
