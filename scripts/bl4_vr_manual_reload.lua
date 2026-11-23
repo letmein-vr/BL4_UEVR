@@ -70,7 +70,7 @@ table.insert(_G.BL4_SECTIONS, { order = 2.8, label = "Manual Reload", layout = {
     { widgetType = "checkbox", id = "mr_dev_ammo", label = "Dev: keep the ammo reserve topped up (refill every 3 s)", initialValue = false },
 }})
 
--- per-gun manual overrides of the learned values (xaero 2026-11-23: the Jakobs revolver cap is pushed in by the game's
+-- per-gun manual overrides of the learned values (2026-11-23: the Jakobs revolver cap is pushed in by the game's
 -- fingertips, so its learned hold looks wrong): offsets for the item in the left hand and for its seat in the gun,
 -- saved per profile key in data/bl4_manual_reload_tune.json, applied live
 table.insert(_G.BL4_SECTIONS, { order = 2.82, label = "Manual Reload - Tuning (this gun)", layout = {
@@ -467,7 +467,7 @@ end
 
 -- The game hides parts it is not showing with bone hidden flags (Jakobs Mag01 at idle: Mag01_SpeedLoader and
 -- Mag01_SpeedLoader_Bullet01-04 sit beside the cylinder, hidden - measured 2026-11-23: HideBoneByName on them made
--- the floating speedloader xaero saw after manual reloads disappear, and the flags read false on the reloaded gun).
+-- the floating speedloader seen after manual reloads disappear, and the flags read false on the reloaded gun).
 -- A manual reload must leave those flags as it found them: they are recorded at the catch, the item and the bones riding
 -- with it are unhidden for the reload (they are drawn), and every recorded bone is hidden again at the end.
 local function hiddenBonesOf(mesh)
@@ -568,7 +568,7 @@ end
 -- -------------------------------------------------------------------------------------------------------------------
 -- The magazine away from the gun (falling, at the hip, in the hand) is drawn by the weapon's THIRD-PERSON gun
 -- (2026-11-23). Bones on the first-person gun live in the gun's space and show a frame late against the controllers:
--- xaero, "the mag still moves when I move the gun". The third-person gun (the OakWeapon's RootComponent, on the body's
+-- in testing "the mag still moves when I move the gun". The third-person gun (the OakWeapon's RootComponent, on the body's
 -- CharacterMesh R_Hand_Weapon) is a second gestalt mesh with the SAME parts. It is drawn for shadows only:
 -- ViewFlags 0x800002 (third-person view) vs the first-person gun's 0x800001 - SetViewFlags(0x800001) shows it to the
 -- player. Attached to the IK rig's L_Hand it stayed there, solid on the hand (MCP 2026-11-23); attaching it to the

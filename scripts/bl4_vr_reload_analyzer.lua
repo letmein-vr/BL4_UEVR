@@ -2030,7 +2030,7 @@ local function analyze()
                     end
                 end
                 res.mechanisms = mechs
-                -- the whole open pose (2026-11-23, xaero's screenshot: the cap seated beside the cylinder - opening only the
+                -- the whole open pose (2026-11-23, a test screenshot: the cap seated beside the cylinder - opening only the
                 -- chosen parts left linked ones where they were): every bone outside the item that is off its rest when the
                 -- item seats, parent-first, so manual reload opens the gun into exactly the game's pose
                 local openFrame = {}
