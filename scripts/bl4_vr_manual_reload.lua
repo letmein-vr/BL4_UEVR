@@ -66,6 +66,11 @@ table.insert(_G.BL4_SECTIONS, { order = 2.8, label = "Manual Reload", layout = {
     { widgetType = "checkbox", id = "mr_flick_close", label = "Flick the gun to close a swung-out cylinder / break (off = closes by itself)", initialValue = true },
     { widgetType = "slider_float", id = "mr_flick_speed", label = "Flick: gun speed at least (cm/s)", initialValue = 110.0, range = {40.0, 400.0} },
     { widgetType = "checkbox", id = "mr_haptics", label = "Haptics", initialValue = true },
+    { widgetType = "checkbox", id = "mr_marker", label = "Show where the magazine goes (a glowing dot at the well while you take / hold one)", initialValue = true },
+    { widgetType = "slider_float", id = "mr_marker_size", label = "Dot size (cm, every gun - per gun in Tuning)", initialValue = 7.0, range = {0.5, 15.0} },
+    { widgetType = "slider_float", id = "mr_marker_opacity", label = "Dot opacity", initialValue = 0.54, range = {0.05, 1.0} },
+    { widgetType = "color_picker", id = "mr_marker_color", label = "Dot colour", initialValue = "#1CF400FF" },
+    { widgetType = "slider_float", id = "mr_marker_brightness", label = "Dot brightness", initialValue = 5.0, range = {0.1, 10.0} },
     { widgetType = "checkbox", id = "mr_log", label = "Log to log.txt", initialValue = false },
     { widgetType = "checkbox", id = "mr_dev_ammo", label = "Dev: keep the ammo reserve topped up (refill every 3 s)", initialValue = false },
 }})
@@ -81,6 +86,10 @@ table.insert(_G.BL4_SECTIONS, { order = 2.82, label = "Manual Reload - Tuning (t
     { widgetType = "text", label = "Seated in the gun (cm / deg, gun frame):" },
     { widgetType = "drag_float3", id = "mr_tune_seat_loc", label = "Seat offset", initialValue = { 0.0, 0.0, 0.0 }, range = {-40, 40}, speed = 0.1 },
     { widgetType = "drag_float3", id = "mr_tune_seat_rot", label = "Seat rotation (pitch / yaw / roll)", initialValue = { 0.0, 0.0, 0.0 }, range = {-180, 180}, speed = 0.5 },
+    { widgetType = "text", label = "Well dot (shows while you take / hold a magazine):" },
+    { widgetType = "combo", id = "mr_tune_marker_shape", label = "Dot shape", initialValue = 1, selections = { "Sphere", "Cube" } },
+    { widgetType = "slider_float", id = "mr_tune_marker_size", label = "Dot size (cm, 0 = the Manual Reload default)", initialValue = 0.0, range = {0.0, 15.0} },
+    { widgetType = "drag_float3", id = "mr_tune_marker_loc", label = "Dot offset (cm, gun frame)", initialValue = { 0.0, 0.0, 0.0 }, range = {-40, 40}, speed = 0.1 },
     { widgetType = "button", id = "mr_tune_reset", label = "Reset this gun's tuning", size = {200, 22} },
 }})
 
@@ -201,7 +210,8 @@ local TUNE_FILE = "bl4_manual_reload_tune.json"
 local tune = {}
 pcall(function() local t = json.load_file(TUNE_FILE) if type(t) == "table" then tune = t end end)
 local tuneKey = nil
-local TUNE_IDS = { hl = "mr_tune_hold_loc", hr = "mr_tune_hold_rot", sl = "mr_tune_seat_loc", sr = "mr_tune_seat_rot" }
+local TUNE_IDS = { hl = "mr_tune_hold_loc", hr = "mr_tune_hold_rot", sl = "mr_tune_seat_loc", sr = "mr_tune_seat_rot",
+                   ml = "mr_tune_marker_loc" }
 
 local function tuneVec(field)
     local t = tuneKey ~= nil and tune[tuneKey] or nil
@@ -234,7 +244,23 @@ local function loadTuneUI(key)
         if type(v) ~= "table" then v = { 0, 0, 0 } end
         pcall(function() configui.setValue(id, { v[1] or 0, v[2] or 0, v[3] or 0 }, true) end)
     end
+    local ms = type(t.ms) == "number" and t.ms or 0.0
+    pcall(function() configui.setValue("mr_tune_marker_size", ms, true) end)
+    pcall(function() configui.setValue("mr_tune_marker_shape", t.mk == 2 and 2 or 1, true) end)
 end
+
+configui.onUpdate("mr_tune_marker_size", function(value)
+    if tuneKey == nil or type(value) ~= "number" then return end
+    tune[tuneKey] = tune[tuneKey] or {}
+    tune[tuneKey].ms = value > 0 and value or nil
+    pcall(function() json.dump_file(TUNE_FILE, tune, 1) end)
+end)
+configui.onUpdate("mr_tune_marker_shape", function(value)
+    if tuneKey == nil or type(value) ~= "number" then return end
+    tune[tuneKey] = tune[tuneKey] or {}
+    tune[tuneKey].mk = value == 2 and 2 or nil   -- 2 = cube, nil = sphere
+    pcall(function() json.dump_file(TUNE_FILE, tune, 1) end)
+end)
 
 for field, id in pairs(TUNE_IDS) do
     configui.onUpdate(id, function(value)
@@ -900,8 +926,121 @@ local function restoreReloadTime()
     if cur ~= nil then cur.savedRT = nil end
 end
 
+-- -------------------------------------------------------------------------------------------------------------------
+-- well dot (2026-11-24): a glowing sphere at the learned seat while a magazine / round is at the hip or in the hand, so
+-- the player sees where it goes on every gun. The well is empty then (the magazine is out), so it is a marker, not a
+-- highlight: the gun is one gestalt mesh with ONE body material for every part (MCP: 3 sections body / scope / glass),
+-- and the game's PP_HighlightStencil needs r.PostProcessing.DisableMaterials 0 (user_script.txt sets 1) and did not
+-- show on the gun even then. Engine sphere (100 cm) + Widget3DPassThrough (unlit, translucent: TintColorAndOpacity
+-- alpha = opacity, as the dot reticule in bl4_main.lua). Attached to the first-person gun at seat + per-gun offset, so it
+-- moves with the gun. Size / offset per gun in data/bl4_manual_reload_tune.json (ms, ml).
+-- -------------------------------------------------------------------------------------------------------------------
+local MARKER_MESH = "StaticMesh /Engine/BasicShapes/Sphere.Sphere"
+local MARKER_MESHES = { [1] = MARKER_MESH, [2] = "StaticMesh /Engine/BasicShapes/Cube.Cube" }   -- per gun: tune mk (2 = cube)
+local markerMeshObj = {}
+local MARKER_MATERIAL = "Material /Engine/EngineMaterials/Widget3DPassThrough.Widget3DPassThrough"
+local MARKER_TEXTURE = "Texture2D /Engine/EngineResources/WhiteSquareTexture.WhiteSquareTexture"
+local marker = nil   -- { comp, mid, parent, tint, loc, size, shown }
+
+local function markerColor()
+    local v = configui.getValue("mr_marker_color") or "#1CF400FF"
+    local hex = type(v) == "string" and v or uevrUtils.intToHexString(v)
+    local r = (tonumber(string.sub(hex, 2, 3), 16) or 51) / 255
+    local g = (tonumber(string.sub(hex, 4, 5), 16) or 255) / 255
+    local b = (tonumber(string.sub(hex, 6, 7), 16) or 102) / 255
+    return r, g, b
+end
+
+local function markerDestroy()
+    if marker ~= nil and marker.comp ~= nil then pcall(function() uevrUtils.destroyComponent(marker.comp, true, false) end) end
+    marker = nil
+end
+
+local function markerHide()
+    if marker == nil or not marker.shown then return end
+    marker.shown = false
+    if exists(marker.comp) then pcall(function() marker.comp:SetVisibility(false, false) end) end
+end
+
+local function markerEnsure()
+    if marker ~= nil and exists(marker.comp) then return marker end
+    marker = nil
+    local comp = uevrUtils.createStaticMeshComponent(MARKER_MESH, { visible = false, collisionEnabled = false })
+    if comp == nil then return nil end
+    pcall(function() comp:SetCastShadow(false) end)
+    pcall(function() comp:SetGenerateOverlapEvents(false) end)
+    local mid = nil
+    pcall(function()
+        local template = uevrUtils.getSafeInstanceOf("Class /Script/Engine.Material", MARKER_MATERIAL)
+        if template == nil then return end
+        mid = comp:CreateDynamicMaterialInstance(0, template, fname("bl4_mr_marker"))
+        local white = uevrUtils.getSafeInstanceOf("Class /Script/Engine.Texture2D", MARKER_TEXTURE)
+        if mid ~= nil and white ~= nil then mid:SetTextureParameterValue(fname("SlateUI"), white) end
+    end)
+    marker = { comp = comp, mid = mid, shown = false, shape = 1 }
+    return marker
+end
+
+local function markerShow(gun, seat)
+    local m = markerEnsure()
+    if m == nil then return end
+    local c = m.comp
+    if m.parent ~= gun then
+        pcall(function() c:K2_AttachToComponent(gun, fname(""), 0, 0, 0, false) end)
+        m.parent, m.loc, m.size = gun, nil, nil
+    end
+    local ox, oy, oz = tuneVec("ml")
+    local loc = addV(seat.loc, { X = ox, Y = oy, Z = oz })
+    if m.loc == nil or lenV(subV(loc, m.loc)) > 1e-3 then
+        pcall(function() c:K2_SetRelativeLocationAndRotation(vec(loc.X, loc.Y, loc.Z), uevrUtils.rotator(0, 0, 0), false, reusable_hit_result, true) end)
+        m.loc = loc
+    end
+    local t = tuneKey ~= nil and tune[tuneKey] or nil
+    local shape = (t ~= nil and t.mk == 2) and 2 or 1
+    if shape ~= m.shape then
+        local mesh = markerMeshObj[shape]
+        if mesh == nil then
+            mesh = uevrUtils.getSafeInstanceOf("Class /Script/Engine.StaticMesh", MARKER_MESHES[shape])
+            markerMeshObj[shape] = mesh
+        end
+        if mesh ~= nil then
+            pcall(function() c:SetStaticMesh(mesh) end)
+            if m.mid ~= nil then pcall(function() c:SetMaterial(0, m.mid) end) end
+        end
+        m.shape = shape
+    end
+    local size = (t ~= nil and type(t.ms) == "number" and t.ms > 0) and t.ms or cfgNum("mr_marker_size", 7.0)
+    if size ~= m.size then
+        local s = size / 100.0
+        pcall(function() c:SetRelativeScale3D(vec(s, s, s)) end)
+        m.size = size
+    end
+    if m.mid ~= nil then
+        local r, g, b = markerColor()
+        local k = cfgNum("mr_marker_brightness", 5.0)
+        local a = cfgNum("mr_marker_opacity", 0.54)
+        local tint = string.format("%.3f %.3f %.3f %.3f %.3f", r, g, b, k, a)
+        if tint ~= m.tint then
+            pcall(function() m.mid:SetVectorParameterValue(fname("TintColorAndOpacity"), uevrUtils.color_from_rgba(r * k, g * k, b * k, a)) end)
+            m.tint = tint
+        end
+    end
+    if not m.shown then
+        m.shown = true
+        pcall(function() c:SetVisibility(true, false) end)
+    end
+end
+
+-- per frame: the dot shows while a magazine waits at the hip or is in the hand, and goes as it is pushed in
+local function markerTick()
+    local want = configui.getValue("mr_marker") ~= false and (state == S_AWAIT or state == S_HOLD)
+        and cur.seat ~= nil and cur.gun ~= nil and exists(cur.gun)
+    if want then markerShow(cur.gun, cur.seat) else markerHide() end
+end
+
 local function cleanup(reason)
     if reason ~= "done" then info("released (" .. tostring(reason) .. ") in state " .. state) end
+    markerHide()
     restoreReloadTime()
     if rackHandRelease ~= nil then pcall(rackHandRelease, os.clock()) end
     tpRelease()
@@ -1753,6 +1892,7 @@ local function tick()
         if state ~= S_IDLE then pcall(cleanup, "error") end
     end
     driverFlush()
+    pcall(markerTick)
     pcall(tickRackHand, now)
     if locked and not fingers.active and state ~= S_HOLD and state ~= S_RACK then lockLeftInput(false) end
 end
@@ -1772,6 +1912,7 @@ uevr.sdk.callbacks.on_script_reset(function()
     pcall(releaseDriver)
     pcall(restoreFingerLocals, fingers)
     pcall(function() lockLeftInput(false) end)
+    pcall(markerDestroy)
     _G.bl4ManualReloadBusy = false
 end)
 
@@ -1782,6 +1923,7 @@ uevrUtils.registerPreLevelChangeCallback(function()
     fingers = {}
     lockLeftInput(false)
     rackHand = nil
+    marker = nil
     cur = {}
     lastPawn, swallowGrip, nearPouch, nearRack, lastReloading = nil, false, false, false, false
     enter(S_IDLE)

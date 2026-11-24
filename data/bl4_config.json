@@ -138,6 +138,11 @@
     "mr_insert_radius": 7.0,
     "mr_insert_time": 0.15,
     "mr_log": false,
+    "mr_marker": true,
+    "mr_marker_brightness": 5.0,
+    "mr_marker_color": 4278252572,
+    "mr_marker_opacity": 0.54,
+    "mr_marker_size": 7.0,
     "mr_pouch_loc": [
         8.0,
         -24.0,
@@ -158,6 +163,13 @@
         0.0,
         0.0
     ],
+    "mr_tune_marker_loc": [
+        0.0,
+        0.0,
+        0.0
+    ],
+    "mr_tune_marker_shape": 1,
+    "mr_tune_marker_size": 0.0,
     "mr_tune_seat_loc": [
         0.0,
         0.0,

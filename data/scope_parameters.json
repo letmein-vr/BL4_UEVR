@@ -217,6 +217,9 @@
         "ORD_AR_Scope_01_L1": {
             "zoom": 1.0
         },
+        "ORD_AR_Scope_01_L2": {
+            "zoom": 1.0
+        },
         "ORD_AR_Scope_02_L1": {
             "zoom": 1.0
         },
@@ -227,6 +230,9 @@
             "zoom": 1.0
         },
         "ORD_AR_Scope_02_L2_Mask": {
+            "zoom": 1.0
+        },
+        "ORD_PS_Scope_01_L2": {
             "zoom": 1.0
         },
         "ORD_PS_Scope_02_L1": {
